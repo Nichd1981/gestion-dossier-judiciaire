@@ -44,4 +44,7 @@ public class Plainte {
     @JoinColumn(name = "JUGEMENT_ID", nullable = true)
     private Jugement jugement;
 
+    @OneToMany(mappedBy = "plainte")
+    private Set<Audition> auditions;
+
 }

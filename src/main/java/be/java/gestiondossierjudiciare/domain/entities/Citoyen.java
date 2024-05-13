@@ -65,4 +65,8 @@ public class Citoyen {
     @ManyToMany(mappedBy = "citoyensConcernes")
     private Set<Plainte> plaintesDuCitoyen;
 
+    @ManyToOne
+    @JoinColumn(name = "AVOCAT_ID", nullable = true)
+    private Citoyen avocat;
+
 }
