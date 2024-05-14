@@ -2,10 +2,15 @@ package be.java.gestiondossierjudiciare.domain.entities;
 
 import be.java.gestiondossierjudiciare.domain.enums.JugementDecision;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "JUGEMENT")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Jugement {
 
     @Id
@@ -16,10 +21,10 @@ public class Jugement {
     private LocalDateTime dateJugement;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "DECISION", nullable = true)
+    @Column(name = "DECISION_JUDGMENT", nullable = true)
     private JugementDecision jugementDecision;
 
-    @Column(name = "COMMENTAIRE", nullable = true)
+    @Column(name = "COMMENTAIRE_JUDGMENT", nullable = true)
     private String commentaire;
 
     @OneToOne
