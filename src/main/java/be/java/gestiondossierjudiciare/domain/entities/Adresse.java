@@ -1,9 +1,13 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "ADRESSE")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Adresse {
 
     @Id

@@ -1,11 +1,15 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "AUDITION")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Audition {
 
     @Id
@@ -18,8 +22,8 @@ public class Audition {
     @Column(name = "NUMERO_SALLE_AUDITION", nullable = false)
     private int numeroSalleAudition;
 
-    @Column(name = "DEPOSITION", nullable = true)
-    private String deposition;
+    @Column(name = "DEPOSITION_AUDITION", nullable = true)
+    private String depositionAudition;
 
     @ManyToOne
     @JoinColumn(name = "CITOYEN_CONVOQUE_ID", nullable = false)
