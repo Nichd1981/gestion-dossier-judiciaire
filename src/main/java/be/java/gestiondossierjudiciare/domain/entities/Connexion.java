@@ -3,6 +3,7 @@ package be.java.gestiondossierjudiciare.domain.entities;
 import be.java.gestiondossierjudiciare.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "CONNEXION")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

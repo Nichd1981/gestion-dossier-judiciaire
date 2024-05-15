@@ -1,18 +1,14 @@
 package be.java.gestiondossierjudiciare.il.utils;
 
 
-import be.java.gestiondossierjudiciare.dal.repositories.AdresseRepository;
-import be.java.gestiondossierjudiciare.dal.repositories.CitoyenRepository;
-import be.java.gestiondossierjudiciare.dal.repositories.PlainteRepository;
-import be.java.gestiondossierjudiciare.dal.repositories.TelephoneRepository;
-import be.java.gestiondossierjudiciare.domain.entities.Adresse;
-import be.java.gestiondossierjudiciare.domain.entities.Citoyen;
-import be.java.gestiondossierjudiciare.domain.entities.Plainte;
-import be.java.gestiondossierjudiciare.domain.entities.Telephone;
+import be.java.gestiondossierjudiciare.dal.repositories.*;
+import be.java.gestiondossierjudiciare.domain.entities.*;
 import be.java.gestiondossierjudiciare.domain.enums.Genre;
+import be.java.gestiondossierjudiciare.domain.enums.Role;
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -26,6 +22,8 @@ public class DataInitializer implements CommandLineRunner {
     private final AdresseRepository adresseRepository;
     private final TelephoneRepository telephoneRepository;
     private final PlainteRepository plainteRepository;
+    private final ConnexionRepository connexionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -36,6 +34,15 @@ public class DataInitializer implements CommandLineRunner {
             citoyenRepository.save(citoyen1);
             citoyenRepository.save(citoyen2);
             citoyenRepository.save(citoyen3);
+
+            Connexion connexion1 = Connexion.builder().
+                    email("antoinegeoris@outlook.be")
+                    .motDePasse(passwordEncoder.encode("09091999"))
+                    .role(Role.ADMIN)
+                    .citoyen(citoyen3)
+                    .build();
+
+            connexionRepository.save(connexion1);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", citoyen1);
             Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", citoyen2);
