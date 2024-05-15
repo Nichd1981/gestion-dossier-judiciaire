@@ -1,4 +1,4 @@
-package be.java.gestiondossierjudiciare.dal;
+package be.java.gestiondossierjudiciare.il.utils;
 
 
 import be.java.gestiondossierjudiciare.dal.repositories.AdresseRepository;

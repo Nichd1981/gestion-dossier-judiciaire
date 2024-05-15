@@ -15,7 +15,7 @@ public class CitoyenController {
     private final CitoyenService citoyenService;
 
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<Long> updateCitoyen(@PathVariable Long id, @Valid CitoyenUpdateForm citoyen) {
+    public ResponseEntity<Long> updateCitoyen(@PathVariable Long id, @RequestBody @Valid CitoyenUpdateForm citoyen) {
 
         Long returnId = citoyenService.update(id, citoyen.toEntity());
         return ResponseEntity.ok(returnId);
