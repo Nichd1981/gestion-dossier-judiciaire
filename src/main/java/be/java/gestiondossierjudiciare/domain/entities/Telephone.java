@@ -24,4 +24,9 @@ public class Telephone {
     @JoinColumn(name = "CITOYEN_ID", nullable = false)
     private Citoyen citoyen;
 
+    public Telephone(String numero, String libelle, Citoyen citoyen) {
+        this.numero = numero;
+        this.libelle = libelle;
+        this.citoyen = citoyen;
+    }
 }

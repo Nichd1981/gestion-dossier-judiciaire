@@ -29,4 +29,14 @@ public class Adresse {
     @ManyToOne
     @JoinColumn(name = "CITOYEN_ID", nullable = false)
     private Citoyen citoyen;
+
+    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String type, Citoyen citoyen) {
+        this.rue = rue;
+        this.numero = numero;
+        this.ville = ville;
+        this.codePostal = codePostal;
+        this.pays = pays;
+        this.type = type;
+        this.citoyen = citoyen;
+    }
 }

@@ -4,9 +4,11 @@ import be.java.gestiondossierjudiciare.domain.enums.Genre;
 import be.java.gestiondossierjudiciare.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ import java.util.Set;
 @Table(name = "CITOYEN")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Citoyen {
 
     @Id
@@ -50,9 +53,20 @@ public class Citoyen {
     private Citoyen avocat;
 
     @OneToMany(mappedBy = "citoyen")
-    private Set<Adresse> adresses;
+    private Set<Adresse> adresses = new HashSet<>();
 
     @OneToMany(mappedBy = "citoyen")
-    private Set<Telephone> telephones;
+    private Set<Telephone> telephones = new HashSet<>();
 
+    public Citoyen(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {
+        this.registreNational = registreNational;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.lieuNaissance = lieuNaissance;
+        this.genre = genre;
+        this.dateDeces = dateDeces;
+        this.photo = photo;
+        this.empreinte = empreinte;
+    }
 }
