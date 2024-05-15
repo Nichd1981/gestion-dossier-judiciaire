@@ -1,7 +1,6 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import be.java.gestiondossierjudiciare.domain.enums.Genre;
-import be.java.gestiondossierjudiciare.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,6 +18,9 @@ import java.util.Set;
 public class Citoyen {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "REGISTRE_NATIONAL", nullable = false, unique = true)
     private String registreNational;
 
