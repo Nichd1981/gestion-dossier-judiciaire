@@ -63,10 +63,10 @@ public class Citoyen {
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
     private Citoyen avocat;
 
-    @OneToMany(mappedBy = "citoyen")
+    @OneToMany
     private Set<Adresse> adresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "citoyen")
+    @OneToMany
     private Set<Telephone> telephones = new HashSet<>();
 
     public Citoyen(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {

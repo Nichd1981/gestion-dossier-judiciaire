@@ -25,13 +25,9 @@ public class Telephone {
     @Column(name = "LIBELLE", nullable = false)
     private String libelle;
 
-    @ManyToOne
-    @JoinColumn(name = "CITOYEN_ID", nullable = false)
-    private Citoyen citoyen;
 
-    public Telephone(String numero, String libelle, Citoyen citoyen) {
+    public Telephone(String numero, String libelle) {
         this.numero = numero;
         this.libelle = libelle;
-        this.citoyen = citoyen;
     }
 }
