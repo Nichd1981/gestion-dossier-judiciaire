@@ -1,18 +1,14 @@
 package be.java.gestiondossierjudiciare.il.utils;
 
 
-import be.java.gestiondossierjudiciare.dal.repositories.AdresseRepository;
-import be.java.gestiondossierjudiciare.dal.repositories.CitoyenRepository;
-import be.java.gestiondossierjudiciare.dal.repositories.PlainteRepository;
-import be.java.gestiondossierjudiciare.dal.repositories.TelephoneRepository;
-import be.java.gestiondossierjudiciare.domain.entities.Adresse;
-import be.java.gestiondossierjudiciare.domain.entities.Citoyen;
-import be.java.gestiondossierjudiciare.domain.entities.Plainte;
-import be.java.gestiondossierjudiciare.domain.entities.Telephone;
+import be.java.gestiondossierjudiciare.dal.repositories.*;
+import be.java.gestiondossierjudiciare.domain.entities.*;
 import be.java.gestiondossierjudiciare.domain.enums.Genre;
+import be.java.gestiondossierjudiciare.domain.enums.Role;
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -32,21 +28,6 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (citoyenRepository.count()==0){
-            Citoyen citoyen1 = new Citoyen("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
-            Citoyen citoyen2 = new Citoyen("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
-            Citoyen citoyen3 = new Citoyen("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
-            citoyenRepository.save(citoyen1);
-            citoyenRepository.save(citoyen2);
-            citoyenRepository.save(citoyen3);
-
-            Connexion connexion1 = Connexion.builder().
-                    email("antoinegeoris@outlook.be")
-                    .motDePasse(passwordEncoder.encode("09091999"))
-                    .role(Role.ADMIN)
-                    .citoyen(citoyen3)
-                    .build();
-
-            connexionRepository.save(connexion1);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile");
             Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile");
@@ -74,6 +55,31 @@ public class DataInitializer implements CommandLineRunner {
             citoyenRepository.save(citoyen1);
             citoyenRepository.save(citoyen2);
             citoyenRepository.save(citoyen3);
+
+            Connexion connexion1 = Connexion.builder().
+                    email("antoinegeoris@outlook.be")
+                    .motDePasse(passwordEncoder.encode("09091999"))
+                    .role(Role.ADMIN)
+                    .citoyen(citoyen3)
+                    .build();
+
+            Connexion connexion2 = Connexion.builder().
+                    email("azzedinehassaini@gmail.com")
+                    .motDePasse(passwordEncoder.encode("Test1234="))
+                    .role(Role.AGENT)
+                    .citoyen(citoyen1)
+                    .build();
+
+            Connexion connexion3 = Connexion.builder().
+                    email("valentineevidence83@gmail.com")
+                    .motDePasse(passwordEncoder.encode("Test1234="))
+                    .role(Role.CITOYEN)
+                    .citoyen(citoyen2)
+                    .build();
+
+            connexionRepository.save(connexion1);
+            connexionRepository.save(connexion2);
+            connexionRepository.save(connexion3);
 
             Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), citoyen2, citoyen1);
             plainte.getCitoyensConcernes().add(citoyen3);
