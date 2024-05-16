@@ -1,10 +1,7 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "TELEPHONE")
@@ -29,6 +26,7 @@ public class Telephone {
     @JoinColumn(name = "PERSONNE_ID", nullable = false)
     private Personne personne;
 
+    @Builder
     public Telephone(String numero, String libelle, Personne personne) {
         this.numero = numero;
         this.libelle = libelle;

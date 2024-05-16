@@ -28,15 +28,15 @@ public record PersonneUpdateForm(
 ){
 
     public Personne toEntity(){
-        Personne personne = new Personne();
-        personne.setNom(nom);
-        personne.setPrenom(prenom);
-        personne.setGenre(genre);
-        personne.setPhoto(photo);
-        personne.setEmpreinte(empreinte);
-        personne.setDateNaissance(dateDeNaissance);
-        personne.setLieuNaissance(lieuDeNaissance);
-        return personne;
+        return Personne.builder()
+                .nom(nom)
+                .prenom(prenom)
+                .genre(genre)
+                .photo(photo)
+                .empreinte(empreinte)
+                .dateNaissance(dateDeNaissance)
+                .lieuNaissance(lieuDeNaissance)
+                .build();
     }
 
 }
