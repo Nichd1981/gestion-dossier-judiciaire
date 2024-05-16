@@ -26,10 +26,27 @@ public class DataInitializer implements CommandLineRunner {
     private final AdresseRepository adresseRepository;
     private final TelephoneRepository telephoneRepository;
     private final PlainteRepository plainteRepository;
+    private final ConnexionRepository connexionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
         if (citoyenRepository.count()==0){
+            Citoyen citoyen1 = new Citoyen("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
+            Citoyen citoyen2 = new Citoyen("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
+            Citoyen citoyen3 = new Citoyen("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
+            citoyenRepository.save(citoyen1);
+            citoyenRepository.save(citoyen2);
+            citoyenRepository.save(citoyen3);
+
+            Connexion connexion1 = Connexion.builder().
+                    email("antoinegeoris@outlook.be")
+                    .motDePasse(passwordEncoder.encode("09091999"))
+                    .role(Role.ADMIN)
+                    .citoyen(citoyen3)
+                    .build();
+
+            connexionRepository.save(connexion1);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile");
             Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile");
