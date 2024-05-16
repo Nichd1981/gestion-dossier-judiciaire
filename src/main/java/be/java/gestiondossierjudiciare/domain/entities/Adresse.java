@@ -43,7 +43,7 @@ public class Adresse {
     private Personne personne;
 
     @Builder
-    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String libelle) {
+    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String libelle, Personne personne) {
         this.rue = rue;
         this.numero = numero;
         this.ville = ville;

@@ -28,56 +28,68 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (personneRepository.count()==0){
-            Personne personne1 = new Personne("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
-            Personne personne2 = new Personne("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
-            Personne personne3 = new Personne("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
-            Personne personne4 = new Personne("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
-            personneRepository.save(personne1);
-            personneRepository.save(personne2);
-            personneRepository.save(personne3);
-            personneRepository.save(personne4);
+            Personne azzedine = new Personne("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
+            Personne antoine = new Personne("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
+            Personne nicolas = new Personne("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
+            Personne valentine = new Personne("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
+            valentine.setAvocat(azzedine);
+            personneRepository.save(azzedine);
+            personneRepository.save(valentine);
+            personneRepository.save(antoine);
+            personneRepository.save(nicolas);
 
             Utilisateur admin = Utilisateur.builder()
                             .email("antoinegeoris@outlook.be")
-                            .motDePasse(passwordEncoder.encode("09091999"))
+                            .motDePasse(passwordEncoder.encode("12341234"))
                             .role(Role.ADMIN)
-                            .personne(personne3)
+                            .personne(antoine)
                             .build();
 
             Utilisateur agent = Utilisateur.builder()
                                         .email("quinet.nicolas@gmail.com")
                                         .motDePasse(passwordEncoder.encode("12341234"))
                                         .role(Role.AGENT)
-                                        .personne(personne4)
+                                        .personne(nicolas)
+                                        .build();
+
+            Utilisateur citoyen = Utilisateur.builder()
+                                        .email("valentineevidence83@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("12341234"))
+                                        .role(Role.CITOYEN)
+                                        .personne(valentine)
                                         .build();
 
             Utilisateur avocat = Utilisateur.builder()
-                                        .email("valentine@gmail.com")
-                                        .motDePasse(passwordEncoder.encode("43214321"))
-                                        .role(Role.AVOCAT)
-                                        .personne(personne2)
-                                        .build();
+                    .email("azzedinehassaini@gmail.com")
+                    .motDePasse(passwordEncoder.encode("12341234"))
+                    .role(Role.AVOCAT)
+                    .personne(azzedine)
+                    .build();
 
             utilisateurRepository.save(admin);
             utilisateurRepository.save(agent);
             utilisateurRepository.save(avocat);
 
-            Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", personne1);
-            Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", personne2);
-            Adresse adresse3 = new Adresse("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", personne3);
+            Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
+            Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", valentine);
+            Adresse adresse3 = new Adresse("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
+            Adresse adresse4 = new Adresse("Rue test4", "1", "Ville", "1234", "Belgique", "Domicile", nicolas);
             adresseRepository.save(adresse1);
             adresseRepository.save(adresse2);
             adresseRepository.save(adresse3);
+            adresseRepository.save(adresse4);
 
-            Telephone tel1 = new Telephone("0498123456", "GSM", personne1);
-            Telephone tel2 = new Telephone("0498123457", "GSM", personne2);
-            Telephone tel3 = new Telephone("0498123458", "GSM", personne3);
+            Telephone tel1 = new Telephone("0498123456", "GSM", azzedine);
+            Telephone tel2 = new Telephone("0498123457", "GSM", valentine);
+            Telephone tel3 = new Telephone("0498123458", "GSM", antoine);
+            Telephone tel4 = new Telephone("0498123459", "GSM", nicolas);
             telephoneRepository.save(tel1);
             telephoneRepository.save(tel2);
             telephoneRepository.save(tel3);
+            telephoneRepository.save(tel4);
 
-            Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), personne2, personne1);
-            plainte.getPersonnesConcernes().add(personne3);
+            Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), valentine, nicolas);
+            plainte.getPersonnesConcernes().add(antoine);
 
             plainteRepository.save(plainte);
 
