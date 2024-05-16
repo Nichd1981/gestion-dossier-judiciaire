@@ -49,8 +49,14 @@ public class Plainte {
                 inverseJoinColumns = @JoinColumn(name = "PERSONNE_ID"))
     private Set<Personne> personnesConcernes = new HashSet<>();
 
-    @OneToMany(mappedBy = "plainte")
+    @OneToMany(mappedBy = "plainte", fetch = FetchType.EAGER)
     private Set<Audition> auditions = new HashSet<>();
+
+    @OneToMany(mappedBy = "plainte", fetch = FetchType.EAGER)
+    private Set<PlainteDepositionHistorique> depositions = new HashSet<>();
+
+    @OneToMany(mappedBy = "plainte", fetch = FetchType.EAGER)
+    private Set<PlainteTypeHistorique> types = new HashSet<>();
 
     public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Personne plaignant, Personne agentTraitant) {
         this.numeroDossier = numeroDossier;
