@@ -1,6 +1,6 @@
 package be.java.gestiondossierjudiciare.api.forms;
 
-import be.java.gestiondossierjudiciare.domain.entities.Citoyen;
+import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.enums.Genre;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
-public record CitoyenUpdateForm (
+public record PersonneUpdateForm(
 
         @NotBlank(message = "Nom ne peut pas être vide")
         @Size(min = 1, max = 50)
@@ -27,16 +27,16 @@ public record CitoyenUpdateForm (
 
 ){
 
-    public Citoyen toEntity(){
-        Citoyen citoyen = new Citoyen();
-        citoyen.setNom(nom);
-        citoyen.setPrenom(prenom);
-        citoyen.setGenre(genre);
-        citoyen.setPhoto(photo);
-        citoyen.setEmpreinte(empreinte);
-        citoyen.setDateNaissance(dateDeNaissance);
-        citoyen.setLieuNaissance(lieuDeNaissance);
-        return citoyen;
+    public Personne toEntity(){
+        Personne personne = new Personne();
+        personne.setNom(nom);
+        personne.setPrenom(prenom);
+        personne.setGenre(genre);
+        personne.setPhoto(photo);
+        personne.setEmpreinte(empreinte);
+        personne.setDateNaissance(dateDeNaissance);
+        personne.setLieuNaissance(lieuDeNaissance);
+        return personne;
     }
 
 }

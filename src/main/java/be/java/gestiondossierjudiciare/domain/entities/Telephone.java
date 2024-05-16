@@ -26,12 +26,12 @@ public class Telephone {
     private String libelle;
 
     @ManyToOne
-    @JoinColumn(name = "CITOYEN_ID", nullable = false)
-    private Citoyen citoyen;
+    @JoinColumn(name = "PERSONNE_ID", nullable = false)
+    private Personne personne;
 
-    public Telephone(String numero, String libelle, Citoyen citoyen) {
+    public Telephone(String numero, String libelle, Personne personne) {
         this.numero = numero;
         this.libelle = libelle;
-        this.citoyen = citoyen;
+        this.personne = personne;
     }
 }

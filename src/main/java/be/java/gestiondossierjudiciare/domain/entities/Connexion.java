@@ -36,8 +36,8 @@ public class Connexion implements UserDetails {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "CITOYEN_ID", nullable = false)
-    private Citoyen citoyen;
+    @JoinColumn(name = "PERSONNE_ID", nullable = false)
+    private Personne personne;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,7 +56,7 @@ public class Connexion implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return citoyen.getDateDeces() != null;
+        return personne.getDateDeces() != null;
     }
 
     @Override

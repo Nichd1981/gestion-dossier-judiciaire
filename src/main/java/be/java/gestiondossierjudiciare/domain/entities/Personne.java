@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Citoyen {
+public class Personne {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,15 +61,15 @@ public class Citoyen {
     @Setter
     @ManyToOne
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
-    private Citoyen avocat;
+    private Personne avocat;
 
-    @OneToMany(mappedBy = "citoyen")
+    @OneToMany(mappedBy = "personne")
     private Set<Adresse> adresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "citoyen")
+    @OneToMany(mappedBy = "personne")
     private Set<Telephone> telephones = new HashSet<>();
 
-    public Citoyen(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {
+    public Personne(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {
         this.registreNational = registreNational;
         this.nom = nom;
         this.prenom = prenom;

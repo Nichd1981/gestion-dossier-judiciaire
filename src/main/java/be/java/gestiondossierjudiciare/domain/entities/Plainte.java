@@ -1,7 +1,6 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
-import be.java.gestiondossierjudiciare.domain.enums.TypePlainte;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,22 +37,22 @@ public class Plainte {
 
     @ManyToOne
     @JoinColumn(name = "PLAIGNANT_ID")
-    private Citoyen plaignant;
+    private Personne plaignant;
 
     @ManyToOne
     @JoinColumn(name = "AGENT_TRAITANT_ID")
-    private Citoyen agentTraitant;
+    private Personne agentTraitant;
 
     @ManyToMany
-    @JoinTable(name = "PLAINTE_CITOYEN",
+    @JoinTable(name = "PLAINTE_PERSONNE",
                 joinColumns = @JoinColumn(name = "PLAINTE_ID"),
-                inverseJoinColumns = @JoinColumn(name = "CITOYEN_ID"))
-    private Set<Citoyen> citoyensConcernes = new HashSet<>();
+                inverseJoinColumns = @JoinColumn(name = "PERSONNE_ID"))
+    private Set<Personne> personnesConcernes = new HashSet<>();
 
     @OneToMany(mappedBy = "plainte")
     private Set<Audition> auditions = new HashSet<>();
 
-    public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Citoyen plaignant, Citoyen agentTraitant) {
+    public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Personne plaignant, Personne agentTraitant) {
         this.numeroDossier = numeroDossier;
         this.statut = statut;
         this.datePlainte = datePlainte;
