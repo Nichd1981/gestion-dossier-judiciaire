@@ -5,5 +5,12 @@ import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import java.util.List;
 
 public interface PlainteService {
+
+    List<Plainte> findAll();
+
+    Plainte findById(Long id);
+
+    Plainte findByNumeroDossier(String numeroDossier);
+
     List<Plainte> findByPlaignantId(Long id);
 }
