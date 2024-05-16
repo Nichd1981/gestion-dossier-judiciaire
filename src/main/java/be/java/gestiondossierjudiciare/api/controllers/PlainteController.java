@@ -1,6 +1,5 @@
 package be.java.gestiondossierjudiciare.api.controllers;
 
-import be.java.gestiondossierjudiciare.api.dtos.PlainteDTO;
 import be.java.gestiondossierjudiciare.api.dtos.PlainteDetailDTO;
 import be.java.gestiondossierjudiciare.api.dtos.PlainteListDTO;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
@@ -21,20 +20,8 @@ import java.util.List;
 public class PlainteController {
     private final PlainteService plainteService;
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('CITOYEN')")
-    public ResponseEntity<List<PlainteDTO>> getPlainteByPlaignantId(Authentication authentication) {
-        Utilisateur c = (Utilisateur) authentication.getPrincipal();
-
-        List<PlainteDTO> plaintes = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
-                .map(PlainteDTO::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(plaintes);
-    }
-
     @PreAuthorize("hasAuthority('AGENT')")
-    @GetMapping
+    @GetMapping("/agent")
     public ResponseEntity<List<PlainteListDTO>> getAll(){
 
         List<PlainteListDTO> dtos = plainteService.findAll()
@@ -43,6 +30,18 @@ public class PlainteController {
                 .toList();
 
         return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/citoyen")
+    @PreAuthorize("hasAuthority('CITOYEN')")
+    public ResponseEntity<List<PlainteListDTO>> getPlainteByPlaignantId(Authentication authentication) {
+        Utilisateur c = (Utilisateur) authentication.getPrincipal();
+
+        List<PlainteListDTO> plaintes = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
+                .map(PlainteListDTO::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(plaintes);
     }
 
     @PreAuthorize("hasAuthority('AGENT')")
