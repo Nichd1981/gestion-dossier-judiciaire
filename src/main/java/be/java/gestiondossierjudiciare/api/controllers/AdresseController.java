@@ -1,11 +1,10 @@
 package be.java.gestiondossierjudiciare.api.controllers;
 
-import be.java.gestiondossierjudiciare.api.forms.TelephoneUpdateForm;
-import be.java.gestiondossierjudiciare.bll.services.TelephoneService;
+import be.java.gestiondossierjudiciare.api.forms.AdresseUpdateForm;
+import be.java.gestiondossierjudiciare.bll.services.AdresseService;
 import be.java.gestiondossierjudiciare.domain.entities.Adresse;
 import be.java.gestiondossierjudiciare.domain.entities.Citoyen;
 import be.java.gestiondossierjudiciare.domain.entities.Connexion;
-import be.java.gestiondossierjudiciare.domain.entities.Telephone;
 import be.java.gestiondossierjudiciare.domain.enums.Role;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,31 +18,30 @@ import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/telephone")
-public class TelephoneController {
+@RequestMapping("/adresse")
+public class AdresseController {
 
-    private final TelephoneService telephoneService;
+    private final AdresseService adresseService;
 
     @PreAuthorize("hasAnyAuthority('AGENT','CITOYEN')")
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<Long> updateTelephone(@PathVariable Long id,
-                                                @RequestBody @Valid TelephoneUpdateForm telephone,
-                                                Authentication authentication)
+    public ResponseEntity<Void> updateAdresse(@PathVariable Long id,
+                                              @RequestBody @Valid AdresseUpdateForm adresse,
+                                              Authentication authentication)
     {
-
         Connexion c = (Connexion) authentication.getPrincipal();
 
         if (c.getRole() == Role.CITOYEN){
             Citoyen citoyen = c.getCitoyen();
-            Set<Telephone> tels = citoyen.getTelephones();
-            if (tels.stream().noneMatch(t -> t.getId().equals(id))) {
-                // Le n° de tel que l'on veut modifier n'est pas un de ceux de ce citoyen
+            Set<Adresse> adresses = citoyen.getAdresses();
+            if (adresses.stream().noneMatch(a -> a.getId().equals(id))) {
+                // L'adresse que l'on veut modifier n'est pas une des adresses de ce citoyen
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         }
 
-        Long returnId = telephoneService.update(id, telephone.toEntity());
-        return ResponseEntity.ok(returnId);
+        adresseService.update(id, adresse.toEntity());
+        return ResponseEntity.ok().build();
 
     }
 

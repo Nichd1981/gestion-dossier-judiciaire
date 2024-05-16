@@ -35,17 +35,17 @@ public class Adresse {
     private String pays;
 
     @Setter
-    @Column(name = "TYPE", nullable = false)
-    private String type;
+    @Column(name = "LIBELLE", nullable = false)
+    private String libelle;
 
 
     @Builder
-    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String type) {
+    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String libelle) {
         this.rue = rue;
         this.numero = numero;
         this.ville = ville;
         this.codePostal = codePostal;
         this.pays = pays;
-        this.type = type;
+        this.libelle = libelle;
     }
 }
