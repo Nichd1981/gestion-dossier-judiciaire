@@ -3,8 +3,8 @@ package be.java.gestiondossierjudiciare.api.controllers;
 import be.java.gestiondossierjudiciare.api.forms.AdresseUpdateForm;
 import be.java.gestiondossierjudiciare.bll.services.AdresseService;
 import be.java.gestiondossierjudiciare.domain.entities.Adresse;
-import be.java.gestiondossierjudiciare.domain.entities.Citoyen;
-import be.java.gestiondossierjudiciare.domain.entities.Connexion;
+import be.java.gestiondossierjudiciare.domain.entities.Personne;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import be.java.gestiondossierjudiciare.domain.enums.Role;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +29,11 @@ public class AdresseController {
                                               @RequestBody @Valid AdresseUpdateForm adresse,
                                               Authentication authentication)
     {
-        Connexion c = (Connexion) authentication.getPrincipal();
+        Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
         if (c.getRole() == Role.CITOYEN){
-            Citoyen citoyen = c.getCitoyen();
-            Set<Adresse> adresses = citoyen.getAdresses();
+            Personne personne = c.getPersonne();
+            Set<Adresse> adresses = personne.getAdresses();
             if (adresses.stream().noneMatch(a -> a.getId().equals(id))) {
                 // L'adresse que l'on veut modifier n'est pas une des adresses de ce citoyen
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

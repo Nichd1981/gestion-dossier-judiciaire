@@ -2,10 +2,9 @@ package be.java.gestiondossierjudiciare.api.controllers;
 
 import be.java.gestiondossierjudiciare.api.forms.TelephoneUpdateForm;
 import be.java.gestiondossierjudiciare.bll.services.TelephoneService;
-import be.java.gestiondossierjudiciare.domain.entities.Adresse;
-import be.java.gestiondossierjudiciare.domain.entities.Citoyen;
-import be.java.gestiondossierjudiciare.domain.entities.Connexion;
+import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Telephone;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import be.java.gestiondossierjudiciare.domain.enums.Role;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +30,11 @@ public class TelephoneController {
                                                 Authentication authentication)
     {
 
-        Connexion c = (Connexion) authentication.getPrincipal();
+        Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
         if (c.getRole() == Role.CITOYEN){
-            Citoyen citoyen = c.getCitoyen();
-            Set<Telephone> tels = citoyen.getTelephones();
+            Personne personne = c.getPersonne();
+            Set<Telephone> tels = personne.getTelephones();
             if (tels.stream().noneMatch(t -> t.getId().equals(id))) {
                 // Le n° de tel que l'on veut modifier n'est pas un de ceux de ce citoyen
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
