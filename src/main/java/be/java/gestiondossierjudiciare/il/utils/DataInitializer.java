@@ -31,18 +31,36 @@ public class DataInitializer implements CommandLineRunner {
             Citoyen citoyen1 = new Citoyen("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
             Citoyen citoyen2 = new Citoyen("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
             Citoyen citoyen3 = new Citoyen("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
+            Citoyen citoyen4 = new Citoyen("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
             citoyenRepository.save(citoyen1);
             citoyenRepository.save(citoyen2);
             citoyenRepository.save(citoyen3);
+            citoyenRepository.save(citoyen4);
 
-            Connexion connexion1 = Connexion.builder().
-                    email("antoinegeoris@outlook.be")
-                    .motDePasse(passwordEncoder.encode("09091999"))
-                    .role(Role.ADMIN)
-                    .citoyen(citoyen3)
-                    .build();
+            Connexion admin = Connexion.builder()
+                            .email("antoinegeoris@outlook.be")
+                            .motDePasse(passwordEncoder.encode("09091999"))
+                            .role(Role.ADMIN)
+                            .citoyen(citoyen3)
+                            .build();
 
-            connexionRepository.save(connexion1);
+            Connexion agent = Connexion.builder()
+                                        .email("quinet.nicolas@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("12341234"))
+                                        .role(Role.AGENT)
+                                        .citoyen(citoyen4)
+                                        .build();
+
+            Connexion avocat = Connexion.builder()
+                                        .email("valentine@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("43214321"))
+                                        .role(Role.AVOCAT)
+                                        .citoyen(citoyen2)
+                                        .build();
+
+            connexionRepository.save(admin);
+            connexionRepository.save(agent);
+            connexionRepository.save(avocat);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", citoyen1);
             Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", citoyen2);

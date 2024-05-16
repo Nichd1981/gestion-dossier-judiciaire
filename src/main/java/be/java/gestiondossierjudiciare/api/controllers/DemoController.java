@@ -18,5 +18,17 @@ public class DemoController {
         return ResponseEntity.ok("Hello my master !");
     }
 
+    @PreAuthorize("hasAnyAuthority('AGENT', 'ADMIN')")
+    @GetMapping("/agent")
+    public ResponseEntity<String> helloAgent(){
+        return ResponseEntity.ok("Hello Agent 212");
+    }
+
+    @PreAuthorize("hasAnyAuthority('AVOCAT', 'ADMIN')")
+    @GetMapping("/avocat")
+    public ResponseEntity<String> helloAvocat(){
+        return ResponseEntity.ok("Hello toi");
+    }
+
 
 }
