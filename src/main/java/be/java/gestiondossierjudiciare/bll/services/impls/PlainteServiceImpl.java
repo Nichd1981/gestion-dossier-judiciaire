@@ -19,6 +19,11 @@ public class PlainteServiceImpl implements PlainteService {
     }
 
     @Override
+    public List<Plainte> findByPersonneConcernee(Long id) {
+        return plainteRepository.findByPersonnesConcernees(id);
+    }
+
+    @Override
     public List<Plainte> findAll() {
         return plainteRepository.findAll();
     }

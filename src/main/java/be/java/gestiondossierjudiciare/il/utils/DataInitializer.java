@@ -59,6 +59,13 @@ public class DataInitializer implements CommandLineRunner {
                                         .personne(valentine)
                                         .build();
 
+            Utilisateur citoyen2 = Utilisateur.builder()
+                    .email("antoinegeoris99@outlook.be")
+                    .motDePasse(passwordEncoder.encode("12341234"))
+                    .role(Role.CITOYEN)
+                    .personne(antoine)
+                    .build();
+
             Utilisateur avocat = Utilisateur.builder()
                     .email("azzedinehassaini@gmail.com")
                     .motDePasse(passwordEncoder.encode("12341234"))
@@ -69,6 +76,7 @@ public class DataInitializer implements CommandLineRunner {
             utilisateurRepository.save(admin);
             utilisateurRepository.save(agent);
             utilisateurRepository.save(citoyen);
+            utilisateurRepository.save(citoyen2);
             utilisateurRepository.save(avocat);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);

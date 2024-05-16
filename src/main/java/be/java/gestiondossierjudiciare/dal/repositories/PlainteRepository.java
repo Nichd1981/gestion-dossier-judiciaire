@@ -20,4 +20,7 @@ public interface PlainteRepository extends JpaRepository<Plainte, Long> {
             """)
     Optional<Plainte> findByNumeroDossier(String numeroDossier);
 
+    @Query("SELECT p FROM Plainte p WHERE :id MEMBER OF p.personnesConcernees")
+    List<Plainte> findByPersonnesConcernees(Long id);
+
 }

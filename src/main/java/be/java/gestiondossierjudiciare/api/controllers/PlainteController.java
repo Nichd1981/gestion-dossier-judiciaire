@@ -52,4 +52,17 @@ public class PlainteController {
 
         return ResponseEntity.ok(dto);
     }
+
+    @PreAuthorize("hasAuthority('CITOYEN')")
+    @GetMapping("/citoyen/concerne")
+    public ResponseEntity<List<PlainteListDTO>> getFindByPersonneConcernee(Authentication authentication){
+        Utilisateur c = (Utilisateur) authentication.getPrincipal();
+
+        List<PlainteListDTO> plaintes = plainteService.findByPersonneConcernee(c.getPersonne().getId())
+                .stream()
+                .map(PlainteListDTO::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(plaintes);
+    }
 }

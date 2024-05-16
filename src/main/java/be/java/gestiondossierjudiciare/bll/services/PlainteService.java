@@ -13,4 +13,6 @@ public interface PlainteService {
     Plainte findByNumeroDossier(String numeroDossier);
 
     List<Plainte> findByPlaignantId(Long id);
+
+    List<Plainte> findByPersonneConcernee(Long id);
 }
