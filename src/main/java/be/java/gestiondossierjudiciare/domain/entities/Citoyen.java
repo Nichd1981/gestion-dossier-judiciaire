@@ -2,10 +2,7 @@ package be.java.gestiondossierjudiciare.domain.entities;
 
 import be.java.gestiondossierjudiciare.domain.enums.Genre;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -63,12 +60,13 @@ public class Citoyen {
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
     private Citoyen avocat;
 
-    @OneToMany(mappedBy = "citoyen")
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Adresse> adresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "citoyen")
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Telephone> telephones = new HashSet<>();
 
+    @Builder
     public Citoyen(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {
         this.registreNational = registreNational;
         this.nom = nom;

@@ -1,10 +1,7 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "ADRESSE")
@@ -38,20 +35,17 @@ public class Adresse {
     private String pays;
 
     @Setter
-    @Column(name = "TYPE", nullable = false)
-    private String type;
+    @Column(name = "LIBELLE", nullable = false)
+    private String libelle;
 
-    @ManyToOne
-    @JoinColumn(name = "CITOYEN_ID", nullable = false)
-    private Citoyen citoyen;
 
-    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String type, Citoyen citoyen) {
+    @Builder
+    public Adresse(String rue, String numero, String ville, String codePostal, String pays, String libelle) {
         this.rue = rue;
         this.numero = numero;
         this.ville = ville;
         this.codePostal = codePostal;
         this.pays = pays;
-        this.type = type;
-        this.citoyen = citoyen;
+        this.libelle = libelle;
     }
 }
