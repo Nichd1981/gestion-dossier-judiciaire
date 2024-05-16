@@ -90,7 +90,7 @@ public class DataInitializer implements CommandLineRunner {
             telephoneRepository.save(tel4);
 
             Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), valentine, nicolas);
-            plainte.getPersonnesConcernes().add(antoine);
+            plainte.getPersonnesConcernees().add(antoine);
 
             plainteRepository.save(plainte);
 
