@@ -14,12 +14,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "CONNEXION")
+@Table(name = "UTILISATEUR")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Connexion implements UserDetails {
+public class Utilisateur implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

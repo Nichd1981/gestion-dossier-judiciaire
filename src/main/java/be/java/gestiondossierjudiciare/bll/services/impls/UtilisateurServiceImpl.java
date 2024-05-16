@@ -1,8 +1,8 @@
 package be.java.gestiondossierjudiciare.bll.services.impls;
 
-import be.java.gestiondossierjudiciare.bll.services.ConnexionService;
-import be.java.gestiondossierjudiciare.dal.repositories.ConnexionRepository;
-import be.java.gestiondossierjudiciare.domain.entities.Connexion;
+import be.java.gestiondossierjudiciare.bll.services.UtilisateurService;
+import be.java.gestiondossierjudiciare.dal.repositories.UtilisateurRepository;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ConnexionServiceImpl implements ConnexionService {
+public class UtilisateurServiceImpl implements UtilisateurService {
 
-    private final ConnexionRepository connexionRepository;
+    private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //        TODO : gerer les exceptions.
-        return connexionRepository.getUserByUsername(username).orElseThrow();
+        return utilisateurRepository.getUserByUsername(username).orElseThrow();
     }
 
     @Override
-    public Connexion login(Connexion connexion) {
-        Connexion existingUser = connexionRepository.getUserByUsername(connexion.getEmail()).orElseThrow();
+    public Utilisateur login(Utilisateur utilisateur) {
+        Utilisateur existingUser = utilisateurRepository.getUserByUsername(utilisateur.getEmail()).orElseThrow();
 
-        if (!passwordEncoder.matches(connexion.getPassword(), existingUser.getPassword())) {
+        if (!passwordEncoder.matches(utilisateur.getPassword(), existingUser.getPassword())) {
             throw new RuntimeException("Wrong password");
         }
         return existingUser;

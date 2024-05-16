@@ -1,13 +1,13 @@
 package be.java.gestiondossierjudiciare.api.forms;
 
-import be.java.gestiondossierjudiciare.domain.entities.Connexion;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 
 public record LoginForm(
         String email,
         String motDePasse
 ) {
-    public Connexion toEntity() {
-        return Connexion.builder()
+    public Utilisateur toEntity() {
+        return Utilisateur.builder()
                 .email(this.email)
                 .motDePasse(this.motDePasse)
                 .build();

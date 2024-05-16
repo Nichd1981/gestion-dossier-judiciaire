@@ -1,9 +1,9 @@
 package be.java.gestiondossierjudiciare.api.controllers;
 
-import be.java.gestiondossierjudiciare.api.dtos.ConnexionTokenDTO;
+import be.java.gestiondossierjudiciare.api.dtos.UtilisateurTokenDTO;
 import be.java.gestiondossierjudiciare.api.forms.LoginForm;
-import be.java.gestiondossierjudiciare.bll.services.ConnexionService;
-import be.java.gestiondossierjudiciare.domain.entities.Connexion;
+import be.java.gestiondossierjudiciare.bll.services.UtilisateurService;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import be.java.gestiondossierjudiciare.il.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    private final ConnexionService connexionService;
+    private final UtilisateurService utilisateurService;
     private final JwtUtils jwtUtils;
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
-    public ResponseEntity<ConnexionTokenDTO> login(@RequestBody LoginForm form) {
-        Connexion connexion = connexionService.login(form.toEntity());
-        ConnexionTokenDTO dto = ConnexionTokenDTO.fromEntity(connexion);
-        String token = jwtUtils.generateToken(connexion);
+    public ResponseEntity<UtilisateurTokenDTO> login(@RequestBody LoginForm form) {
+        Utilisateur utilisateur = utilisateurService.login(form.toEntity());
+        UtilisateurTokenDTO dto = UtilisateurTokenDTO.fromEntity(utilisateur);
+        String token = jwtUtils.generateToken(utilisateur);
         dto.setToken(token);
         return ResponseEntity.ok(dto);
     }

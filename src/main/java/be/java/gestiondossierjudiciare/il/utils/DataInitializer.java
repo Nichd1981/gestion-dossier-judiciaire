@@ -22,7 +22,7 @@ public class DataInitializer implements CommandLineRunner {
     private final AdresseRepository adresseRepository;
     private final TelephoneRepository telephoneRepository;
     private final PlainteRepository plainteRepository;
-    private final ConnexionRepository connexionRepository;
+    private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -37,30 +37,30 @@ public class DataInitializer implements CommandLineRunner {
             personneRepository.save(personne3);
             personneRepository.save(personne4);
 
-            Connexion admin = Connexion.builder()
+            Utilisateur admin = Utilisateur.builder()
                             .email("antoinegeoris@outlook.be")
                             .motDePasse(passwordEncoder.encode("09091999"))
                             .role(Role.ADMIN)
                             .personne(personne3)
                             .build();
 
-            Connexion agent = Connexion.builder()
+            Utilisateur agent = Utilisateur.builder()
                                         .email("quinet.nicolas@gmail.com")
                                         .motDePasse(passwordEncoder.encode("12341234"))
                                         .role(Role.AGENT)
                                         .personne(personne4)
                                         .build();
 
-            Connexion avocat = Connexion.builder()
+            Utilisateur avocat = Utilisateur.builder()
                                         .email("valentine@gmail.com")
                                         .motDePasse(passwordEncoder.encode("43214321"))
                                         .role(Role.AVOCAT)
                                         .personne(personne2)
                                         .build();
 
-            connexionRepository.save(admin);
-            connexionRepository.save(agent);
-            connexionRepository.save(avocat);
+            utilisateurRepository.save(admin);
+            utilisateurRepository.save(agent);
+            utilisateurRepository.save(avocat);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", personne1);
             Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", personne2);
