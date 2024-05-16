@@ -51,17 +51,19 @@ public class DataInitializer implements CommandLineRunner {
             citoyen2.getTelephones().add(tel2);
             Citoyen citoyen3 = new Citoyen("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
             citoyen3.getAdresses().add(adresse3);
-            citoyen3.getTelephones().add(tel3);
+          
+            Citoyen citoyen4 = new Citoyen("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
             citoyenRepository.save(citoyen1);
             citoyenRepository.save(citoyen2);
             citoyenRepository.save(citoyen3);
+            citoyenRepository.save(citoyen4);
 
-            Connexion connexion1 = Connexion.builder().
-                    email("antoinegeoris@outlook.be")
-                    .motDePasse(passwordEncoder.encode("09091999"))
-                    .role(Role.ADMIN)
-                    .citoyen(citoyen3)
-                    .build();
+            Connexion admin = Connexion.builder()
+                            .email("antoinegeoris@outlook.be")
+                            .motDePasse(passwordEncoder.encode("09091999"))
+                            .role(Role.ADMIN)
+                            .citoyen(citoyen3)
+                            .build();
 
             Connexion connexion2 = Connexion.builder().
                     email("azzedinehassaini@gmail.com")
@@ -69,6 +71,24 @@ public class DataInitializer implements CommandLineRunner {
                     .role(Role.AGENT)
                     .citoyen(citoyen1)
                     .build();
+         
+            Connexion agent = Connexion.builder()
+                                        .email("quinet.nicolas@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("12341234"))
+                                        .role(Role.AGENT)
+                                        .citoyen(citoyen4)
+                                        .build();
+
+            Connexion avocat = Connexion.builder()
+                                        .email("valentine@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("43214321"))
+                                        .role(Role.AVOCAT)
+                                        .citoyen(citoyen2)
+                                        .build();
+
+            connexionRepository.save(admin);
+            connexionRepository.save(agent);
+            connexionRepository.save(avocat);
 
             Connexion connexion3 = Connexion.builder().
                     email("valentineevidence83@gmail.com")
