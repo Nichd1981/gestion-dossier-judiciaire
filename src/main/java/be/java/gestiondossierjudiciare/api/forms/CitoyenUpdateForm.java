@@ -28,15 +28,15 @@ public record CitoyenUpdateForm (
 ){
 
     public Citoyen toEntity(){
-        Citoyen citoyen = new Citoyen();
-        citoyen.setNom(nom);
-        citoyen.setPrenom(prenom);
-        citoyen.setGenre(genre);
-        citoyen.setPhoto(photo);
-        citoyen.setEmpreinte(empreinte);
-        citoyen.setDateNaissance(dateDeNaissance);
-        citoyen.setLieuNaissance(lieuDeNaissance);
-        return citoyen;
+        return Citoyen.builder()
+                .nom(nom)
+                .prenom(prenom)
+                .genre(genre)
+                .photo(photo)
+                .empreinte(empreinte)
+                .dateNaissance(dateDeNaissance)
+                .lieuNaissance(lieuDeNaissance)
+                .build();
     }
 
 }

@@ -1,10 +1,7 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "ADRESSE")
@@ -42,6 +39,7 @@ public class Adresse {
     private String type;
 
 
+    @Builder
     public Adresse(String rue, String numero, String ville, String codePostal, String pays, String type) {
         this.rue = rue;
         this.numero = numero;

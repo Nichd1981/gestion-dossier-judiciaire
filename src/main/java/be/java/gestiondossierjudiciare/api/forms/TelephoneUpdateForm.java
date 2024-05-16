@@ -14,10 +14,10 @@ public record TelephoneUpdateForm(
 
     public Telephone toEntity(){
 
-        Telephone telephone = new Telephone();
-        telephone.setNumero(numero);
-        telephone.setLibelle(libelle);
-        return telephone;
+        return Telephone.builder()
+                .numero(numero)
+                .libelle(libelle)
+                .build();
 
     }
 
