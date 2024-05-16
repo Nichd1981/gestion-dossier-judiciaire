@@ -19,4 +19,20 @@ public class PlainteServiceImpl implements PlainteService {
     public List<Plainte> findAll() {
         return plainteRepository.findAll();
     }
+
+    @Override
+    public Plainte findById(Long id) {
+        return plainteRepository.findById(id).orElseThrow(
+                // TODO : gestion exceptions custom
+                () -> new RuntimeException("Le plainte n'existe pas")
+        );
+    }
+
+    @Override
+    public Plainte findByNumeroDossier(String numeroDossier) {
+        return plainteRepository.findByNumeroDossier(numeroDossier).orElseThrow(
+                // TODO : gestion exceptions custom
+                () -> new RuntimeException("Le plainte n'existe pas")
+        );
+    }
 }

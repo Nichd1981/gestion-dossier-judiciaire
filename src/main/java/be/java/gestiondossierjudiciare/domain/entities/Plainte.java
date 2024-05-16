@@ -47,7 +47,7 @@ public class Plainte {
     @JoinTable(name = "PLAINTE_PERSONNE",
                 joinColumns = @JoinColumn(name = "PLAINTE_ID"),
                 inverseJoinColumns = @JoinColumn(name = "PERSONNE_ID"))
-    private Set<Personne> personnesConcernes = new HashSet<>();
+    private Set<Personne> personnesConcernees = new HashSet<>();
 
     @OneToMany(mappedBy = "plainte", fetch = FetchType.EAGER)
     private Set<Audition> auditions = new HashSet<>();

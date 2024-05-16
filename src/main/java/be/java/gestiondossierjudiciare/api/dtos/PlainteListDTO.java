@@ -8,7 +8,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public class PlainteDTO {
+public class PlainteListDTO {
 
     private String numeroDossier;
     private Statut statut;
@@ -17,8 +17,8 @@ public class PlainteDTO {
     private Personne agentTraitant;
 
 
-    public static PlainteDTO fromEntity(Plainte plainte) {
-        return PlainteDTO.builder()
+    public static PlainteListDTO fromEntity(Plainte plainte) {
+        return PlainteListDTO.builder()
                 .numeroDossier(plainte.getNumeroDossier())
                 .statut(plainte.getStatut())
                 .date(plainte.getDatePlainte())

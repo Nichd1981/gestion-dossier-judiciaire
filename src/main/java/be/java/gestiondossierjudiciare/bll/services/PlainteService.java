@@ -8,4 +8,8 @@ public interface PlainteService {
 
     List<Plainte> findAll();
 
+    Plainte findById(Long id);
+
+    Plainte findByNumeroDossier(String numeroDossier);
+
 }
