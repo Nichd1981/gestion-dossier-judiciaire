@@ -1,6 +1,6 @@
 package be.java.gestiondossierjudiciare.il.utils;
 
-import be.java.gestiondossierjudiciare.domain.entities.Connexion;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import be.java.gestiondossierjudiciare.il.configs.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -25,7 +25,7 @@ public class JwtUtils {
         this.parser = Jwts.parserBuilder().setSigningKey(config.getSecretKey()).build();
     }
 
-    public String generateToken(Connexion c){
+    public String generateToken(Utilisateur c){
         return builder
                 .setSubject(c.getUsername())
                 .claim("id",c.getId())

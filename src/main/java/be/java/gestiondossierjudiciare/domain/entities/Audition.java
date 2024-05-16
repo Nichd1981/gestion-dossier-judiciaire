@@ -27,15 +27,15 @@ public class Audition {
 
     @ManyToOne
     @JoinColumn(name = "CITOYEN_CONVOQUE_ID", nullable = false)
-    private Citoyen convoque;
+    private Personne convoque;
 
     @ManyToOne
     @JoinColumn(name = "AGENT_ID", nullable = false)
-    private Citoyen agentTraitant;
+    private Personne agentTraitant;
 
     @ManyToOne
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
-    private Citoyen avocat;
+    private Personne avocat;
 
     @ManyToOne
     @JoinColumn(name = "PLAINTE_ID", nullable = false)

@@ -18,91 +18,66 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-    private final CitoyenRepository citoyenRepository;
+    private final PersonneRepository personneRepository;
     private final AdresseRepository adresseRepository;
     private final TelephoneRepository telephoneRepository;
     private final PlainteRepository plainteRepository;
-    private final ConnexionRepository connexionRepository;
+    private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
-        if (citoyenRepository.count()==0){
+        if (personneRepository.count()==0){
+            Personne personne1 = new Personne("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
+            Personne personne2 = new Personne("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
+            Personne personne3 = new Personne("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
+            Personne personne4 = new Personne("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
+            personneRepository.save(personne1);
+            personneRepository.save(personne2);
+            personneRepository.save(personne3);
+            personneRepository.save(personne4);
 
-            Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile");
-            Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile");
-            Adresse adresse3 = new Adresse("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile");
+            Utilisateur admin = Utilisateur.builder()
+                            .email("antoinegeoris@outlook.be")
+                            .motDePasse(passwordEncoder.encode("09091999"))
+                            .role(Role.ADMIN)
+                            .personne(personne3)
+                            .build();
+
+            Utilisateur agent = Utilisateur.builder()
+                                        .email("quinet.nicolas@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("12341234"))
+                                        .role(Role.AGENT)
+                                        .personne(personne4)
+                                        .build();
+
+            Utilisateur avocat = Utilisateur.builder()
+                                        .email("valentine@gmail.com")
+                                        .motDePasse(passwordEncoder.encode("43214321"))
+                                        .role(Role.AVOCAT)
+                                        .personne(personne2)
+                                        .build();
+
+            utilisateurRepository.save(admin);
+            utilisateurRepository.save(agent);
+            utilisateurRepository.save(avocat);
+
+            Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", personne1);
+            Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", personne2);
+            Adresse adresse3 = new Adresse("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", personne3);
             adresseRepository.save(adresse1);
             adresseRepository.save(adresse2);
             adresseRepository.save(adresse3);
 
-            Telephone tel1 = new Telephone("0498123456", "GSM");
-            Telephone tel2 = new Telephone("0498123457", "GSM");
-            Telephone tel3 = new Telephone("0498123458", "GSM");
+            Telephone tel1 = new Telephone("0498123456", "GSM", personne1);
+            Telephone tel2 = new Telephone("0498123457", "GSM", personne2);
+            Telephone tel3 = new Telephone("0498123458", "GSM", personne3);
             telephoneRepository.save(tel1);
             telephoneRepository.save(tel2);
             telephoneRepository.save(tel3);
 
-            Citoyen citoyen1 = new Citoyen("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
-            citoyen1.getAdresses().add(adresse1);
-            citoyen1.getTelephones().add(tel1);
-            Citoyen citoyen2 = new Citoyen("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
-            citoyen2.getAdresses().add(adresse2);
-            citoyen2.getTelephones().add(tel2);
-            Citoyen citoyen3 = new Citoyen("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
-            citoyen3.getAdresses().add(adresse3);
-          
-            Citoyen citoyen4 = new Citoyen("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
-            citoyenRepository.save(citoyen1);
-            citoyenRepository.save(citoyen2);
-            citoyenRepository.save(citoyen3);
-            citoyenRepository.save(citoyen4);
-
-            Connexion admin = Connexion.builder()
-                            .email("antoinegeoris@outlook.be")
-                            .motDePasse(passwordEncoder.encode("09091999"))
-                            .role(Role.ADMIN)
-                            .citoyen(citoyen3)
-                            .build();
-
-            Connexion connexion2 = Connexion.builder().
-                    email("azzedinehassaini@gmail.com")
-                    .motDePasse(passwordEncoder.encode("Test1234="))
-                    .role(Role.AGENT)
-                    .citoyen(citoyen1)
-                    .build();
-         
-            Connexion agent = Connexion.builder()
-                                        .email("quinet.nicolas@gmail.com")
-                                        .motDePasse(passwordEncoder.encode("12341234"))
-                                        .role(Role.AGENT)
-                                        .citoyen(citoyen4)
-                                        .build();
-
-            Connexion avocat = Connexion.builder()
-                                        .email("valentine@gmail.com")
-                                        .motDePasse(passwordEncoder.encode("43214321"))
-                                        .role(Role.AVOCAT)
-                                        .citoyen(citoyen2)
-                                        .build();
-
-            connexionRepository.save(admin);
-            connexionRepository.save(agent);
-            connexionRepository.save(avocat);
-
-            Connexion connexion3 = Connexion.builder().
-                    email("valentineevidence83@gmail.com")
-                    .motDePasse(passwordEncoder.encode("Test1234="))
-                    .role(Role.CITOYEN)
-                    .citoyen(citoyen2)
-                    .build();
-
-            connexionRepository.save(connexion1);
-            connexionRepository.save(connexion2);
-            connexionRepository.save(connexion3);
-
-            Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), citoyen2, citoyen1);
-            plainte.getCitoyensConcernes().add(citoyen3);
+            Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), personne2, personne1);
+            plainte.getPersonnesConcernes().add(personne3);
 
             plainteRepository.save(plainte);
 

@@ -38,6 +38,9 @@ public class Adresse {
     @Column(name = "LIBELLE", nullable = false)
     private String libelle;
 
+    @ManyToOne
+    @JoinColumn(name = "PERSONNE_ID", nullable = false)
+    private Personne personne;
 
     @Builder
     public Adresse(String rue, String numero, String ville, String codePostal, String pays, String libelle) {
@@ -47,5 +50,6 @@ public class Adresse {
         this.codePostal = codePostal;
         this.pays = pays;
         this.libelle = libelle;
+        this.personne = personne;
     }
 }

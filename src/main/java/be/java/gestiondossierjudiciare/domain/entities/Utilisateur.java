@@ -14,12 +14,12 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "CONNEXION")
+@Table(name = "UTILISATEUR")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Connexion implements UserDetails {
+public class Utilisateur implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +36,8 @@ public class Connexion implements UserDetails {
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "CITOYEN_ID", nullable = false)
-    private Citoyen citoyen;
+    @JoinColumn(name = "PERSONNE_ID", nullable = false)
+    private Personne personne;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,7 +56,7 @@ public class Connexion implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return citoyen.getDateDeces() != null;
+        return personne.getDateDeces() != null;
     }
 
     @Override

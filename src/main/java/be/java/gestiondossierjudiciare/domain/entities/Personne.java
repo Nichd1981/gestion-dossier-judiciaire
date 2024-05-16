@@ -9,11 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "CITOYEN")
+@Table(name = "PERSONNE")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Citoyen {
+public class Personne {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,16 +58,16 @@ public class Citoyen {
     @Setter
     @ManyToOne
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
-    private Citoyen avocat;
+    private Personne avocat;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "personne", fetch = FetchType.EAGER)
     private Set<Adresse> adresses = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "personne", fetch = FetchType.EAGER)
     private Set<Telephone> telephones = new HashSet<>();
 
     @Builder
-    public Citoyen(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {
+    public Personne(String registreNational, String nom, String prenom, LocalDateTime dateNaissance, String lieuNaissance, Genre genre, LocalDateTime dateDeces, String photo, String empreinte) {
         this.registreNational = registreNational;
         this.nom = nom;
         this.prenom = prenom;

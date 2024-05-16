@@ -22,9 +22,14 @@ public class Telephone {
     @Column(name = "LIBELLE", nullable = false)
     private String libelle;
 
+    @ManyToOne
+    @JoinColumn(name = "PERSONNE_ID", nullable = false)
+    private Personne personne;
+
     @Builder
-    public Telephone(String numero, String libelle) {
+    public Telephone(String numero, String libelle, Personne personne) {
         this.numero = numero;
         this.libelle = libelle;
+        this.personne = personne;
     }
 }
