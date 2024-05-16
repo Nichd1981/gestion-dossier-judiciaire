@@ -26,7 +26,7 @@ public class DataInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         if (personneRepository.count()==0){
             Personne azzedine = new Personne("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
             Personne antoine = new Personne("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
@@ -68,6 +68,7 @@ public class DataInitializer implements CommandLineRunner {
 
             utilisateurRepository.save(admin);
             utilisateurRepository.save(agent);
+            utilisateurRepository.save(citoyen);
             utilisateurRepository.save(avocat);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
