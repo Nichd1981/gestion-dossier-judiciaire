@@ -1,5 +1,6 @@
 package be.java.gestiondossierjudiciare.bll.services;
 
+import be.java.gestiondossierjudiciare.api.forms.PlainteCreateForm;
 import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 
@@ -20,5 +21,5 @@ public interface PlainteService {
 
     List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut);
 
-
+    Plainte create(PlainteCreateForm form);
 }

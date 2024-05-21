@@ -2,9 +2,7 @@ package be.java.gestiondossierjudiciare.domain.entities;
 
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -36,10 +34,12 @@ public class Plainte {
     private Jugement jugement;
 
     @ManyToOne
+    @Setter
     @JoinColumn(name = "PLAIGNANT_ID")
     private Personne plaignant;
 
     @ManyToOne
+    @Setter
     @JoinColumn(name = "AGENT_TRAITANT_ID")
     private Personne agentTraitant;
 
@@ -58,6 +58,7 @@ public class Plainte {
     @OneToMany(mappedBy = "plainte", cascade = CascadeType.ALL)
     private Set<PlainteTypeHistorique> types = new HashSet<>();
 
+    @Builder
     public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Personne plaignant, Personne agentTraitant) {
         this.numeroDossier = numeroDossier;
         this.statut = statut;

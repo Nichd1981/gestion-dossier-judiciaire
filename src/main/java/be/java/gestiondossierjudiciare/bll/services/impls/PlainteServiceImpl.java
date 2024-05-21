@@ -1,7 +1,10 @@
 package be.java.gestiondossierjudiciare.bll.services.impls;
 
+import be.java.gestiondossierjudiciare.api.forms.PlainteCreateForm;
+import be.java.gestiondossierjudiciare.bll.services.PersonneService;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
 import be.java.gestiondossierjudiciare.bll.specifications.PlainteSpecification;
+import be.java.gestiondossierjudiciare.dal.repositories.PersonneRepository;
 import be.java.gestiondossierjudiciare.dal.repositories.PlainteRepository;
 import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
@@ -18,6 +21,7 @@ import java.util.List;
 public class PlainteServiceImpl implements PlainteService {
 
     private final PlainteRepository plainteRepository;
+    private final PersonneService personneService;
 
     @Override
     public List<Plainte> findByPlaignantId(Long id) {
@@ -54,6 +58,20 @@ public class PlainteServiceImpl implements PlainteService {
     public List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut) {
         Specification<Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut);
         return plainteRepository.findAll(spec);
+    }
+
+    @Override
+    public Plainte create(PlainteCreateForm form) {
+
+        Plainte plainte = form.toEntity();
+        plainte.setPlaignant(personneService.findById(form.idPlaignant()));
+        plainte.setAgentTraitant(personneService.findById(form.idAgentTraitant()));
+        form.idConcernes().forEach(id -> {
+            Personne personne = personneService.findById(id);
+            plainte.getPersonnesConcernees().add(personne);
+        });
+
+        return plainteRepository.save(plainte);
     }
 
     private Specification<Plainte> getSpecification(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut) {
