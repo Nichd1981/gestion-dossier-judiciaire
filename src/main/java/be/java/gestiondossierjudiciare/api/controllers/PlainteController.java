@@ -36,7 +36,6 @@ public class PlainteController {
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<PlainteDetailDTO> getOne(@PathVariable Long id){
-
         PlainteDetailDTO dto = PlainteDetailDTO.fromEntity(plainteService.findById(id));
 
         return ResponseEntity.ok(dto);

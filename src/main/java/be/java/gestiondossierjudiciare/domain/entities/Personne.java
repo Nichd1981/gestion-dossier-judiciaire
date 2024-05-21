@@ -61,10 +61,10 @@ public class Personne {
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
     private Personne avocat;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Adresse> adresses = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Telephone> telephones = new HashSet<>();
 
     @Builder
