@@ -61,6 +61,13 @@ public class DataInitializer implements CommandLineRunner {
                                         .personne(valentine)
                                         .build();
 
+            Utilisateur citoyen2 = Utilisateur.builder()
+                    .email("antoinegeoris2@outlook.be")
+                    .motDePasse(passwordEncoder.encode("12341234"))
+                    .role(Role.CITOYEN)
+                    .personne(antoine)
+                    .build();
+
             Utilisateur avocat = Utilisateur.builder()
                     .email("azzedinehassaini@gmail.com")
                     .motDePasse(passwordEncoder.encode("12341234"))
@@ -71,6 +78,7 @@ public class DataInitializer implements CommandLineRunner {
             utilisateurRepository.save(admin);
             utilisateurRepository.save(agent);
             utilisateurRepository.save(citoyen);
+            utilisateurRepository.save(citoyen2);
             utilisateurRepository.save(avocat);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
@@ -81,10 +89,6 @@ public class DataInitializer implements CommandLineRunner {
             adresseRepository.save(adresse2);
             adresseRepository.save(adresse3);
             adresseRepository.save(adresse4);
-            azzedine.getAdresses().add(adresse1);
-            valentine.getAdresses().add(adresse2);
-            antoine.getAdresses().add(adresse3);
-            nicolas.getAdresses().add(adresse4);
 
             Telephone tel1 = new Telephone("0498123456", "GSM", azzedine);
             Telephone tel2 = new Telephone("0498123457", "GSM", valentine);
@@ -94,15 +98,6 @@ public class DataInitializer implements CommandLineRunner {
             telephoneRepository.save(tel2);
             telephoneRepository.save(tel3);
             telephoneRepository.save(tel4);
-            azzedine.getTelephones().add(tel1);
-            valentine.getTelephones().add(tel2);
-            antoine.getTelephones().add(tel3);
-            nicolas.getTelephones().add(tel4);
-
-            personneRepository.save(azzedine);
-            personneRepository.save(valentine);
-            personneRepository.save(antoine);
-            personneRepository.save(nicolas);
 
             Plainte plainte = new Plainte("VAL-1234-5678", Statut.ENREGISTREE, LocalDate.of(2024,1,10).atStartOfDay(), valentine, nicolas);
             plainte.getPersonnesConcernees().add(antoine);
