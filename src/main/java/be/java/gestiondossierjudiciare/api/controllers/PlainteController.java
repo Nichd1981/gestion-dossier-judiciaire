@@ -43,7 +43,7 @@ public class PlainteController {
     }
 
     @PreAuthorize("hasAuthority('AGENT')")
-    @PostMapping("/filter")
+    @GetMapping("/filter")
     public ResponseEntity<List<PlainteShortDTO>> getWithCriteria(@RequestBody PlainteFilter f) {
 
         List<PlainteShortDTO> plaintes = plainteService.findByCriteria(f.getNumeroDossier(),f.getDateLowerBound(),f.getDateUpperBound(), f.getStatut())
@@ -54,8 +54,8 @@ public class PlainteController {
         return ResponseEntity.ok(plaintes);
     }
 
-    @GetMapping("/citoyen")
     @PreAuthorize("hasAuthority('CITOYEN')")
+    @GetMapping("/citoyen")
     public ResponseEntity<List<PlainteShortDTO>> getPlainteByPlaignantId(Authentication authentication) {
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
