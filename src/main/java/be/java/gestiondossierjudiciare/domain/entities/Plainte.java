@@ -24,6 +24,7 @@ public class Plainte {
 
     @Column(name = "STATUT", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter
     private Statut statut = Statut.ENREGISTREE;
 
     @Column(name = "DATE_PLAINTE")

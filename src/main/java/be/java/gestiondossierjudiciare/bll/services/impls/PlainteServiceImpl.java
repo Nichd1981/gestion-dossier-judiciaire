@@ -74,6 +74,17 @@ public class PlainteServiceImpl implements PlainteService {
         return plainteRepository.save(plainte);
     }
 
+    @Override
+    public void ouvrirEnquete(Long id) {
+        Plainte toUpdate = plainteRepository.findById(id).orElseThrow(
+                // TODO : gestion exceptions custom
+                () -> new RuntimeException("Le plainte n'existe pas")
+        );
+
+        toUpdate.setStatut(Statut.EN_COURS);
+        plainteRepository.save(toUpdate);
+    }
+
     private Specification<Plainte> getSpecification(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut) {
 
         Specification<Plainte> spec = Specification.where(null);

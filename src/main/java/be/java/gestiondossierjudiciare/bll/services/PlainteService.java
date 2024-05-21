@@ -22,4 +22,6 @@ public interface PlainteService {
     List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut);
 
     Plainte create(PlainteCreateForm form);
+
+    void ouvrirEnquete(Long id);
 }

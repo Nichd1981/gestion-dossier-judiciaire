@@ -89,4 +89,11 @@ public class PlainteController {
         return ResponseEntity.created(URI.create("/plainte/"+id)).build();
     }
 
+    @PreAuthorize("hasAuthority('AGENT')")
+    @PutMapping("/{id:\\d+}")
+    public ResponseEntity<Void> ouvrirEnquete(@PathVariable Long id){
+        plainteService.ouvrirEnquete(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
