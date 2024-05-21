@@ -104,12 +104,16 @@ public class DataInitializer implements CommandLineRunner {
             plainteRepository.save(plainte);
 
             Plainte plainte2 = new Plainte("VAL-1234-5679", Statut.ENREGISTREE, LocalDate.of(2024,2,10).atStartOfDay(), azzedine, nicolas);
-            plainte.getPersonnesConcernees().add(antoine);
+            plainte2.getPersonnesConcernees().add(antoine);
             plainteRepository.save(plainte2);
 
             Plainte plainte3 = new Plainte("AZZ-1234-5670", Statut.EN_COURS, LocalDate.of(2024,3,10).atStartOfDay(), valentine, nicolas);
-            plainte.getPersonnesConcernees().add(antoine);
+            plainte3.getPersonnesConcernees().add(antoine);
             plainteRepository.save(plainte3);
+
+            Plainte plainte4 = new Plainte("ANT-1234-5670", Statut.EN_COURS, LocalDate.of(2024,4,10).atStartOfDay(), antoine, nicolas);
+            plainte4.getPersonnesConcernees().add(valentine);
+            plainteRepository.save(plainte4);
 
         }
     }

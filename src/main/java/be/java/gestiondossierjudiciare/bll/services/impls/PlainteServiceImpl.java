@@ -3,6 +3,7 @@ package be.java.gestiondossierjudiciare.bll.services.impls;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
 import be.java.gestiondossierjudiciare.bll.specifications.PlainteSpecification;
 import be.java.gestiondossierjudiciare.dal.repositories.PlainteRepository;
+import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class PlainteServiceImpl implements PlainteService {
     }
 
     @Override
-    public List<Plainte> findByPersonneConcernee(Long id) {
-        return plainteRepository.findByPersonnesConcernees(id);
+    public List<Plainte> findByPersonneConcernee(Personne personne) {
+        return plainteRepository.findByPersonnesConcernees(personne);
     }
 
     @Override

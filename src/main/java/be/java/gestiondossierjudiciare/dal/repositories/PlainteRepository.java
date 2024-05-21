@@ -1,5 +1,6 @@
 package be.java.gestiondossierjudiciare.dal.repositories;
 
+import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface PlainteRepository extends JpaRepository<Plainte, Long>, JpaSpecificationExecutor<Plainte> {
 
-    @Query("select p from Plainte p where p.plaignant = :id")
+    @Query("select p from Plainte p where p.plaignant.id = :id")
     List<Plainte> findByPlaignantId(Long id);
 
     @Query("""
@@ -21,7 +22,7 @@ public interface PlainteRepository extends JpaRepository<Plainte, Long>, JpaSpec
             """)
     Optional<Plainte> findByNumeroDossier(String numeroDossier);
 
-    @Query("SELECT p FROM Plainte p WHERE :id MEMBER OF p.personnesConcernees")
-    List<Plainte> findByPersonnesConcernees(Long id);
+    @Query("SELECT p FROM Plainte p WHERE :personne MEMBER OF p.personnesConcernees")
+    List<Plainte> findByPersonnesConcernees(Personne personne);
 
 }

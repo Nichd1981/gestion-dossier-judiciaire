@@ -4,6 +4,7 @@ import be.java.gestiondossierjudiciare.api.dtos.PlainteDetailDTO;
 import be.java.gestiondossierjudiciare.api.dtos.PlainteShortDTO;
 import be.java.gestiondossierjudiciare.api.forms.PlainteFilter;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
+import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,18 +33,6 @@ public class PlainteController {
         return ResponseEntity.ok(dtos);
     }
 
-    @GetMapping("/citoyen")
-    @PreAuthorize("hasAuthority('CITOYEN')")
-    public ResponseEntity<List<PlainteShortDTO>> getPlainteByPlaignantId(Authentication authentication) {
-        Utilisateur c = (Utilisateur) authentication.getPrincipal();
-
-        List<PlainteShortDTO> plaintes = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
-                .map(PlainteShortDTO::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(plaintes);
-    }
-
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<PlainteDetailDTO> getOne(@PathVariable Long id){
@@ -65,16 +54,28 @@ public class PlainteController {
         return ResponseEntity.ok(plaintes);
     }
 
+    @GetMapping("/citoyen")
+    @PreAuthorize("hasAuthority('CITOYEN')")
+    public ResponseEntity<List<PlainteShortDTO>> getPlainteByPlaignantId(Authentication authentication) {
+        Utilisateur c = (Utilisateur) authentication.getPrincipal();
+
+        List<PlainteShortDTO> dtos = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
+                .map(PlainteShortDTO::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
+    }
+
     @PreAuthorize("hasAuthority('CITOYEN')")
     @GetMapping("/citoyen/concerne")
     public ResponseEntity<List<PlainteShortDTO>> getFindByPersonneConcernee(Authentication authentication){
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
-        List<PlainteShortDTO> plaintes = plainteService.findByPersonneConcernee(c.getPersonne().getId())
-                .stream()
-                .map(PlainteShortDTO::fromEntity)
-                .toList();
+        List<Plainte> plaintes = plainteService.findByPersonneConcernee(c.getPersonne());
+        List<PlainteShortDTO> dtos = plaintes.stream()
+                                    .map(PlainteShortDTO::fromEntity)
+                                    .toList();
 
-        return ResponseEntity.ok(plaintes);
+        return ResponseEntity.ok(dtos);
     }
 }
