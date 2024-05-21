@@ -1,15 +1,14 @@
 package be.java.gestiondossierjudiciare.api.controllers;
 
 import be.java.gestiondossierjudiciare.api.dtos.PlainteDetailDTO;
-import be.java.gestiondossierjudiciare.api.dtos.PlainteListDTO;
+import be.java.gestiondossierjudiciare.api.dtos.PlainteShortDTO;
+import be.java.gestiondossierjudiciare.api.forms.PlainteFilter;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,11 +21,11 @@ public class PlainteController {
 
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping
-    public ResponseEntity<List<PlainteListDTO>> getAll(){
+    public ResponseEntity<List<PlainteShortDTO>> getAll(){
 
-        List<PlainteListDTO> dtos = plainteService.findAll()
+        List<PlainteShortDTO> dtos = plainteService.findAll()
                 .stream()
-                .map(PlainteListDTO::fromEntity)
+                .map(PlainteShortDTO::fromEntity)
                 .toList();
 
         return ResponseEntity.ok(dtos);
@@ -39,6 +38,18 @@ public class PlainteController {
         PlainteDetailDTO dto = PlainteDetailDTO.fromEntity(plainteService.findById(id));
 
         return ResponseEntity.ok(dto);
+    }
+
+    @PreAuthorize("hasAuthority('AGENT')")
+    @PostMapping("/filter")
+    public ResponseEntity<List<PlainteShortDTO>> getWithCriteria(@RequestBody PlainteFilter f) {
+
+        List<PlainteShortDTO> plaintes = plainteService.findByCriteria(f.getNumeroDossier(),f.getDateLowerBound(),f.getDateUpperBound(), f.getStatut())
+                .stream()
+                .map(PlainteShortDTO::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(plaintes);
     }
 
 }

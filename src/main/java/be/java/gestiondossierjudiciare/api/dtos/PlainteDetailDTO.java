@@ -1,39 +1,40 @@
 package be.java.gestiondossierjudiciare.api.dtos;
 
 import be.java.gestiondossierjudiciare.domain.entities.*;
-import be.java.gestiondossierjudiciare.domain.enums.Statut;
 import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Builder
+@Data
 public class PlainteDetailDTO {
 
-    private String numeroDossier;
-    private Statut statut;
-    private LocalDateTime date;
-    private Personne plaignant;
-    private Personne agentTraitant;
-    private Jugement jugement;
-    private Set<Personne> personnesConcernees;
-    private Set<Audition> auditions;
-    private Set<PlainteDepositionHistorique> depositions;
-    private Set<PlainteTypeHistorique> types;
+    String numeroDossier;
+    String statut;
+    LocalDateTime date;
+    PersonneShortDTO plaignant;
+    PersonneShortDTO agentTraitant;
+    List<PersonneShortDTO> personnesConcernees;
+//    Jugement jugement;
+//    List<Audition> auditions;
+//    List<PlainteDepositionHistorique> depositions;
+//    List<PlainteTypeHistorique> types;
 
 
     public static PlainteDetailDTO fromEntity(Plainte plainte) {
         return PlainteDetailDTO.builder()
                 .numeroDossier(plainte.getNumeroDossier())
-                .statut(plainte.getStatut())
+                .statut(plainte.getStatut().toString())
                 .date(plainte.getDatePlainte())
-                .plaignant(plainte.getPlaignant())
-                .agentTraitant(plainte.getAgentTraitant())
-                .jugement(plainte.getJugement())
-                .personnesConcernees(plainte.getPersonnesConcernees())
-                .auditions(plainte.getAuditions())
-                .depositions(plainte.getDepositions())
-                .types(plainte.getTypes())
+                .plaignant(PersonneShortDTO.fromEntity(plainte.getPlaignant()))
+                .agentTraitant(PersonneShortDTO.fromEntity(plainte.getAgentTraitant()))
+                .personnesConcernees(plainte.getPersonnesConcernees().stream().map(PersonneShortDTO::fromEntity).toList())
+//                .jugement(plainte.getJugement())
+//                .auditions(plainte.getAuditions())
+//                .depositions(plainte.getDepositions())
+//                .types(plainte.getTypes())
                 .build();
     }
 
