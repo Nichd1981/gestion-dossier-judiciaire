@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
+    //TODO : pdt le refactoring, passer par les service plutot que les repository
+
     private final PersonneRepository personneRepository;
     private final AdresseRepository adresseRepository;
     private final TelephoneRepository telephoneRepository;
@@ -97,10 +99,17 @@ public class DataInitializer implements CommandLineRunner {
             telephoneRepository.save(tel3);
             telephoneRepository.save(tel4);
 
-            Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), valentine, nicolas);
+            Plainte plainte = new Plainte("VAL-1234-5678", Statut.ENREGISTREE, LocalDate.of(2024,1,10).atStartOfDay(), valentine, nicolas);
             plainte.getPersonnesConcernees().add(antoine);
-
             plainteRepository.save(plainte);
+
+            Plainte plainte2 = new Plainte("VAL-1234-5679", Statut.ENREGISTREE, LocalDate.of(2024,2,10).atStartOfDay(), azzedine, nicolas);
+            plainte.getPersonnesConcernees().add(antoine);
+            plainteRepository.save(plainte2);
+
+            Plainte plainte3 = new Plainte("AZZ-1234-5670", Statut.EN_COURS, LocalDate.of(2024,3,10).atStartOfDay(), valentine, nicolas);
+            plainte.getPersonnesConcernees().add(antoine);
+            plainteRepository.save(plainte3);
 
         }
     }

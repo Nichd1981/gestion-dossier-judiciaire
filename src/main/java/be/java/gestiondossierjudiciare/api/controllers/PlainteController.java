@@ -34,11 +34,11 @@ public class PlainteController {
 
     @GetMapping("/citoyen")
     @PreAuthorize("hasAuthority('CITOYEN')")
-    public ResponseEntity<List<PlainteListDTO>> getPlainteByPlaignantId(Authentication authentication) {
+    public ResponseEntity<List<PlainteShortDTO>> getPlainteByPlaignantId(Authentication authentication) {
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
-        List<PlainteListDTO> plaintes = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
-                .map(PlainteListDTO::fromEntity)
+        List<PlainteShortDTO> plaintes = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
+                .map(PlainteShortDTO::fromEntity)
                 .toList();
 
         return ResponseEntity.ok(plaintes);
@@ -67,12 +67,12 @@ public class PlainteController {
 
     @PreAuthorize("hasAuthority('CITOYEN')")
     @GetMapping("/citoyen/concerne")
-    public ResponseEntity<List<PlainteListDTO>> getFindByPersonneConcernee(Authentication authentication){
+    public ResponseEntity<List<PlainteShortDTO>> getFindByPersonneConcernee(Authentication authentication){
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
-        List<PlainteListDTO> plaintes = plainteService.findByPersonneConcernee(c.getPersonne().getId())
+        List<PlainteShortDTO> plaintes = plainteService.findByPersonneConcernee(c.getPersonne().getId())
                 .stream()
-                .map(PlainteListDTO::fromEntity)
+                .map(PlainteShortDTO::fromEntity)
                 .toList();
 
         return ResponseEntity.ok(plaintes);
