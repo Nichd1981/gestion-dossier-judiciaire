@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -60,10 +61,10 @@ public class Personne {
     @JoinColumn(name = "AVOCAT_ID", nullable = true)
     private Personne avocat;
 
-    @OneToMany(mappedBy = "personne", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Adresse> adresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "personne", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Telephone> telephones = new HashSet<>();
 
     @Builder
@@ -77,5 +78,18 @@ public class Personne {
         this.dateDeces = dateDeces;
         this.photo = photo;
         this.empreinte = empreinte;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Personne personne = (Personne) o;
+        return Objects.equals(registreNational, personne.registreNational);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(registreNational);
     }
 }

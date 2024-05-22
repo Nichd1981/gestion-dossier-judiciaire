@@ -13,6 +13,14 @@ public class PersonneServiceImpl implements PersonneService {
     private final PersonneRepository personneRepository;
 
     @Override
+    public Personne findById(Long id) {
+        return personneRepository.findById(id).orElseThrow(
+                //TODO : exception custom
+                () -> new RuntimeException("Personne non trouvée")
+        );
+    }
+
+    @Override
     public Long update(Long id, Personne personne) {
 
         Personne toUpdate = personneRepository.findById(id).orElseThrow(

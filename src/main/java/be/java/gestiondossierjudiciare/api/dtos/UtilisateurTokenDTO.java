@@ -7,9 +7,10 @@ import lombok.Data;
 @Data
 @Builder
 public class UtilisateurTokenDTO {
-    private Long id;
-    private String email;
-    private String token;
+
+    Long id;
+    String email;
+    String token;
 
     public static UtilisateurTokenDTO fromEntity(Utilisateur utilisateur) {
         return UtilisateurTokenDTO.builder()

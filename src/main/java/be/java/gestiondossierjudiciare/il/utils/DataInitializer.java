@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
+    //TODO : pdt le refactoring, passer par les service plutot que les repository
+
     private final PersonneRepository personneRepository;
     private final AdresseRepository adresseRepository;
     private final TelephoneRepository telephoneRepository;
@@ -59,6 +61,13 @@ public class DataInitializer implements CommandLineRunner {
                                         .personne(valentine)
                                         .build();
 
+            Utilisateur citoyen2 = Utilisateur.builder()
+                    .email("antoinegeoris99@outlook.be")
+                    .motDePasse(passwordEncoder.encode("12341234"))
+                    .role(Role.CITOYEN)
+                    .personne(antoine)
+                    .build();
+
             Utilisateur avocat = Utilisateur.builder()
                     .email("azzedinehassaini@gmail.com")
                     .motDePasse(passwordEncoder.encode("12341234"))
@@ -69,6 +78,7 @@ public class DataInitializer implements CommandLineRunner {
             utilisateurRepository.save(admin);
             utilisateurRepository.save(agent);
             utilisateurRepository.save(citoyen);
+            utilisateurRepository.save(citoyen2);
             utilisateurRepository.save(avocat);
 
             Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
@@ -89,10 +99,21 @@ public class DataInitializer implements CommandLineRunner {
             telephoneRepository.save(tel3);
             telephoneRepository.save(tel4);
 
-            Plainte plainte = new Plainte("1234-5678", Statut.ENREGISTREE, LocalDateTime.now(), valentine, nicolas);
-            plainte.getPersonnesConcernes().add(antoine);
-
+            Plainte plainte = new Plainte("VAL-1234-5678", Statut.ENREGISTREE, LocalDate.of(2024,1,10).atStartOfDay(), valentine, nicolas);
+            plainte.getPersonnesConcernees().add(antoine);
             plainteRepository.save(plainte);
+
+            Plainte plainte2 = new Plainte("VAL-1234-5679", Statut.ENREGISTREE, LocalDate.of(2024,2,10).atStartOfDay(), azzedine, nicolas);
+            plainte2.getPersonnesConcernees().add(antoine);
+            plainteRepository.save(plainte2);
+
+            Plainte plainte3 = new Plainte("AZZ-1234-5670", Statut.EN_COURS, LocalDate.of(2024,3,10).atStartOfDay(), valentine, nicolas);
+            plainte3.getPersonnesConcernees().add(antoine);
+            plainteRepository.save(plainte3);
+
+            Plainte plainte4 = new Plainte("ANT-1234-5670", Statut.EN_COURS, LocalDate.of(2024,4,10).atStartOfDay(), antoine, nicolas);
+            plainte4.getPersonnesConcernees().add(valentine);
+            plainteRepository.save(plainte4);
 
         }
     }
