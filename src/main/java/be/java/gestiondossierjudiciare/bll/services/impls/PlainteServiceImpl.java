@@ -1,6 +1,8 @@
 package be.java.gestiondossierjudiciare.bll.services.impls;
 
+import be.java.gestiondossierjudiciare.api.forms.ClotureEnqueteForm;
 import be.java.gestiondossierjudiciare.api.forms.PlainteCreateForm;
+import be.java.gestiondossierjudiciare.bll.services.JugementService;
 import be.java.gestiondossierjudiciare.bll.services.PersonneService;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
 import be.java.gestiondossierjudiciare.bll.specifications.PlainteSpecification;
@@ -9,11 +11,13 @@ import be.java.gestiondossierjudiciare.dal.repositories.PlainteRepository;
 import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
+import be.java.gestiondossierjudiciare.domain.enums.TypePlainte;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,6 +26,7 @@ public class PlainteServiceImpl implements PlainteService {
 
     private final PlainteRepository plainteRepository;
     private final PersonneService personneService;
+    private final JugementService jugementService;
 
     @Override
     public List<Plainte> findByPlaignantId(Long id) {
@@ -76,12 +81,28 @@ public class PlainteServiceImpl implements PlainteService {
 
     @Override
     public void ouvrirEnquete(Long id) {
-        Plainte toUpdate = plainteRepository.findById(id).orElseThrow(
-                // TODO : gestion exceptions custom
-                () -> new RuntimeException("Le plainte n'existe pas")
-        );
+        Plainte toUpdate = this.findById(id);
 
         toUpdate.setStatut(Statut.EN_COURS);
+        plainteRepository.save(toUpdate);
+    }
+
+    @Override
+    public void cloturerEnquete(ClotureEnqueteForm form) {
+        Plainte toUpdate = this.findById(form.plainteId());
+
+        // Si la plainte n'est pas encore ouverte, exception!
+        if (toUpdate.getStatut() != Statut.EN_COURS) {
+            //TODO : custom exception
+            throw new RuntimeException("La plainte doit être \"En cours\" pour pouvoir être clôturée.");
+        }
+
+        toUpdate.setStatut(Statut.CLOTUREE);
+        toUpdate.setTypePlainte(TypePlainte.valueOf(form.type()));
+        // Si le type de plainte est Délit ou Crime, créer un Jugement associé
+        if (TypePlainte.valueOf(form.type()) == TypePlainte.DELIT || TypePlainte.valueOf(form.type()) == TypePlainte.CRIME) {
+            jugementService.create(form.plainteId());
+        }
         plainteRepository.save(toUpdate);
     }
 

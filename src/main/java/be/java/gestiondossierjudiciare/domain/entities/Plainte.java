@@ -30,6 +30,7 @@ public class Plainte {
 
     @Column(name = "TYPE_PLAINTE", nullable = true)
     @Enumerated(EnumType.STRING)
+    @Setter
     private TypePlainte typePlainte;
 
     @Column(name = "DATE_PLAINTE")

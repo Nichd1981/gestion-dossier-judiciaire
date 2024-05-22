@@ -1,5 +1,6 @@
 package be.java.gestiondossierjudiciare.bll.services;
 
+import be.java.gestiondossierjudiciare.api.forms.ClotureEnqueteForm;
 import be.java.gestiondossierjudiciare.api.forms.PlainteCreateForm;
 import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
@@ -24,4 +25,6 @@ public interface PlainteService {
     Plainte create(PlainteCreateForm form);
 
     void ouvrirEnquete(Long id);
+
+    void cloturerEnquete(ClotureEnqueteForm form);
 }

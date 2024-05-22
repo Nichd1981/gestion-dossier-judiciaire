@@ -2,6 +2,7 @@ package be.java.gestiondossierjudiciare.api.controllers;
 
 import be.java.gestiondossierjudiciare.api.dtos.PlainteDetailDTO;
 import be.java.gestiondossierjudiciare.api.dtos.PlainteShortDTO;
+import be.java.gestiondossierjudiciare.api.forms.ClotureEnqueteForm;
 import be.java.gestiondossierjudiciare.api.forms.PlainteCreateForm;
 import be.java.gestiondossierjudiciare.api.forms.PlainteFilter;
 import be.java.gestiondossierjudiciare.bll.services.PlainteService;
@@ -9,6 +10,7 @@ import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -93,7 +95,14 @@ public class PlainteController {
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Void> ouvrirEnquete(@PathVariable Long id){
         plainteService.ouvrirEnquete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PreAuthorize("hasAuthority('AGENT')")
+    @PutMapping("/cloture")
+    public ResponseEntity<Void> cloturerEnquete(@RequestBody @Valid ClotureEnqueteForm form){
+        plainteService.cloturerEnquete(form);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
