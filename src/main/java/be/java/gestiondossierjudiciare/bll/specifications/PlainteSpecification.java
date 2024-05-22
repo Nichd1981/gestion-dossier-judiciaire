@@ -1,6 +1,8 @@
 package be.java.gestiondossierjudiciare.bll.specifications;
 
+import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
+import be.java.gestiondossierjudiciare.domain.entities.Utilisateur;
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
 import be.java.gestiondossierjudiciare.domain.enums.TypePlainte;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,9 +35,9 @@ public class PlainteSpecification {
         });
     }
 
-    public static Specification<Plainte> getById(Long id){
+    public static Specification<Plainte> getByPlaignant(Personne plaignant){
         return ((root, query, criteriaBuilder) -> {
-            return criteriaBuilder.equal(root.get("id"), id);
+            return criteriaBuilder.equal(root.get("plaignant"), plaignant);
         });
     }
 

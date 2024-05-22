@@ -86,7 +86,7 @@ public class PlainteController {
     @GetMapping("/citoyen/filter")
     public ResponseEntity<List<PlainteShortDTO>> getFindByPlaignantIdWithCriteria(Authentication authentication, @RequestBody PlainteFilter f){
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
-        List<Plainte> plaintes = plainteService.findByPlaignantIdWithCriteria(c.getPersonne().getId(),
+        List<Plainte> plaintes = plainteService.findByPlaignantIdWithCriteria(c.getPersonne(),
                                                                                 f.getType(),
                                                                                 f.getDateUpperBound(),
                                                                                 f.getDateLowerBound(),

@@ -77,13 +77,13 @@ public class PlainteServiceImpl implements PlainteService {
     }
 
     @Override
-    public List<Plainte> findByPlaignantIdWithCriteria(Long id, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut) {
-        Specification <Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut, type, id);
+    public List<Plainte> findByPlaignantIdWithCriteria(Personne plaignant, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut) {
+        Specification <Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut, type, plaignant);
         return plainteRepository.findAll(spec);
     }
 
 
-    private Specification<Plainte> getSpecification(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut, String type, Long id) {
+    private Specification<Plainte> getSpecification(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut, String type, Personne plaignant) {
 
         Specification<Plainte> spec = Specification.where(null);
         if(!numeroDossier.isBlank()){
@@ -101,8 +101,8 @@ public class PlainteServiceImpl implements PlainteService {
         if(type != null && !type.isBlank()){
             spec = spec.and(PlainteSpecification.getByType(TypePlainte.valueOf(type)));
         }
-        if(id != null){
-            spec = spec.and(PlainteSpecification.getById(id));
+        if(plaignant != null){
+            spec = spec.and(PlainteSpecification.getByPlaignant(plaignant));
         }
         return spec;
     }
