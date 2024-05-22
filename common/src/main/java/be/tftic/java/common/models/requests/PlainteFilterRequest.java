@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlainteFilter {
+public class PlainteFilterRequest {
 
     private String numeroDossier;
     private LocalDate dateLowerBound;

@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.AdresseService;
-import be.tftic.java.common.models.requests.AdresseUpdateForm;
+import be.tftic.java.common.models.requests.AdresseUpdateRequest;
 import be.tftic.java.domain.entities.Adresse;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Utilisateur;
@@ -26,7 +26,7 @@ public class AdresseController {
     @PreAuthorize("hasAnyAuthority('AGENT','CITOYEN')")
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Void> updateAdresse(@PathVariable Long id,
-                                              @RequestBody @Valid AdresseUpdateForm adresse,
+                                              @RequestBody @Valid AdresseUpdateRequest adresse,
                                               Authentication authentication)
     {
         Utilisateur c = (Utilisateur) authentication.getPrincipal();

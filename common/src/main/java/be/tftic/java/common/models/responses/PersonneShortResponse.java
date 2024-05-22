@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-public class PersonneShortDTO {
+public class PersonneShortResponse {
 
     String registreNational;
     String nom;
@@ -17,8 +17,8 @@ public class PersonneShortDTO {
     String lieuNaissance;
     String genre;
 
-    public static PersonneShortDTO fromEntity(Personne personne){
-        return PersonneShortDTO.builder()
+    public static PersonneShortResponse fromEntity(Personne personne){
+        return PersonneShortResponse.builder()
                 .registreNational(personne.getRegistreNational())
                 .nom(personne.getNom())
                 .prenom(personne.getPrenom())

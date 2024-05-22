@@ -4,8 +4,8 @@ import be.tftic.java.bll.services.JugementService;
 import be.tftic.java.bll.services.PersonneService;
 import be.tftic.java.bll.services.PlainteService;
 import be.tftic.java.bll.specifications.PlainteSpecification;
-import be.tftic.java.common.models.requests.ClotureEnqueteForm;
-import be.tftic.java.common.models.requests.PlainteCreateForm;
+import be.tftic.java.common.models.requests.ClotureEnqueteRequest;
+import be.tftic.java.common.models.requests.PlainteCreateRequest;
 import be.tftic.java.dal.repositories.PlainteRepository;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Plainte;
@@ -64,7 +64,7 @@ public class PlainteServiceImpl implements PlainteService {
     }
 
     @Override
-    public Plainte create(PlainteCreateForm form) {
+    public Plainte create(PlainteCreateRequest form) {
 
         Plainte plainte = form.toEntity();
         plainte.setPlaignant(personneService.findById(form.idPlaignant()));
@@ -86,7 +86,7 @@ public class PlainteServiceImpl implements PlainteService {
     }
 
     @Override
-    public void cloturerEnquete(ClotureEnqueteForm form) {
+    public void cloturerEnquete(ClotureEnqueteRequest form) {
         Plainte toUpdate = this.findById(form.plainteId());
 
         // Si la plainte n'est pas encore ouverte, exception!

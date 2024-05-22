@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AdresseDTO {
+public class AdresseResponse {
 
     String rue;
     String numero;
@@ -15,8 +15,8 @@ public class AdresseDTO {
     String pays;
     String libelle;
 
-    public static AdresseDTO fromEntity(Adresse adresse) {
-        return AdresseDTO.builder()
+    public static AdresseResponse fromEntity(Adresse adresse) {
+        return AdresseResponse.builder()
                 .rue(adresse.getRue())
                 .numero(adresse.getNumero())
                 .ville(adresse.getVille())

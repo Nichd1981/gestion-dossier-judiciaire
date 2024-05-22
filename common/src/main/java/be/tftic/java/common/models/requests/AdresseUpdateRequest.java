@@ -4,7 +4,7 @@ import be.tftic.java.domain.entities.Adresse;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.format.annotation.NumberFormat;
 
-public record AdresseUpdateForm(
+public record AdresseUpdateRequest(
 
         @NotBlank
         String rue,

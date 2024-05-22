@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.PersonneService;
-import be.tftic.java.common.models.requests.PersonneUpdateForm;
+import be.tftic.java.common.models.requests.PersonneUpdateRequest;
 import be.tftic.java.domain.entities.Utilisateur;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class PersonneController {
     private final PersonneService personneService;
 
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<Long> updatePersonne(@PathVariable Long id, @RequestBody @Valid PersonneUpdateForm personne) {
+    public ResponseEntity<Long> updatePersonne(@PathVariable Long id, @RequestBody @Valid PersonneUpdateRequest personne) {
 
         Long returnId = personneService.update(id, personne.toEntity());
         return ResponseEntity.ok(returnId);
@@ -27,7 +27,7 @@ public class PersonneController {
 
     @PreAuthorize("hasAuthority('CITOYEN')")
     @PutMapping
-    public ResponseEntity<Long> updatePersonne(@RequestBody @Valid PersonneUpdateForm personne, Authentication auth) {
+    public ResponseEntity<Long> updatePersonne(@RequestBody @Valid PersonneUpdateRequest personne, Authentication auth) {
 
         Utilisateur c = (Utilisateur) auth.getPrincipal();
         Long id = c.getPersonne().getId();

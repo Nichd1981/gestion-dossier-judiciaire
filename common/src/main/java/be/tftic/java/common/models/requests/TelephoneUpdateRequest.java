@@ -3,7 +3,7 @@ package be.tftic.java.common.models.requests;
 import be.tftic.java.domain.entities.Telephone;
 import jakarta.validation.constraints.NotBlank;
 
-public record TelephoneUpdateForm(
+public record TelephoneUpdateRequest(
 
     @NotBlank(message = "Numéro ne peut pas être vide")
     String numero,

@@ -1,8 +1,8 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.UtilisateurService;
-import be.tftic.java.common.models.requests.LoginForm;
-import be.tftic.java.common.models.responses.UtilisateurTokenDTO;
+import be.tftic.java.common.models.requests.LoginRequest;
+import be.tftic.java.common.models.responses.UtilisateurTokenResponse;
 import be.tftic.java.domain.entities.Utilisateur;
 import be.tftic.java.il.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ public class AuthController {
 
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
-    public ResponseEntity<UtilisateurTokenDTO> login(@RequestBody LoginForm form) {
+    public ResponseEntity<UtilisateurTokenResponse> login(@RequestBody LoginRequest form) {
         Utilisateur utilisateur = utilisateurService.login(form.toEntity());
-        UtilisateurTokenDTO dto = UtilisateurTokenDTO.fromEntity(utilisateur);
+        UtilisateurTokenResponse dto = UtilisateurTokenResponse.fromEntity(utilisateur);
         String token = jwtUtils.generateToken(utilisateur);
         dto.setToken(token);
         return ResponseEntity.ok(dto);
