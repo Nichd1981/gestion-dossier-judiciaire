@@ -22,4 +22,7 @@ public interface PlainteService {
     List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut);
 
     Plainte create(PlainteCreateForm form);
+
+    List<Plainte> findByPlaignantIdWithCriteria(Long id, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut);
+
 }

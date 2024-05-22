@@ -9,7 +9,9 @@ import be.java.gestiondossierjudiciare.dal.repositories.PlainteRepository;
 import be.java.gestiondossierjudiciare.domain.entities.Personne;
 import be.java.gestiondossierjudiciare.domain.entities.Plainte;
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
+import be.java.gestiondossierjudiciare.domain.enums.TypePlainte;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +58,7 @@ public class PlainteServiceImpl implements PlainteService {
 
     @Override
     public List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut) {
-        Specification<Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut);
+        Specification<Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut, null, null);
         return plainteRepository.findAll(spec);
     }
 
@@ -74,7 +76,14 @@ public class PlainteServiceImpl implements PlainteService {
         return plainteRepository.save(plainte);
     }
 
-    private Specification<Plainte> getSpecification(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut) {
+    @Override
+    public List<Plainte> findByPlaignantIdWithCriteria(Long id, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut) {
+        Specification <Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut, type, id);
+        return plainteRepository.findAll(spec);
+    }
+
+
+    private Specification<Plainte> getSpecification(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut, String type, Long id) {
 
         Specification<Plainte> spec = Specification.where(null);
         if(!numeroDossier.isBlank()){
@@ -86,8 +95,14 @@ public class PlainteServiceImpl implements PlainteService {
         if(upperBound != null){
             spec = spec.and(PlainteSpecification.getByDateUpperBound(upperBound));
         }
-        if(!statut.isBlank()){
+        if(statut != null && !statut.isBlank()){
             spec = spec.and(PlainteSpecification.getByStatut(Statut.valueOf(statut)));
+        }
+        if(type != null && !type.isBlank()){
+            spec = spec.and(PlainteSpecification.getByType(TypePlainte.valueOf(type)));
+        }
+        if(id != null){
+            spec = spec.and(PlainteSpecification.getById(id));
         }
         return spec;
     }
