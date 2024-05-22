@@ -1,6 +1,7 @@
 package be.java.gestiondossierjudiciare.domain.entities;
 
 import be.java.gestiondossierjudiciare.domain.enums.Statut;
+import be.java.gestiondossierjudiciare.domain.enums.TypePlainte;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,6 +27,10 @@ public class Plainte {
     @Enumerated(EnumType.STRING)
     @Setter
     private Statut statut = Statut.ENREGISTREE;
+
+    @Column(name = "TYPE_PLAINTE", nullable = true)
+    @Enumerated(EnumType.STRING)
+    private TypePlainte typePlainte;
 
     @Column(name = "DATE_PLAINTE")
     private LocalDateTime datePlainte;
@@ -55,9 +60,6 @@ public class Plainte {
 
     @OneToMany(mappedBy = "plainte", cascade = CascadeType.ALL)
     private Set<PlainteDepositionHistorique> depositions = new HashSet<>();
-
-    @OneToMany(mappedBy = "plainte", cascade = CascadeType.ALL)
-    private Set<PlainteTypeHistorique> types = new HashSet<>();
 
     @Builder
     public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Personne plaignant, Personne agentTraitant) {
