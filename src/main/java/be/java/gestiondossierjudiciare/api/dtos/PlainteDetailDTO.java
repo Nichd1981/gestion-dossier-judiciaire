@@ -20,7 +20,6 @@ public class PlainteDetailDTO {
 //    Jugement jugement;
 //    List<Audition> auditions;
 //    List<PlainteDepositionHistorique> depositions;
-//    List<PlainteTypeHistorique> types;
 
 
     public static PlainteDetailDTO fromEntity(Plainte plainte) {
@@ -34,7 +33,6 @@ public class PlainteDetailDTO {
 //                .jugement(plainte.getJugement())
 //                .auditions(plainte.getAuditions())
 //                .depositions(plainte.getDepositions())
-//                .types(plainte.getTypes())
                 .build();
     }
 
