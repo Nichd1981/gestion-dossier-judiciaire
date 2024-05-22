@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Builder
 @Data
-public class TelephoneDTO {
+public class TelephoneResponse {
 
     String numero;
     String libelle;
 
-    public static TelephoneDTO fromEntity(Telephone telephone) {
-        return TelephoneDTO.builder()
+    public static TelephoneResponse fromEntity(Telephone telephone) {
+        return TelephoneResponse.builder()
                 .numero(telephone.getNumero())
                 .libelle(telephone.getLibelle())
                 .build();

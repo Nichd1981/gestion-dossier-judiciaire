@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
-public record PersonneUpdateForm(
+public record PersonneUpdateRequest(
 
         @NotBlank(message = "Nom ne peut pas être vide")
         @Size(min = 1, max = 50)

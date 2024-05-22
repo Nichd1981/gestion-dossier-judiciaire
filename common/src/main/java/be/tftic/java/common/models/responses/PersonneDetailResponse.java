@@ -9,7 +9,7 @@ import java.util.List;
 
 @Builder
 @Data
-public class PersonneDetailDTO {
+public class PersonneDetailResponse {
 
     String registreNational;
     String nom;
@@ -20,11 +20,11 @@ public class PersonneDetailDTO {
     LocalDateTime dateDeces;
     String photo;
     String empreinte;
-    List<AdresseDTO> adresses;
-    List<TelephoneDTO> telephones;
+    List<AdresseResponse> adresses;
+    List<TelephoneResponse> telephones;
 
-    public static PersonneDetailDTO fromEntity(Personne personne){
-        return PersonneDetailDTO.builder()
+    public static PersonneDetailResponse fromEntity(Personne personne){
+        return PersonneDetailResponse.builder()
                 .registreNational(personne.getRegistreNational())
                 .nom(personne.getNom())
                 .prenom(personne.getPrenom())
@@ -34,8 +34,8 @@ public class PersonneDetailDTO {
                 .dateDeces(personne.getDateDeces())
                 .photo(personne.getPhoto())
                 .empreinte(personne.getEmpreinte())
-                .adresses(personne.getAdresses().stream().map(AdresseDTO::fromEntity).toList())
-                .telephones(personne.getTelephones().stream().map(TelephoneDTO::fromEntity).toList())
+                .adresses(personne.getAdresses().stream().map(AdresseResponse::fromEntity).toList())
+                .telephones(personne.getTelephones().stream().map(TelephoneResponse::fromEntity).toList())
                 .build();
     }
 

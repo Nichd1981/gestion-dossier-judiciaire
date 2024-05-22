@@ -1,8 +1,8 @@
 package be.tftic.java.bll.services;
 
 
-import be.tftic.java.common.models.requests.ClotureEnqueteForm;
-import be.tftic.java.common.models.requests.PlainteCreateForm;
+import be.tftic.java.common.models.requests.ClotureEnqueteRequest;
+import be.tftic.java.common.models.requests.PlainteCreateRequest;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Plainte;
 
@@ -23,11 +23,11 @@ public interface PlainteService {
 
     List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut);
 
-    Plainte create(PlainteCreateForm form);
+    Plainte create(PlainteCreateRequest form);
 
     void ouvrirEnquete(Long id);
 
-    void cloturerEnquete(ClotureEnqueteForm form);
+    void cloturerEnquete(ClotureEnqueteRequest form);
 
     List<Plainte> findByPlaignantIdWithCriteria(Personne plaignant, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut);
 

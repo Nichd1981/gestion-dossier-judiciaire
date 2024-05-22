@@ -2,7 +2,7 @@ package be.tftic.java.common.models.requests;
 
 import be.tftic.java.domain.entities.Utilisateur;
 
-public record LoginForm(
+public record LoginRequest(
         String email,
         String motDePasse
 ) {

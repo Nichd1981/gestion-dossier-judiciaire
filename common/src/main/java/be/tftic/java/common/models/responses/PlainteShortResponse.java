@@ -8,22 +8,22 @@ import java.time.LocalDateTime;
 
 @Builder
 @Data
-public class PlainteShortDTO {
+public class PlainteShortResponse {
 
     String numeroDossier;
     String statut;
     LocalDateTime date;
-    PersonneShortDTO plaignant;
-    PersonneShortDTO agentTraitant;
+    PersonneShortResponse plaignant;
+    PersonneShortResponse agentTraitant;
 
 
-    public static PlainteShortDTO fromEntity(Plainte plainte) {
-        return PlainteShortDTO.builder()
+    public static PlainteShortResponse fromEntity(Plainte plainte) {
+        return PlainteShortResponse.builder()
                 .numeroDossier(plainte.getNumeroDossier())
                 .statut(plainte.getStatut().toString())
                 .date(plainte.getDatePlainte())
-                .plaignant(PersonneShortDTO.fromEntity(plainte.getPlaignant()))
-                .agentTraitant(PersonneShortDTO.fromEntity(plainte.getAgentTraitant()))
+                .plaignant(PersonneShortResponse.fromEntity(plainte.getPlaignant()))
+                .agentTraitant(PersonneShortResponse.fromEntity(plainte.getAgentTraitant()))
                 .build();
     }
 

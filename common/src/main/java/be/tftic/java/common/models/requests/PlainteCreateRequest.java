@@ -6,7 +6,7 @@ import be.tftic.java.domain.enums.Statut;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record PlainteCreateForm(
+public record PlainteCreateRequest(
 
         String numeroDossier,
         Long idPlaignant,

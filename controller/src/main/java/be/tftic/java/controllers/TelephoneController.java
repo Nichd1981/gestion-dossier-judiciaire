@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.TelephoneService;
-import be.tftic.java.common.models.requests.TelephoneUpdateForm;
+import be.tftic.java.common.models.requests.TelephoneUpdateRequest;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Telephone;
 import be.tftic.java.domain.entities.Utilisateur;
@@ -26,7 +26,7 @@ public class TelephoneController {
     @PreAuthorize("hasAnyAuthority('AGENT','CITOYEN')")
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Long> updateTelephone(@PathVariable Long id,
-                                                @RequestBody @Valid TelephoneUpdateForm telephone,
+                                                @RequestBody @Valid TelephoneUpdateRequest telephone,
                                                 Authentication authentication)
     {
 
