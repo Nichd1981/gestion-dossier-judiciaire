@@ -27,4 +27,7 @@ public interface PlainteService {
     void ouvrirEnquete(Long id);
 
     void cloturerEnquete(ClotureEnqueteForm form);
+
+    List<Plainte> findByPlaignantIdWithCriteria(Personne plaignant, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut);
+
 }

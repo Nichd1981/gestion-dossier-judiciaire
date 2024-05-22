@@ -41,6 +41,7 @@ public class PlainteController {
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<PlainteDetailDTO> getOne(@PathVariable Long id){
+
         PlainteDetailDTO dto = PlainteDetailDTO.fromEntity(plainteService.findById(id));
 
         return ResponseEntity.ok(dto);
@@ -80,6 +81,20 @@ public class PlainteController {
                                     .map(PlainteShortDTO::fromEntity)
                                     .toList();
 
+        return ResponseEntity.ok(dtos);
+    }
+
+    @PreAuthorize("hasAuthority('CITOYEN')")
+    @GetMapping("/citoyen/filter")
+    public ResponseEntity<List<PlainteShortDTO>> getFindByPlaignantIdWithCriteria(Authentication authentication, @RequestBody PlainteFilter f){
+        Utilisateur c = (Utilisateur) authentication.getPrincipal();
+        List<Plainte> plaintes = plainteService.findByPlaignantIdWithCriteria(c.getPersonne(),
+                                                                                f.getType(),
+                                                                                f.getDateUpperBound(),
+                                                                                f.getDateLowerBound(),
+                                                                                f.getNumeroDossier(),
+                                                                                f.getStatut());
+        List<PlainteShortDTO> dtos = plaintes.stream().map(PlainteShortDTO::fromEntity).toList();
         return ResponseEntity.ok(dtos);
     }
 

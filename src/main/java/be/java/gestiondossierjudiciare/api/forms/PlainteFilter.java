@@ -16,5 +16,6 @@ public class PlainteFilter {
     private LocalDate dateLowerBound;
     private LocalDate dateUpperBound;
     private String statut;
+    private String type;
 
 }
