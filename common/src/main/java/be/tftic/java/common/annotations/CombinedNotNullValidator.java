@@ -24,12 +24,17 @@ public class CombinedNotNullValidator implements ConstraintValidator<CombinedNot
         for (final String f : fields) {
             final Object fieldValue = beanWrapper.getPropertyValue(f);
 
-            if (fieldValue == null) {
-                return false;
+            if (fieldValue instanceof String) {
+                if (!((String) fieldValue).isBlank())
+                    return true;
+            } else {
+                if (fieldValue != null) {
+                    return true;
+                }
             }
         }
 
-        return true;
+        return false;
 
     }
 }
