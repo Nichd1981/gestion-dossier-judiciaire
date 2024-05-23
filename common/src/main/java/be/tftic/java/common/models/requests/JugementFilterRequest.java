@@ -1,7 +1,6 @@
 package be.tftic.java.common.models.requests;
 
 import be.tftic.java.common.annotations.CombinedNotNull;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

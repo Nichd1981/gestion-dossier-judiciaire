@@ -3,6 +3,7 @@ package be.tftic.java.bll.services.impls;
 import be.tftic.java.bll.services.JugementService;
 import be.tftic.java.bll.specifications.JugementSpecification;
 import be.tftic.java.bll.specifications.PlainteSpecification;
+import be.tftic.java.common.models.requests.JugementUpdateRequest;
 import be.tftic.java.dal.repositories.JugementRepository;
 import be.tftic.java.dal.repositories.PlainteRepository;
 import be.tftic.java.domain.entities.Jugement;
@@ -29,9 +30,7 @@ public class JugementServiceImpl implements JugementService {
     public void create(Long plainteId) {
         Jugement jugement = new Jugement();
         jugement.setDateJugement(LocalDateTime.now());
-        jugement.setPlainte(plainteRepository.findById(plainteId).orElseThrow(
-                () -> new RuntimeException("Plainte n'existe pas")
-        ));
+        jugement.setPlainte(getPlainte(plainteId));
         jugementRepository.save(jugement);
     }
 
@@ -52,26 +51,34 @@ public class JugementServiceImpl implements JugementService {
      */
     @Override
     public List<Jugement> findWithCriteria(Long plainteId, String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision) {
-        Plainte plainte;
-        if (plainteId != null){
-            plainte = plainteRepository.findById(plainteId)
-                    .orElseThrow(
-                            () -> new RuntimeException("Plainte n'existe pas")
-                    );
-        } else {
-            plainte = plainteRepository.findByNumeroDossier(numeroDossier)
-                    .orElseThrow(
-                            () -> new RuntimeException("Plainte n'existe pas")
-                    );
-        }
-
+        Plainte plainte = (plainteId != null ? getPlainte(plainteId) : getPlainte(numeroDossier));
         Specification<Jugement> spec = getSpecification(plainte, lowerBound, upperBound, keyWord, decision);
         return jugementRepository.findAll(spec);
     }
 
     @Override
-    public void cloturerJugement(String decision, String commentaire) {
+    public void cloturerJugement(JugementUpdateRequest jugement) {
+        Jugement toUpdate = jugementRepository.findById(jugement.getId()).orElseThrow(
+                () -> new RuntimeException("Le jugement n'existe pas")
+        );
 
+        toUpdate.setCommentaire(jugement.getCommentaire());
+        toUpdate.setJugementDecision(JugementDecision.valueOf(jugement.getDecision()));
+        jugementRepository.save(toUpdate);
+    }
+
+    private Plainte getPlainte(Long plainteId){
+        return plainteRepository.findById(plainteId)
+                                .orElseThrow(
+                                        () -> new RuntimeException("Plainte n'existe pas")
+                                );
+    }
+
+    private Plainte getPlainte(String numeroDossier){
+        return plainteRepository.findByNumeroDossier(numeroDossier)
+                                .orElseThrow(
+                                        () -> new RuntimeException("Plainte n'existe pas")
+                                );
     }
 
     private Specification<Jugement> getSpecification(Plainte plainte, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision){

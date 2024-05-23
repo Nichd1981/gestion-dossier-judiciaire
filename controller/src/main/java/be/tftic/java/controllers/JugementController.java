@@ -2,6 +2,7 @@ package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.JugementService;
 import be.tftic.java.common.models.requests.JugementFilterRequest;
+import be.tftic.java.common.models.requests.JugementUpdateRequest;
 import be.tftic.java.common.models.responses.JugementResponse;
 import be.tftic.java.common.models.responses.PlainteShortResponse;
 import jakarta.validation.Valid;
@@ -47,6 +48,13 @@ public class JugementController {
                 .toList();
 
         return ResponseEntity.ok(dtos);
+    }
+
+    @PreAuthorize("hasAuthority('AGENT')")
+    @PutMapping("/cloture")
+    public ResponseEntity<Void> clotureJugement(@RequestBody @Valid JugementUpdateRequest jugement){
+        jugementService.cloturerJugement(jugement);
+        return ResponseEntity.noContent().build();
     }
 
 }
