@@ -26,6 +26,7 @@ public class PlainteController {
 
     private final PlainteService plainteService;
 
+
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping
     public ResponseEntity<List<PlainteShortResponse>> getAll(){
@@ -119,5 +120,4 @@ public class PlainteController {
         plainteService.cloturerEnquete(form);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }
