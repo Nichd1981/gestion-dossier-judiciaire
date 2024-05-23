@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -69,5 +70,18 @@ public class Plainte {
         this.datePlainte = datePlainte;
         this.plaignant = plaignant;
         this.agentTraitant = agentTraitant;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plainte plainte = (Plainte) o;
+        return Objects.equals(numeroDossier, plainte.numeroDossier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(numeroDossier);
     }
 }
