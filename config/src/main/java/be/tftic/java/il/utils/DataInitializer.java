@@ -25,6 +25,7 @@ public class DataInitializer implements CommandLineRunner {
     private final PlainteRepository plainteRepository;
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
+    private final DepositionRepository depositionRepository;
 
     @Override
     public void run(String... args) {
@@ -113,6 +114,10 @@ public class DataInitializer implements CommandLineRunner {
             Plainte plainte4 = new Plainte("ANT-1234-5670", Statut.EN_COURS, LocalDate.of(2024,4,10).atStartOfDay(), antoine, nicolas);
             plainte4.getPersonnesConcernees().add(valentine);
             plainteRepository.save(plainte4);
+
+            Deposition deposition = new Deposition(LocalDate.of(2024, 1, 1), "Ceci est une arnaque", plainte);
+
+            depositionRepository.save(deposition);
 
         }
     }
