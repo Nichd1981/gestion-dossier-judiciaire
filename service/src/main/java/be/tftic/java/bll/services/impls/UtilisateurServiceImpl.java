@@ -24,7 +24,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public Utilisateur login(Utilisateur utilisateur) {
-        Utilisateur existingUser = utilisateurRepository.getUserByUsername(utilisateur.getEmail()).orElseThrow();
+        Utilisateur existingUser = (Utilisateur) utilisateurRepository.getUserByUsername(utilisateur.getEmail()).orElseThrow();
 
         if (!passwordEncoder.matches(utilisateur.getPassword(), existingUser.getPassword())) {
             throw new RuntimeException("Wrong password");

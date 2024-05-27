@@ -26,7 +26,10 @@ public class AuthController {
         Utilisateur utilisateur = utilisateurService.login(form.toEntity());
         UtilisateurTokenResponse dto = UtilisateurTokenResponse.fromEntity(utilisateur);
         String token = jwtUtils.generateToken(utilisateur);
+        String refreshToken = jwtUtils.generateRefreshToken(utilisateur);
         dto.setToken(token);
+        dto.setRefreshToken(refreshToken);
+
         return ResponseEntity.ok(dto);
     }
 }

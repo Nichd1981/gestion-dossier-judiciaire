@@ -11,6 +11,8 @@ public class UtilisateurTokenResponse {
     Long id;
     String email;
     String token;
+    String refreshToken;
+
 
     public static UtilisateurTokenResponse fromEntity(Utilisateur utilisateur) {
         return UtilisateurTokenResponse.builder()

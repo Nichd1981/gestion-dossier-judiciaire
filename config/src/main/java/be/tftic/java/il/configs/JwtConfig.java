@@ -35,6 +35,7 @@ public class JwtConfig {
     private String algorithm;
     private String secret;
     private long expireAt;
+    private long refreshExpireAt;
 
     private SecretKey secretKey;
 

@@ -34,6 +34,15 @@ public class JwtUtils {
                 .compact();
     }
 
+    public String generateRefreshToken(Utilisateur c){
+        return builder
+                .setSubject(c.getUsername())
+                .claim("id",c.getId())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + config.getRefreshExpireAt() * 1000L))
+                .compact();
+    }
+
     public Claims getClaims(String token){
         return parser.parseClaimsJws(token).getBody();
     }
