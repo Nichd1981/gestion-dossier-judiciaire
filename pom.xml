@@ -20,6 +20,7 @@
         <module>repository</module>
         <module>domain</module>
         <module>config</module>
+        <module>controller</module>
     </modules>
     <description>gestionDossierJudiciare</description>
     <properties>
