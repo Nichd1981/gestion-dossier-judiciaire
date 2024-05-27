@@ -24,6 +24,7 @@ public class DataInitializer implements CommandLineRunner {
     private final TelephoneRepository telephoneRepository;
     private final PlainteRepository plainteRepository;
     private final UtilisateurRepository utilisateurRepository;
+    private final DepositionRepository depositionRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -114,6 +115,8 @@ public class DataInitializer implements CommandLineRunner {
             plainte4.getPersonnesConcernees().add(valentine);
             plainteRepository.save(plainte4);
 
+            Deposition deposition = new Deposition(LocalDate.of(2024, 1, 5), "Ceci est une arnaque !", plainte);
+            depositionRepository.save(deposition);
         }
     }
 }

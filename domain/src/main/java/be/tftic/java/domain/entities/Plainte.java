@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -60,7 +61,20 @@ public class Plainte {
     private Set<Audition> auditions = new HashSet<>();
 
     @OneToMany(mappedBy = "plainte", cascade = CascadeType.ALL)
-    private Set<PlainteDepositionHistorique> depositions = new HashSet<>();
+    private Set<Deposition> depositions = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plainte plainte = (Plainte) o;
+        return Objects.equals(id, plainte.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
     @Builder
     public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Personne plaignant, Personne agentTraitant) {
