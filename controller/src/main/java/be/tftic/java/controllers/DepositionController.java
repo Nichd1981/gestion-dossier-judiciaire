@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("/deposition")
 @RequiredArgsConstructor
 public class DepositionController {
+
     private final DepositionService depositionService;
 
     @PreAuthorize("hasAnyAuthority('CITOYEN', 'AGENT')")

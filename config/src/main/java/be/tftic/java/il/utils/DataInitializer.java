@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UtilisateurRepository utilisateurRepository;
     private final DepositionRepository depositionRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuditionRepository auditionRepository;
 
     @Override
     public void run(String... args) {
@@ -117,6 +119,12 @@ public class DataInitializer implements CommandLineRunner {
 
             Deposition deposition = new Deposition(LocalDate.of(2024, 1, 5), "Ceci est une arnaque !", plainte);
             depositionRepository.save(deposition);
+
+            Audition audition  = new Audition(LocalDateTime.of(2024, 1, 5, 10, 0), 2, "Ceci est une audition !", valentine, nicolas, azzedine, plainte );
+            auditionRepository.save(audition);
+            Audition audition2  = new Audition(LocalDateTime.of(2025, 7, 7, 10, 0), 2, "Ceci est une audition Bis repetita !", valentine, nicolas, azzedine, plainte );
+            auditionRepository.save(audition2);
+
         }
     }
 }
