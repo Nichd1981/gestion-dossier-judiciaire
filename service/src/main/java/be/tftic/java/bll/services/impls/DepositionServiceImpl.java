@@ -2,19 +2,16 @@ package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.DepositionService;
 import be.tftic.java.bll.specifications.DepositionSpecification;
-import be.tftic.java.common.models.requests.DepositionFilterRequest;
+import be.tftic.java.common.models.requests.filter.DepositionFilterRequest;
 import be.tftic.java.common.models.responses.DepositionShortResponse;
 import be.tftic.java.dal.repositories.DepositionRepository;
 import be.tftic.java.dal.repositories.PlainteRepository;
 import be.tftic.java.domain.entities.Deposition;
 import be.tftic.java.domain.entities.Plainte;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

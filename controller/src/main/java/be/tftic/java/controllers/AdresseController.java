@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.AdresseService;
-import be.tftic.java.common.models.requests.AdresseUpdateRequest;
+import be.tftic.java.common.models.requests.update.AdresseUpdateRequest;
 import be.tftic.java.domain.entities.Adresse;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Utilisateur;

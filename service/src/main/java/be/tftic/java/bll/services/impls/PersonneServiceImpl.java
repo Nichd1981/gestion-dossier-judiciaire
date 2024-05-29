@@ -14,19 +14,18 @@ public class PersonneServiceImpl implements PersonneService {
 
     @Override
     public Personne findById(Long id) {
-        return personneRepository.findById(id).orElseThrow(
-                //TODO : exception custom
-                () -> new RuntimeException("Personne non trouvée")
-        );
+        return getPersonne(id);
+    }
+
+    @Override
+    public Personne findByNationalRegister(String nationalNumber) {
+        return getPersonne(nationalNumber);
     }
 
     @Override
     public Long update(Long id, Personne personne) {
 
-        Personne toUpdate = personneRepository.findById(id).orElseThrow(
-                //TODO : utiliser une exception custom quand on gerera les exceptions
-                () -> new RuntimeException("Personne not found")
-        );
+        Personne toUpdate = getPersonne(id);
 
         toUpdate.setNom(personne.getNom());
         toUpdate.setPrenom(personne.getPrenom());
@@ -39,6 +38,20 @@ public class PersonneServiceImpl implements PersonneService {
         personneRepository.save(toUpdate);
 
         return id;
+    }
+
+    private Personne getPersonne(Long id){
+        return personneRepository.findById(id).orElseThrow(
+                //TODO : utiliser une exception custom quand on gerera les exceptions
+                () -> new RuntimeException("Personne not found")
+        );
+    }
+
+    private Personne getPersonne(String nationalRegisterNumber){
+        return personneRepository.findByRegistreNational(nationalRegisterNumber).orElseThrow(
+                //TODO : utiliser une exception custom quand on gerera les exceptions
+                () -> new RuntimeException("Personne not found")
+        );
     }
 
 }

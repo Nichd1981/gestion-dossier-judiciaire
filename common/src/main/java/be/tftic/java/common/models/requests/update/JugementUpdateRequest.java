@@ -1,4 +1,4 @@
-package be.tftic.java.common.models.requests;
+package be.tftic.java.common.models.requests.update;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

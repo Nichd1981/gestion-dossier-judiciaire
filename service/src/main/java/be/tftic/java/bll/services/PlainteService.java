@@ -1,8 +1,8 @@
 package be.tftic.java.bll.services;
 
 
-import be.tftic.java.common.models.requests.ClotureEnqueteRequest;
-import be.tftic.java.common.models.requests.PlainteCreateRequest;
+import be.tftic.java.common.models.requests.update.ClotureEnqueteRequest;
+import be.tftic.java.common.models.requests.create.PlainteCreateRequest;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Plainte;
 

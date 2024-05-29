@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.TelephoneService;
-import be.tftic.java.common.models.requests.TelephoneUpdateRequest;
+import be.tftic.java.common.models.requests.update.TelephoneUpdateRequest;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Telephone;
 import be.tftic.java.domain.entities.Utilisateur;

@@ -1,7 +1,7 @@
 package be.tftic.java.bll.services;
 
 
-import be.tftic.java.common.models.requests.JugementUpdateRequest;
+import be.tftic.java.common.models.requests.update.JugementUpdateRequest;
 import be.tftic.java.domain.entities.Jugement;
 
 import java.time.LocalDate;
