@@ -10,8 +10,8 @@
     <groupId>be.tftic.java</groupId>
     <artifactId>repository</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>dal</name>
-    <description>dal</description>
+    <name>repository</name>
+    <description>repository</description>
     <properties>
         <java.version>17</java.version>
     </properties>
