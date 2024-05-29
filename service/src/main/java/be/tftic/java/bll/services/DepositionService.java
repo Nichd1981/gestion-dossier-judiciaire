@@ -5,5 +5,7 @@ import be.tftic.java.domain.entities.Deposition;
 import java.util.List;
 
 public interface DepositionService {
+
     List<Deposition> findAllDeposition(Long id);
+
 }

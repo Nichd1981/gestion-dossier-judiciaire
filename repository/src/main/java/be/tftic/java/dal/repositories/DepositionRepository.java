@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface DepositionRepository extends JpaRepository<Deposition, Long> {
+
     @Query("select d from Deposition d where d.plainte = :plainte")
     List<Deposition> findByPlainte(Plainte plainte);
+
 }
