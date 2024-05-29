@@ -1,9 +1,7 @@
 package be.tftic.java.bll.specifications;
 
 import be.tftic.java.domain.entities.Audition;
-import be.tftic.java.domain.entities.Plainte;
 import org.springframework.data.jpa.domain.Specification;
-
 import java.time.LocalDate;
 
 public class AuditionSpecification {
@@ -14,6 +12,10 @@ public class AuditionSpecification {
 
 	public static Specification<Audition> getByDateUpperBound(LocalDate upperBound) {
 		return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("dateAudition"), upperBound));
+	}
+
+	public static Specification<Audition> getByKeyword(String keyword) {
+		return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("depositionAudition"), "%" + keyword + "%"));
 	}
 
 }

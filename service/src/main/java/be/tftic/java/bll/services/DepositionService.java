@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DepositionService {
 
-    List<Deposition> findAllDeposition(Long id);
+    List<DepositionShortResponse> findAllDeposition(Long id);
     List<DepositionShortResponse> findByCriteria(DepositionFilterRequest f);
 
 }

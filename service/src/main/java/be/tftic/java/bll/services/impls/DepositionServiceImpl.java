@@ -22,19 +22,23 @@ public class DepositionServiceImpl implements DepositionService {
     private final DepositionRepository depositionRepository;
 
     @Override
-    public List<Deposition> findAllDeposition(Long id) {
+    public List<DepositionShortResponse> findAllDeposition(Long id) {
         Plainte plainte = plainteRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("La plainte n'existe pas")
         );
 
-        return depositionRepository.findByPlainte(plainte);
+        return depositionRepository.findByPlainte(plainte)
+                .stream()
+                .map(DepositionShortResponse::fromEntity)
+                .toList();
     }
 
     @Override
     public List<DepositionShortResponse> findByCriteria(DepositionFilterRequest f) {
-        return depositionRepository.findAll(getSpecification(f)).stream()
+        return depositionRepository.findAll(getSpecification(f))
+                .stream()
                 .map(DepositionShortResponse::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 

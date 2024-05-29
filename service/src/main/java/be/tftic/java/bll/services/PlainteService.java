@@ -3,25 +3,25 @@ package be.tftic.java.bll.services;
 
 import be.tftic.java.common.models.requests.update.ClotureEnqueteRequest;
 import be.tftic.java.common.models.requests.create.PlainteCreateRequest;
-import be.tftic.java.domain.entities.Personne;
+import be.tftic.java.common.models.requests.filter.PlainteFilterRequest;
+import be.tftic.java.common.models.responses.PlainteShortResponse;
 import be.tftic.java.domain.entities.Plainte;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface PlainteService {
 
-    List<Plainte> findAll();
+    List<PlainteShortResponse> findAll();
 
     Plainte findById(Long id);
 
     Plainte findByNumeroDossier(String numeroDossier);
 
-    List<Plainte> findByPlaignantId(Long id);
+    List<PlainteShortResponse> findByPlaignantId();
 
-    List<Plainte> findByPersonneConcernee(Personne personne);
+    List<PlainteShortResponse> findByPersonneConcernee();
 
-    List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut);
+    List<PlainteShortResponse> findByCriteria(PlainteFilterRequest f);
 
     Plainte create(PlainteCreateRequest form);
 
@@ -29,6 +29,6 @@ public interface PlainteService {
 
     void cloturerEnquete(ClotureEnqueteRequest form);
 
-    List<Plainte> findByPlaignantIdWithCriteria(Personne plaignant, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut);
+    List<PlainteShortResponse> findByPlaignantIdWithCriteria(PlainteFilterRequest f);
 
 }

@@ -6,14 +6,11 @@ import be.tftic.java.common.models.requests.create.PlainteCreateRequest;
 import be.tftic.java.common.models.requests.filter.PlainteFilterRequest;
 import be.tftic.java.common.models.responses.PlainteDetailResponse;
 import be.tftic.java.common.models.responses.PlainteShortResponse;
-import be.tftic.java.domain.entities.Plainte;
-import be.tftic.java.domain.entities.Utilisateur;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -26,85 +23,46 @@ public class PlainteController {
 
     private final PlainteService plainteService;
 
-
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping
     public ResponseEntity<List<PlainteShortResponse>> getAll(){
-
-        List<PlainteShortResponse> dtos = plainteService.findAll()
-                .stream()
-                .map(PlainteShortResponse::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok(plainteService.findAll());
     }
 
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<PlainteDetailResponse> getOne(@PathVariable Long id){
-
-        PlainteDetailResponse dto = PlainteDetailResponse.fromEntity(plainteService.findById(id));
-
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(PlainteDetailResponse.fromEntity(plainteService.findById(id)));
     }
 
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/filter")
     public ResponseEntity<List<PlainteShortResponse>> getWithCriteria(@RequestBody PlainteFilterRequest f) {
-
-        List<PlainteShortResponse> plaintes = plainteService.findByCriteria(f.getNumeroDossier(),f.getDateLowerBound(),f.getDateUpperBound(), f.getStatut())
-                .stream()
-                .map(PlainteShortResponse::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(plaintes);
+        return ResponseEntity.ok(plainteService.findByCriteria(f));
     }
 
     @PreAuthorize("hasAuthority('CITOYEN')")
     @GetMapping("/citoyen")
-    public ResponseEntity<List<PlainteShortResponse>> getPlainteByPlaignantId(Authentication authentication) {
-        Utilisateur c = (Utilisateur) authentication.getPrincipal();
-
-        List<PlainteShortResponse> dtos = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
-                .map(PlainteShortResponse::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(dtos);
+    public ResponseEntity<List<PlainteShortResponse>> getPlainteByPlaignantId() {
+        return ResponseEntity.ok(plainteService.findByPlaignantId());
     }
 
     @PreAuthorize("hasAuthority('CITOYEN')")
     @GetMapping("/citoyen/concerne")
-    public ResponseEntity<List<PlainteShortResponse>> getFindByPersonneConcernee(Authentication authentication){
-        Utilisateur c = (Utilisateur) authentication.getPrincipal();
-
-        List<Plainte> plaintes = plainteService.findByPersonneConcernee(c.getPersonne());
-        List<PlainteShortResponse> dtos = plaintes.stream()
-                                    .map(PlainteShortResponse::fromEntity)
-                                    .toList();
-
-        return ResponseEntity.ok(dtos);
+    public ResponseEntity<List<PlainteShortResponse>> getFindByPersonneConcernee(){
+        return ResponseEntity.ok(plainteService.findByPersonneConcernee());
     }
 
     @PreAuthorize("hasAuthority('CITOYEN')")
     @GetMapping("/citoyen/filter")
-    public ResponseEntity<List<PlainteShortResponse>> getFindByPlaignantIdWithCriteria(Authentication authentication, @RequestBody PlainteFilterRequest f){
-        Utilisateur c = (Utilisateur) authentication.getPrincipal();
-        List<Plainte> plaintes = plainteService.findByPlaignantIdWithCriteria(c.getPersonne(),
-                                                                                f.getType(),
-                                                                                f.getDateUpperBound(),
-                                                                                f.getDateLowerBound(),
-                                                                                f.getNumeroDossier(),
-                                                                                f.getStatut());
-        List<PlainteShortResponse> dtos = plaintes.stream().map(PlainteShortResponse::fromEntity).toList();
-        return ResponseEntity.ok(dtos);
+    public ResponseEntity<List<PlainteShortResponse>> getFindByPlaignantIdWithCriteria(@RequestBody PlainteFilterRequest f){
+        return ResponseEntity.ok(plainteService.findByPlaignantIdWithCriteria(f));
     }
 
     @PreAuthorize("hasAuthority('AGENT')")
     @PostMapping()
     public ResponseEntity<PlainteDetailResponse> createOne(@RequestBody @Valid PlainteCreateRequest form){
-        Long id = plainteService.create(form).getId();
-
-        return ResponseEntity.created(URI.create("/plainte/"+id)).build();
+        return ResponseEntity.created(URI.create("/plainte/" + plainteService.create(form).getId())).build();
     }
 
     @PreAuthorize("hasAuthority('AGENT')")

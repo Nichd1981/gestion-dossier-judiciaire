@@ -3,6 +3,7 @@ package be.tftic.java.bll.services.impls;
 import be.tftic.java.bll.services.JugementService;
 import be.tftic.java.bll.specifications.JugementSpecification;
 import be.tftic.java.common.models.requests.update.JugementUpdateRequest;
+import be.tftic.java.common.models.responses.JugementResponse;
 import be.tftic.java.dal.repositories.JugementRepository;
 import be.tftic.java.dal.repositories.PlainteRepository;
 import be.tftic.java.domain.entities.Jugement;
@@ -37,8 +38,8 @@ public class JugementServiceImpl implements JugementService {
      * @return
      */
     @Override
-    public List<Jugement> findAllForPlainte(Long plainteId) {
-       return this.findWithCriteria(plainteId, null, null, null, null, null);
+    public List<JugementResponse> findAllForPlainte(Long plainteId) {
+        return this.findWithCriteria(plainteId, null, null, null, null, null);
     }
 
     /**
@@ -47,10 +48,14 @@ public class JugementServiceImpl implements JugementService {
      * @return
      */
     @Override
-    public List<Jugement> findWithCriteria(Long plainteId, String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision) {
+    public List<JugementResponse> findWithCriteria(Long plainteId, String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision) {
         Plainte plainte = (plainteId != null ? getPlainte(plainteId) : getPlainte(numeroDossier));
         Specification<Jugement> spec = getSpecification(plainte, lowerBound, upperBound, keyWord, decision);
-        return jugementRepository.findAll(spec);
+
+        return jugementRepository.findAll(spec)
+                .stream()
+                .map(JugementResponse::fromEntity)
+                .toList();
     }
 
     @Override

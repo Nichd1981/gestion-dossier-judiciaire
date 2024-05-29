@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Set;
 
 @RestController
@@ -25,24 +26,8 @@ public class AdresseController {
 
     @PreAuthorize("hasAnyAuthority('AGENT','CITOYEN')")
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<Void> updateAdresse(@PathVariable Long id,
-                                              @RequestBody @Valid AdresseUpdateRequest adresse,
-                                              Authentication authentication)
-    {
-        Utilisateur c = (Utilisateur) authentication.getPrincipal();
-
-        if (c.getRole() == Role.CITOYEN){
-            Personne personne = c.getPersonne();
-            Set<Adresse> adresses = personne.getAdresses();
-            if (adresses.stream().noneMatch(a -> a.getId().equals(id))) {
-                // L'adresse que l'on veut modifier n'est pas une des adresses de ce citoyen
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            }
-        }
-
-        adresseService.update(id, adresse.toEntity());
-        return ResponseEntity.ok().build();
-
+    public ResponseEntity<Long> updateAdresse(@PathVariable Long id,
+                                              @RequestBody @Valid AdresseUpdateRequest adresse) throws AccessDeniedException {
+        return ResponseEntity.ok(adresseService.update(id, adresse.toEntity()));
     }
-
 }
