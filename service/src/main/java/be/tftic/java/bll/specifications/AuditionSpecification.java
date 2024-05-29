@@ -1,9 +1,7 @@
 package be.tftic.java.bll.specifications;
 
 import be.tftic.java.domain.entities.Audition;
-import be.tftic.java.domain.entities.Plainte;
 import org.springframework.data.jpa.domain.Specification;
-
 import java.time.LocalDate;
 
 public class AuditionSpecification {

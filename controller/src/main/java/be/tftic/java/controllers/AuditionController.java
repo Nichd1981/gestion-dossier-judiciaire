@@ -37,14 +37,6 @@ public class AuditionController {
 	@PreAuthorize("hasAuthority('CITOYEN')")
 	@GetMapping("/citoyen")
 	public ResponseEntity<List<AuditionShortResponse>> getFindAuditionByCriteria(Authentication authentication, @RequestBody AuditionFilterRequest f){
-//		Utilisateur c = (Utilisateur) authentication.getPrincipal();
-//		List<Audition> auditions = auditionService.findAuditionByCriteria(c.getPersonne(),
-//																			f.getDateLowerBound(),
-//																			f.getDateUpperBound());
-//
-//		List<AuditionShortResponse> dtos = auditions.stream().map(AuditionShortResponse::fromEntity).toList();
-//		return ResponseEntity.ok(dtos);
-
 		return ResponseEntity.ok(auditionService.findAuditionByCriteria(f));
 	}
 

@@ -57,7 +57,6 @@ public class AuditionServiceImpl implements AuditionService {
 
 
 	private Specification<Audition> getSpecification(LocalDate lowerBound, LocalDate upperBound, String keyword) {
-
 		Specification<Audition> spec = Specification.where(null);
 
 		if(lowerBound != null){
