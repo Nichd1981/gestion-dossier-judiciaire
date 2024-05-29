@@ -10,40 +10,55 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
-/**<h1>JWT Configuration</h1>
- * <p>
- * This class is responsible for JWT configuration.
- * It is annotated with @Component to indicate that an instance of this class should be created at startup.
- * It is also annotated with @ConfigurationProperties(prefix = "jwt") to bind properties prefixed with "jwt"
- * from the application's configuration files to this class's fields.
- * </p>
- * <p>
- * The class has three fields: algorithm, secret, and expireAt, which represent the JWT algorithm, secret key,
- * and expiration time respectively. These fields are populated with values from the application's configuration files.
- * </p>
- * <p>
- * The class also has a SecretKey field, secretKey, which is used to store the secret key in a format suitable for
- * creating a JWT signature. This field is populated in the init method, which is annotated with @PostConstruct
- * to ensure it is executed after Spring has completed the field injection.
- * </p>
+import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * Configuration pour les paramètres JWT.
+ *
+ * Cette classe lit les propriétés JWT à partir des propriétés de configuration de l'application
+ * en utilisant le préfixe "jwt". Elle initialise également la clé secrète pour l'algorithme spécifié.
  */
 @Component
 @ConfigurationProperties(prefix = "jwt")
-@Getter @Setter
+@Getter
+@Setter
 public class JwtConfig {
 
+    /**
+     * L'algorithme utilisé pour le chiffrement JWT.
+     */
     private String algorithm;
+
+    /**
+     * La clé secrète utilisée pour signer le JWT.
+     */
     private String secret;
+
+    /**
+     * La durée d'expiration du JWT en millisecondes.
+     */
     private long expireAt;
 
+    /**
+     * La clé secrète générée à partir du secret et de l'algorithme spécifié.
+     */
     private SecretKey secretKey;
 
     /**
-     * This method is executed after Spring has completed the field injection.
-     * It creates a new SecretKeySpec object using the secret and algorithm fields and assigns it to the secretKey field.
+     * Méthode d'initialisation appelée après l'injection des propriétés.
+     *
+     * Cette méthode crée une instance de SecretKey en utilisant le secret et l'algorithme spécifiés.
      */
     @PostConstruct
     public void init() {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), algorithm);
     }
 }
+

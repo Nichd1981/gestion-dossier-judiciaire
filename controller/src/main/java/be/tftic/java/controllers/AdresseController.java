@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
+/**
+ * Controleur REST pour gerer les adresses.
+ * @author Azzedine
+ * @since 1.0.0
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/adresse")
@@ -23,6 +28,17 @@ public class AdresseController {
 
     private final AdresseService adresseService;
 
+    /**
+     * Met a jour une adresse existante.
+     * @param id L'identifiant de l'adresse mettre a jour. 
+     * @param adresse Les nouvelles information de l'adresse 
+     * @param authentication Les informations d'authentification de l'utilisateur 
+     * @return une reponse HTTP vide avec un code status 200(OK) si la mise a reussi, ou un code de statut 403 (Interdit) si l'utilisateur n'est pas autorise a modifier 
+     *
+     * @throws IllegalArgumentException si l'identifiant de l'adresse est invalide 
+     * @see AdresseService#update(Long, Adresse) 
+     */
+    
     @PreAuthorize("hasAnyAuthority('AGENT','CITOYEN')")
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Void> updateAdresse(@PathVariable Long id,
