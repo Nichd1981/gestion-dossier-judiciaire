@@ -19,6 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+/**
+ *  * Contrôleur REST pour la gestion des plaintes.
+ *
+ * @RestController indique que cette classe est un Contrôleur REST.
+ * @RequiredArgsConstructor indique que le compilateur doit générer un constructeur avec les arguments requis.
+ * @RequestMapping("/plainte") indique que les requêtes HTTP qui correspondent à cette annotation seront traitées par cette classe.
+ */
 @RestController
 @RequestMapping("/plainte")
 @RequiredArgsConstructor
@@ -26,98 +33,210 @@ public class PlainteController {
 
     private final PlainteService plainteService;
 
-
+    /**
+     * Récupère la liste de toutes les plaintes.
+     *
+     * @PreAuthorize("hasAuthority('AGENT')") Garantit que seuls les utilisateurs ayant le rôle "AGENT" peuvent accéder à cette méthode.
+     *
+     * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant toutes les plaintes
+     */
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping
-    public ResponseEntity<List<PlainteShortResponse>> getAll(){
+    public ResponseEntity<List<PlainteShortResponse>> getAll() {
+        // Récupère la liste de toutes les plaintes
+        List<Plainte> plaintes = plainteService.findAll();
 
-        List<PlainteShortResponse> dtos = plainteService.findAll()
-                .stream()
+        // Convertit la liste de Plainte en liste de PlainteShortResponse
+        List<PlainteShortResponse> dtos = plaintes.stream()
                 .map(PlainteShortResponse::fromEntity)
                 .toList();
 
+        // Retourne la liste de PlainteShortResponse avec un statut HTTP 200 (OK)
         return ResponseEntity.ok(dtos);
     }
-
-    @PreAuthorize("hasAuthority('AGENT')")
+    /**
+     * Récupère les détails d'une plainte spécifique.
+     *
+     * @param id L'identifiant unique de la plainte à récupérer
+     * @PreAuthorize("hasAuthority('AGENT')") Garantit que seuls les utilisateurs ayant le rôle "AGENT" peuvent accéder à cette méthode.
+     *
+     * @Param id identifiant de la plainte récupéré dans @PathVariable.
+     * @return Une ResponseEntity contenant un objet PlainteDetailResponse représentant les détails de la plainte
+     */
     @GetMapping("/{id:\\d+}")
-    public ResponseEntity<PlainteDetailResponse> getOne(@PathVariable Long id){
+    public ResponseEntity<PlainteDetailResponse> getOne(@PathVariable Long id) {
+        // Récupère la plainte correspondant à l'identifiant donné
+        Plainte plainte = plainteService.findById(id);
 
-        PlainteDetailResponse dto = PlainteDetailResponse.fromEntity(plainteService.findById(id));
+        // Convertit la plainte en objet PlainteDetailResponse
+        PlainteDetailResponse dto = PlainteDetailResponse.fromEntity(plainte);
 
+        // Retourne l'objet PlainteDetailResponse avec un statut HTTP 200 (OK)
         return ResponseEntity.ok(dto);
     }
 
-    @PreAuthorize("hasAuthority('AGENT')")
+    /**
+     * Récupère une liste de plaintes filtrées selon différents critères.
+     *
+     * @PreAuthorize("hasAuthority('AGENT')") Garantit que seuls les utilisateurs ayant le rôle "AGENT" peuvent accéder à cette méthode.
+     *
+     * @param f L'objet PlainteFilterRequest contenant les critères de filtrage
+     * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes correspondant aux critères
+     */
     @GetMapping("/filter")
     public ResponseEntity<List<PlainteShortResponse>> getWithCriteria(@RequestBody PlainteFilterRequest f) {
-
-        List<PlainteShortResponse> plaintes = plainteService.findByCriteria(f.getNumeroDossier(),f.getDateLowerBound(),f.getDateUpperBound(), f.getStatut())
-                .stream()
+        // Récupère la liste des plaintes correspondant aux critères de filtrage
+        List<PlainteShortResponse> plaintes = plainteService.findByCriteria(
+                        f.getNumeroDossier(),
+                        f.getDateLowerBound(),
+                        f.getDateUpperBound(),
+                        f.getStatut()
+                ).stream()
                 .map(PlainteShortResponse::fromEntity)
                 .toList();
 
+        // Retourne la liste de PlainteShortResponse avec un statut HTTP 200 (OK)
         return ResponseEntity.ok(plaintes);
     }
 
-    @PreAuthorize("hasAuthority('CITOYEN')")
+    /**
+     * Récupère la liste des plaintes déposées par l'utilisateur authentifié.
+     *
+     * @PreAuthorize("hasAuthority('CITOYEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode.
+     *
+     * @param authentication L'objet Authentication contenant les informations d'authentification de l'utilisateur
+     * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes déposées par l'utilisateur authentifié
+     */
     @GetMapping("/citoyen")
     public ResponseEntity<List<PlainteShortResponse>> getPlainteByPlaignantId(Authentication authentication) {
+        // Récupère l'objet Utilisateur à partir de l'objet Authentication
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
+        // Récupère la liste des plaintes déposées par l'utilisateur
         List<PlainteShortResponse> dtos = plainteService.findByPlaignantId(c.getPersonne().getId()).stream()
                 .map(PlainteShortResponse::fromEntity)
                 .toList();
 
+        // Retourne la liste de PlainteShortResponse avec un statut HTTP 200 (OK)
         return ResponseEntity.ok(dtos);
     }
-
-    @PreAuthorize("hasAuthority('CITOYEN')")
+    /**
+     * Récupère la liste des plaintes où l'utilisateur authentifié est la personne concernée.
+     *
+     * @PreAuthorize("hasAuthority('CITOYEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode.
+     *
+     * @param authentication L'objet Authentication contenant les informations d'authentification de l'utilisateur
+     * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes concernant l'utilisateur authentifié
+     */
     @GetMapping("/citoyen/concerne")
-    public ResponseEntity<List<PlainteShortResponse>> getFindByPersonneConcernee(Authentication authentication){
+    public ResponseEntity<List<PlainteShortResponse>> getFindByPersonneConcernee(Authentication authentication) {
+        // Récupère l'objet Utilisateur à partir de l'objet Authentication
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
 
+        // Récupère la liste des plaintes où l'utilisateur est la personne concernée
         List<Plainte> plaintes = plainteService.findByPersonneConcernee(c.getPersonne());
+
+        // Convertit la liste de Plainte en liste de PlainteShortResponse
         List<PlainteShortResponse> dtos = plaintes.stream()
-                                    .map(PlainteShortResponse::fromEntity)
-                                    .toList();
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
 
+        // Retourne la liste de PlainteShortResponse avec un statut HTTP 200 (OK)
         return ResponseEntity.ok(dtos);
     }
 
-    @PreAuthorize("hasAuthority('CITOYEN')")
+    /**
+     * Récupère la liste des plaintes déposées par l'utilisateur authentifié, filtrées selon différents critères.
+     *
+     * @PreAuthorize("hasAuthority('CITOYEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode
+     *
+     * @param authentication L'objet Authentication contenant les informations d'authentification de l'utilisateur
+     * @param f L'objet PlainteFilterRequest contenant les critères de filtrage
+     * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes déposées par l'utilisateur authentifié et correspondant aux critères de filtrage
+     */
     @GetMapping("/citoyen/filter")
-    public ResponseEntity<List<PlainteShortResponse>> getFindByPlaignantIdWithCriteria(Authentication authentication, @RequestBody PlainteFilterRequest f){
+    public ResponseEntity<List<PlainteShortResponse>> getFindByPlaignantIdWithCriteria(Authentication authentication, @RequestBody PlainteFilterRequest f) {
+        // Récupère l'objet Utilisateur à partir de l'objet Authentication
         Utilisateur c = (Utilisateur) authentication.getPrincipal();
-        List<Plainte> plaintes = plainteService.findByPlaignantIdWithCriteria(c.getPersonne(),
-                                                                                f.getType(),
-                                                                                f.getDateUpperBound(),
-                                                                                f.getDateLowerBound(),
-                                                                                f.getNumeroDossier(),
-                                                                                f.getStatut());
-        List<PlainteShortResponse> dtos = plaintes.stream().map(PlainteShortResponse::fromEntity).toList();
+
+        // Récupère la liste des plaintes déposées par l'utilisateur et correspondant aux critères de filtrage
+        List<Plainte> plaintes = plainteService.findByPlaignantIdWithCriteria(
+                c.getPersonne(),
+                f.getType(),
+                f.getDateUpperBound(),
+                f.getDateLowerBound(),
+                f.getNumeroDossier(),
+                f.getStatut()
+        );
+
+        // Convertit la liste de Plainte en liste de PlainteShortResponse
+        List<PlainteShortResponse> dtos = plaintes.stream()
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
+
+        // Retourne la liste de PlainteShortResponse avec un statut HTTP 200 (OK)
         return ResponseEntity.ok(dtos);
     }
 
+    /**
+     * Crée une nouvelle plainte à partir des informations fournies.
+     *
+     * @PreAuthorize("hasAuthority('AGENT')") Garantit que seuls les utilisateurs ayant le rôle "AGENT" peuvent accéder à cette méthode.
+     *
+     * @param form L'objet PlainteCreateRequest contenant les informations nécessaires à la création de la plainte
+     * @return Une ResponseEntity contenant l'objet PlainteDetailResponse représentant la plainte créée, avec un statut HTTP 201 (Created) et l'URI de la nouvelle ressource dans l'en-tête de la réponse
+     */
     @PreAuthorize("hasAuthority('AGENT')")
-    @PostMapping()
-    public ResponseEntity<PlainteDetailResponse> createOne(@RequestBody @Valid PlainteCreateRequest form){
-        Long id = plainteService.create(form).getId();
+    @PostMapping
+    public ResponseEntity<PlainteDetailResponse> createOne(@RequestBody @Valid PlainteCreateRequest form) {
+        // Crée une nouvelle plainte à partir des informations fournies dans l'objet PlainteCreateRequest
+        Plainte plainte = plainteService.create(form);
 
-        return ResponseEntity.created(URI.create("/plainte/"+id)).build();
+        // Convertit la plainte créée en objet PlainteDetailResponse
+        PlainteDetailResponse dto = PlainteDetailResponse.fromEntity(plainte);
+
+        // Construit l'URI de la nouvelle ressource créée
+        Long id = plainte.getId();
+        URI location = URI.create("/plainte/" + id);
+
+        // Retourne l'objet PlainteDetailResponse avec un statut HTTP 201 (Created) et l'URI de la nouvelle ressource dans l'en-tête de la réponse
+        return ResponseEntity.created(location).body(dto);
     }
 
+    /**
+     * Ouvre une enquête pour une plainte spécifique.
+     *
+     * @PreAuthorize("hasAuthority('AGENT')") Garantit que seuls les utilisateurs ayant le rôle "AGENT" peuvent accéder à cette méthode
+     *
+     * @param id L'identifiant unique de la plainte pour laquelle ouvrir l'enquête
+     * @return Une ResponseEntity avec un statut HTTP 204 (No Content) si l'opération est réussie
+     */
     @PreAuthorize("hasAuthority('AGENT')")
     @PutMapping("/{id:\\d+}")
-    public ResponseEntity<Void> ouvrirEnquete(@PathVariable Long id){
+    public ResponseEntity<Void> ouvrirEnquete(@PathVariable Long id) {
+        // Ouvre l'enquête pour la plainte correspondant à l'identifiant donné
         plainteService.ouvrirEnquete(id);
+
+        // Retourne une réponse avec un statut HTTP 204 (No Content) pour indiquer que la requête a été traitée avec succès
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * Clôture l'enquête pour une plainte spécifique.
+     *
+     * @PreAuthorize("hasAuthority('AGENT')") Garantit que seuls les utilisateurs ayant le rôle "AGENT" peuvent accéder à cette méthode
+     *
+     * @param form L'objet ClotureEnqueteRequest contenant les informations nécessaires pour clôturer l'enquête
+     * @return Une ResponseEntity avec un statut HTTP 204 (No Content) si l'opération est réussie
+     */
     @PreAuthorize("hasAuthority('AGENT')")
     @PutMapping("/cloture")
-    public ResponseEntity<Void> cloturerEnquete(@RequestBody @Valid ClotureEnqueteRequest form){
+    public ResponseEntity<Void> cloturerEnquete(@RequestBody @Valid ClotureEnqueteRequest form) {
+        // Clôture l'enquête pour la plainte correspondante avec les informations fournies dans l'objet ClotureEnqueteRequest
         plainteService.cloturerEnquete(form);
+
+        // Retourne une réponse avec un statut HTTP 204 (No Content) pour indiquer que la requête a été traitée avec succès
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }
