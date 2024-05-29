@@ -1,14 +1,12 @@
 package be.tftic.java.bll.services;
 
 
-import be.tftic.java.common.models.requests.ClotureEnqueteRequest;
-import be.tftic.java.common.models.requests.PlainteCreateRequest;
-import be.tftic.java.common.models.requests.PlainteFilterRequest;
+import be.tftic.java.common.models.requests.update.ClotureEnqueteRequest;
+import be.tftic.java.common.models.requests.create.PlainteCreateRequest;
+import be.tftic.java.common.models.requests.filter.PlainteFilterRequest;
 import be.tftic.java.common.models.responses.PlainteShortResponse;
-import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Plainte;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface PlainteService {

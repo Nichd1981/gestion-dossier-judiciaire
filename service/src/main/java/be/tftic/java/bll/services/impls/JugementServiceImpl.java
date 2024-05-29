@@ -2,16 +2,13 @@ package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.JugementService;
 import be.tftic.java.bll.specifications.JugementSpecification;
-import be.tftic.java.bll.specifications.PlainteSpecification;
-import be.tftic.java.common.models.requests.JugementUpdateRequest;
+import be.tftic.java.common.models.requests.update.JugementUpdateRequest;
 import be.tftic.java.common.models.responses.JugementResponse;
 import be.tftic.java.dal.repositories.JugementRepository;
 import be.tftic.java.dal.repositories.PlainteRepository;
 import be.tftic.java.domain.entities.Jugement;
 import be.tftic.java.domain.entities.Plainte;
 import be.tftic.java.domain.enums.JugementDecision;
-import be.tftic.java.domain.enums.Statut;
-import be.tftic.java.domain.enums.TypePlainte;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -35,11 +32,21 @@ public class JugementServiceImpl implements JugementService {
         jugementRepository.save(jugement);
     }
 
+    /**
+     * Liste tous les jugements liés à une plainte.
+     * @param plainteId pour laquelle on veut lister les jugements.
+     * @return
+     */
     @Override
     public List<JugementResponse> findAllForPlainte(Long plainteId) {
         return this.findWithCriteria(plainteId, null, null, null, null, null);
     }
 
+    /**
+     * Liste tous les jugements liés à une plainte, avec filtre sur date, mot-clé et désicision
+     * @param plainteId pour laquelle on veut lister les jugements
+     * @return
+     */
     @Override
     public List<JugementResponse> findWithCriteria(Long plainteId, String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision) {
         Plainte plainte = (plainteId != null ? getPlainte(plainteId) : getPlainte(numeroDossier));

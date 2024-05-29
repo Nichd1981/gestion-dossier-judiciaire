@@ -1,14 +1,11 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.DepositionService;
-import be.tftic.java.common.models.requests.DepositionFilterRequest;
+import be.tftic.java.common.models.requests.filter.DepositionFilterRequest;
 import be.tftic.java.common.models.responses.DepositionShortResponse;
-import be.tftic.java.domain.entities.Deposition;
-import be.tftic.java.domain.entities.Utilisateur;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

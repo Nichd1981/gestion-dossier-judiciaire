@@ -1,9 +1,9 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.PlainteService;
-import be.tftic.java.common.models.requests.ClotureEnqueteRequest;
-import be.tftic.java.common.models.requests.PlainteCreateRequest;
-import be.tftic.java.common.models.requests.PlainteFilterRequest;
+import be.tftic.java.common.models.requests.update.ClotureEnqueteRequest;
+import be.tftic.java.common.models.requests.create.PlainteCreateRequest;
+import be.tftic.java.common.models.requests.filter.PlainteFilterRequest;
 import be.tftic.java.common.models.responses.PlainteDetailResponse;
 import be.tftic.java.common.models.responses.PlainteShortResponse;
 import jakarta.validation.Valid;

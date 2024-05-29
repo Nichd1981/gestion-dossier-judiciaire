@@ -1,4 +1,4 @@
-package be.tftic.java.common.models.requests;
+package be.tftic.java.common.models.requests.update;
 
 import be.tftic.java.domain.entities.Telephone;
 import jakarta.validation.constraints.NotBlank;

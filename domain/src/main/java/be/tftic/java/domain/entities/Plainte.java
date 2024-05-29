@@ -72,16 +72,4 @@ public class Plainte {
         this.agentTraitant = agentTraitant;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plainte plainte = (Plainte) o;
-        return Objects.equals(numeroDossier, plainte.numeroDossier);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(numeroDossier);
-    }
 }

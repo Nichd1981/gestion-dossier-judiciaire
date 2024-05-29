@@ -1,4 +1,4 @@
-package be.tftic.java.common.models.requests;
+package be.tftic.java.common.models.requests.create;
 
 import be.tftic.java.domain.entities.Plainte;
 import be.tftic.java.domain.enums.Statut;

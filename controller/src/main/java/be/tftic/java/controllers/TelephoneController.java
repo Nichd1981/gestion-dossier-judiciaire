@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.TelephoneService;
-import be.tftic.java.common.models.requests.TelephoneUpdateRequest;
+import be.tftic.java.common.models.requests.update.TelephoneUpdateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

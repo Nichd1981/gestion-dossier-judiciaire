@@ -1,4 +1,4 @@
-package be.tftic.java.common.models.requests;
+package be.tftic.java.common.models.requests.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

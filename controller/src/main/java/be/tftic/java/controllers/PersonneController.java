@@ -1,7 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.PersonneService;
-import be.tftic.java.common.models.requests.PersonneUpdateRequest;
+import be.tftic.java.common.models.requests.update.PersonneUpdateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
