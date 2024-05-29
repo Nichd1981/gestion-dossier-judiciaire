@@ -22,40 +22,30 @@ public class AuditionController {
 
 	private final AuditionService auditionService;
 
-	@PreAuthorize("hasAuthority('AGENT', 'AVOCAT')")
+	@PreAuthorize("hasAnyAuthority('AGENT', 'AVOCAT')")
 	@GetMapping("/{id: \\d+}")
 	public ResponseEntity<List<AuditionShortResponse>> getAuditionByPlainte(@PathVariable Long id) {
-
-		List<AuditionShortResponse> auditionsDTOS = auditionService.findAllAudition(id)
-				.stream()
-				.map(AuditionShortResponse::fromEntity)
-				.toList();
-
-		return ResponseEntity.ok(auditionsDTOS);
+		return ResponseEntity.ok(auditionService.findAllAudition(id));
 	}
 
 	@PreAuthorize("hasAuthority('AGENT')")
 	@GetMapping
 	public ResponseEntity<List<AuditionShortResponse>> getAll(){
-
-		List<AuditionShortResponse> dtos = auditionService.findAll()
-				.stream()
-				.map(AuditionShortResponse::fromEntity)
-				.toList();
-
-		return ResponseEntity.ok(dtos);
+		return ResponseEntity.ok(auditionService.findAll());
 	}
 
 	@PreAuthorize("hasAuthority('CITOYEN')")
 	@GetMapping("/citoyen")
 	public ResponseEntity<List<AuditionShortResponse>> getFindAuditionByCriteria(Authentication authentication, @RequestBody AuditionFilterRequest f){
-		Utilisateur c = (Utilisateur) authentication.getPrincipal();
-		List<Audition> auditions = auditionService.findAuditionByCriteria(c.getPersonne(),
-																			f.getDateLowerBound(),
-																			f.getDateUpperBound());
+//		Utilisateur c = (Utilisateur) authentication.getPrincipal();
+//		List<Audition> auditions = auditionService.findAuditionByCriteria(c.getPersonne(),
+//																			f.getDateLowerBound(),
+//																			f.getDateUpperBound());
+//
+//		List<AuditionShortResponse> dtos = auditions.stream().map(AuditionShortResponse::fromEntity).toList();
+//		return ResponseEntity.ok(dtos);
 
-		List<AuditionShortResponse> dtos = auditions.stream().map(AuditionShortResponse::fromEntity).toList();
-		return ResponseEntity.ok(dtos);
+		return ResponseEntity.ok(auditionService.findAuditionByCriteria(f));
 	}
 
 }

@@ -119,6 +119,10 @@ public class DataInitializer implements CommandLineRunner {
 
             Deposition deposition = new Deposition(LocalDate.of(2024, 1, 5), "Ceci est une arnaque !", plainte);
             depositionRepository.save(deposition);
+            Deposition deposition2 = new Deposition(LocalDate.of(2024, 10, 5), "C'est quoi ça encore ?!", plainte);
+            depositionRepository.save(deposition2);
+            Deposition deposition3 = new Deposition(LocalDate.of(2024, 5, 5), "Je suis perdu !", plainte);
+            depositionRepository.save(deposition3);
 
             Audition audition  = new Audition(LocalDateTime.of(2024, 1, 5, 10, 0), 2, "Ceci est une audition !", valentine, nicolas, azzedine, plainte );
             auditionRepository.save(audition);

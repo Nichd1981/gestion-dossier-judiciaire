@@ -3,7 +3,9 @@ package be.tftic.java.bll.services.impls;
 import be.tftic.java.bll.services.PersonneService;
 import be.tftic.java.dal.repositories.PersonneRepository;
 import be.tftic.java.domain.entities.Personne;
+import be.tftic.java.domain.entities.Utilisateur;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +24,11 @@ public class PersonneServiceImpl implements PersonneService {
 
     @Override
     public Long update(Long id, Personne personne) {
+
+        if (id == null) {
+            Utilisateur user = (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            id = user.getPersonne().getId();
+        }
 
         Personne toUpdate = personneRepository.findById(id).orElseThrow(
                 //TODO : utiliser une exception custom quand on gerera les exceptions

@@ -23,14 +23,7 @@ public class DepositionController {
     @PreAuthorize("hasAnyAuthority('CITOYEN', 'AGENT')")
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<List<DepositionShortResponse>> getDepositionByPlainte(@PathVariable Long id) {
-
-
-        List<DepositionShortResponse> dtos = depositionService.findAllDeposition(id)
-                .stream()
-                .map(DepositionShortResponse::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok(depositionService.findAllDeposition(id));
     }
 
     @PreAuthorize("hasAuthority('CITOYEN')")
