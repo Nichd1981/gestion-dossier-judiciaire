@@ -3,6 +3,7 @@ package be.tftic.java.domain.entities;
 import be.tftic.java.domain.enums.JugementDecision;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "JUGEMENT")
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Jugement {
