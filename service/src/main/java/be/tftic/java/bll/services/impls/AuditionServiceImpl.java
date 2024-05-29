@@ -27,7 +27,6 @@ public class AuditionServiceImpl implements AuditionService {
 	private final PlainteRepository plainteRepository;
 	private final AuditionRepository AuditionRepository;
 
-
 	public List<Audition> findAllAudition(Long id) {
 		Plainte plainte = plainteRepository.findById(id).orElseThrow(
 				() -> new RuntimeException("La plainte n'existe pas")
