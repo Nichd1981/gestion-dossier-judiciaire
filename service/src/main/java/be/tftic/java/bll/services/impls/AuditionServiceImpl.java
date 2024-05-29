@@ -86,8 +86,8 @@ public class AuditionServiceImpl implements AuditionService {
 	}
 
     private Plainte getComplaint(Long plainteId){
-        return plainteRepository.findById(plainteId).orElseThrow(
-                () -> new RuntimeException("La plainte n'existe pas")
+		return plainteRepository.findById(plainteId).orElseThrow(
+				() -> new RuntimeException("La plainte n'existe pas")
         );
     }
 
