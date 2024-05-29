@@ -6,27 +6,33 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.FileSystemResource;
 
 /**
- * Configuration class for the application.
- * It will replace property placeholders (application.yml) with the ones in the .env file.
- * This class is annotated with @Configuration to indicate that it is a source of bean definitions.
- * The AppConfig class is not instantiable, attempting to do so will result in an IllegalStateException.
+ * Classe de configuration pour la gestion des propriétés externes.
+ * Cette classe configure un bean {@link PropertySourcesPlaceholderConfigurer}
+ * pour charger les propriétés à partir d'un fichier de configuration externe.
+ *
+ * Cette classe définit un bean statique {@link PropertySourcesPlaceholderConfigurer}
+ * qui facilite le chargement des propriétés externes à partir d'un fichier de configuration.
+ * Le fichier de configuration spécifié est utilisé pour stocker les différentes propriétés
+ * de configuration nécessaires à l'application.
  */
 @Configuration
 public class PropertiesPlaceholderConfig {
 
     /**
-     * Bean definition for PropertySourcesPlaceholderConfigurer.
-     * This bean allows the application to use placeholders in property files.
-     * The placeholders are replaced with the actual values from the .env file.
+     * Configure le {@link PropertySourcesPlaceholderConfigurer} pour charger les propriétés
+     * à partir du fichier de configuration externe spécifié.
      *
-     * @return a PropertySourcesPlaceholderConfigurer with the location of the .env file set.
+     * @return une instance configurée de {@link PropertySourcesPlaceholderConfigurer}
      */
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
 
-        configurer.setLocation(new FileSystemResource(".env"));
+        // Spécifiez le chemin vers votre fichier de configuration externe ici
+        configurer.setLocation(new FileSystemResource("chemin/vers/votre/fichier/de/configuration"));
 
         return configurer;
     }
 }
+
+
