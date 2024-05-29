@@ -27,7 +27,6 @@ public class AuditionServiceImpl implements AuditionService {
 	private final PlainteRepository plainteRepository;
 	private final AuditionRepository AuditionRepository;
 
-
 	public List<Audition> findAllAudition(Long id) {
 		Plainte plainte = plainteRepository.findById(id).orElseThrow(
 				() -> new RuntimeException("La plainte n'existe pas")
@@ -44,7 +43,7 @@ public class AuditionServiceImpl implements AuditionService {
 	@Override
 	public List<Audition> findAuditionByCriteria(Personne personne, LocalDate lowerBound, LocalDate upperBound) {
 		Specification<Audition> spec = getSpecification( lowerBound, upperBound);
-		return AuditionRepository.findAll();
+		return AuditionRepository.findAll(spec);
 	}
 
 
