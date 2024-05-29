@@ -41,13 +41,13 @@ public class AuditionServiceImpl implements AuditionService {
 	}
 
 	@Override
-	public List<Audition> findAuditionByCriteria(Personne personne, LocalDate lowerBound, LocalDate upperBound) {
-		Specification<Audition> spec = getSpecification( lowerBound, upperBound);
+	public List<Audition> findAuditionByCriteria(Personne personne, LocalDate lowerBound, LocalDate upperBound, String motCle) {
+		Specification<Audition> spec = getSpecification( lowerBound, upperBound, motCle);
 		return AuditionRepository.findAll(spec);
 	}
 
 
-	private Specification<Audition> getSpecification(LocalDate lowerBound, LocalDate upperBound) {
+	private Specification<Audition> getSpecification(LocalDate lowerBound, LocalDate upperBound, String motCle) {
 
 		Specification<Audition> spec = Specification.where(null);
 
@@ -56,6 +56,9 @@ public class AuditionServiceImpl implements AuditionService {
 		}
 		if(upperBound != null){
 			spec = spec.and(AuditionSpecification.getByDateUpperBound(upperBound));
+		}
+		if(motCle  != null && !motCle.isBlank()){
+			spec = spec.and(AuditionSpecification.getByMotCle(motCle));
 		}
 		return spec;
 	}

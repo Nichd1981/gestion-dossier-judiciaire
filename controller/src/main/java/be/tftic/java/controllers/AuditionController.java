@@ -52,8 +52,8 @@ public class AuditionController {
 		Utilisateur c = (Utilisateur) authentication.getPrincipal();
 		List<Audition> auditions = auditionService.findAuditionByCriteria(c.getPersonne(),
 																			f.getDateLowerBound(),
-																			f.getDateUpperBound());
-
+																			f.getDateUpperBound(),
+																			f.getMotCle());
 		List<AuditionShortResponse> dtos = auditions.stream().map(AuditionShortResponse::fromEntity).toList();
 		return ResponseEntity.ok(dtos);
 	}
