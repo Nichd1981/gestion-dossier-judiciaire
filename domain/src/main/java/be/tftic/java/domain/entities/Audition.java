@@ -2,7 +2,9 @@ package be.tftic.java.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "AUDITION")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter @Setter
 public class Audition {
 
     @Id
@@ -41,4 +44,13 @@ public class Audition {
     @JoinColumn(name = "PLAINTE_ID", nullable = false)
     private Plainte plainte;
 
+    public Audition(LocalDateTime dateAudition, int numeroSalleAudition, String depositionAudition, Personne convoque, Personne agentTraitant, Personne avocat, Plainte plainte){
+        this.dateAudition = dateAudition;
+        this.numeroSalleAudition = numeroSalleAudition;
+        this.depositionAudition = depositionAudition;
+        this.convoque = convoque;
+        this.agentTraitant = agentTraitant;
+        this.avocat = avocat;
+        this.plainte = plainte;
+    }
 }

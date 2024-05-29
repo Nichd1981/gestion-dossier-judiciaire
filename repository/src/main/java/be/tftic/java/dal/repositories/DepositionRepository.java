@@ -13,4 +13,5 @@ import java.util.List;
 public interface DepositionRepository extends JpaRepository<Deposition, Long>, JpaSpecificationExecutor<Deposition> {
     @Query("select d from Deposition d where d.plainte = :plainte")
     List<Deposition> findByPlainte(Plainte plainte);
+
 }
