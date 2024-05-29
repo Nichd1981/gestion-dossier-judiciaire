@@ -13,6 +13,6 @@ public class AuditionFilterRequest {
 
 	private LocalDate dateLowerBound;
 	private LocalDate dateUpperBound;
-	private String motCle;
+	private String keyword;
 
 }
