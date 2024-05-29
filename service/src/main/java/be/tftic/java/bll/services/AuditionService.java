@@ -13,6 +13,7 @@ public interface AuditionService {
 
 	List<Audition> findAll();
 
-	List<Audition> findAuditionByCriteria(Personne personne, LocalDate lowerBound, LocalDate upperBound);
+	List<Audition> findAuditionByCriteria(Personne personne, LocalDate lowerBound, LocalDate upperBound, String motCle);
+
 
 }
