@@ -20,6 +20,11 @@ public class JugementController {
 
     private final JugementService jugementService;
 
+    /**
+     * Cette méthode liste tous les jugements pour une plainte donnée
+     * @param id = id de la plainte (type Long)
+     * @return ResponseEntity dont le body contient la liste des jugements
+     */
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<List<JugementResponse>> getAllForPlainte(@PathVariable Long id){
