@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 /**
  * Classe de réponse courte pour les plaintes.
- *
  * Cette classe est annotée avec @Data de Lombok pour générer automatiquement les
  * getters, setters, constructeurs, et méthodes toString(), hashCode(),
  * et equals(). Elle est utilisée pour stocker et transmettre les informations les plus

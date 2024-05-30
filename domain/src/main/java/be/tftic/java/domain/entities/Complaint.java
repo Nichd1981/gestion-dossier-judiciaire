@@ -11,7 +11,6 @@ import java.util.Set;
 
 /**
  * Classe représentant une plainte.
- *
  * Cette classe permet de stocker les informations relatives à une plainte,
  * telles que son numéro de dossier, son statut, son type, sa date, son
  * jugement, son plaignant, son agent traitant, les personnes concernées,
@@ -27,7 +26,6 @@ public class Complaint {
 
     /**
      * Identifiant unique de la plainte.
-     *
      * Cet identifiant est généré automatiquement par la base de données lorsque
      * la plainte est créée.
      */
@@ -37,7 +35,6 @@ public class Complaint {
 
     /**
      * Numéro de dossier de la plainte.
-     *
      * Ce numéro est unique pour chaque plainte et permet de l'identifier de
      * manière certaine. Il est obligatoire et ne peut pas être modifié une
      * fois qu'il a été défini.
@@ -47,7 +44,6 @@ public class Complaint {
 
     /**
      * Statut de la plainte.
-     *
      * Ce statut peut prendre les valeurs suivantes : "ENREGISTREE", "EN COURS
      * DE TRAITEMENT", "CLASSEE SANS SUITE", "RENVOYEE devant le tribunal". Il
      * est obligatoire et peut être modifié à tout moment.
@@ -59,7 +55,6 @@ public class Complaint {
 
     /**
      * Type de la plainte.
-     *
      * Ce type est facultatif et peut être défini pour préciser la nature de la
      * plainte venant de l'Enum (par exemple : "Sans_suite", "Contravention", "Delit", "Crime"). Il peut
      * être modifié à tout moment.
@@ -71,7 +66,6 @@ public class Complaint {
 
     /**
      * Date de la plainte.
-     *
      * Cette date correspond à la date à laquelle la plainte a été déposée.
      * Elle est obligatoire et ne peut pas être modifiée une fois qu'elle a été
      * définie.
@@ -81,7 +75,6 @@ public class Complaint {
 
     /**
      * Jugement associé à la plainte.
-     *
      * Ce jugement est facultatif et peut être défini pour stocker les
      * informations relatives au jugement rendu suite à la plainte
      * (par exemple : "Sans_suite", "Condamnation"). Il peut être
@@ -93,7 +86,6 @@ public class Complaint {
 
     /**
      * Plaignant de la plainte.
-     *
      * Le plaignant est obligatoire et correspond à la personne qui a déposé
      * la plainte.
      */
@@ -103,7 +95,6 @@ public class Complaint {
     private Person complainant;
     /**
      * Agent traitant de la plainte.
-     *
      * L'agent est obligatoire et correspond à la personne en charge de
      * traiter la plainte.
      */
@@ -114,7 +105,6 @@ public class Complaint {
 
     /**
      * Personnes concernées par la plainte.
-     *
      * Ces personnes sont facultatives et peuvent être définies pour stocker les
      * informations relatives aux personnes concernées par la plainte.
      */
@@ -126,7 +116,6 @@ public class Complaint {
 
     /**
      * Auditions associées à la plainte.
-     *
      * Ces auditions sont facultatives et peuvent être définies pour stocker les
      * informations relatives aux auditions réalisées dans le cadre de la
      * plainte (par exemple : la date de l'audition, la personne auditionnée,
@@ -137,7 +126,6 @@ public class Complaint {
 
     /**
      * Dépôts de plainte associés à la plainte.
-     *
      * Ces dépôts de plainte sont facultatifs et peuvent être définis pour stocker
      * les informations relatives aux dépôts de plainte réalisés dans le cadre
      * de la plainte (par exemple : la date du dépôt de plainte, la personne
@@ -149,7 +137,6 @@ public class Complaint {
 
     /**
      * Renvoie true si la plainte est égale à l'objet en paramètre, false sinon.
-     *
      * Deux instances de la classe Plainte sont égales si elles ont
      * le même identifiant.
      *
@@ -166,7 +153,6 @@ public class Complaint {
 
     /**
      * Renvoie le code de hachage de la plainte.
-     *
      * Le code de hachage est calculé à partir de l'identifiant de la plainte.
      *
      * @return le code de hachage de la plainte
@@ -178,7 +164,6 @@ public class Complaint {
 
     /**
      * Constructeur de la classe Plainte.
-     *
      * Ce constructeur permet de créer une nouvelle instance de la classe
      * Plainte en définissant son numéro de dossier, son statut,
      * sa date, son plaignant et son agent traitant.
