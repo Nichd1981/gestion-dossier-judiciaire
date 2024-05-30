@@ -47,7 +47,7 @@ public class ComplaintSpecification {
     /**
      * Méthode de spécification pour la recherche de plaintes en fonction d'un statut.
      *
-     * @param statut le statut pour la recherche de plaintes
+     * @param status le statut pour la recherche de plaintes
      * @return la spécification de recherche de plaintes en fonction d'un statut
      */
     public static Specification<Complaint> getByStatus(ComplaintStatus status) {
@@ -57,7 +57,7 @@ public class ComplaintSpecification {
     /**
      * Méthode de spécification pour la recherche de plaintes en fonction d'un plaignant.
      *
-     * @param plaignant le plaignant pour la recherche de plaintes
+     * @param complainant le plaignant pour la recherche de plaintes
      * @return la spécification de recherche de plaintes en fonction d'un plaignant
      */
     public static Specification<Complaint> getByComplainant(Person complainant){
