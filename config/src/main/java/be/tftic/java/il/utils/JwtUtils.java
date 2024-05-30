@@ -1,6 +1,6 @@
 package be.tftic.java.il.utils;
 
-import be.tftic.java.domain.entities.Utilisateur;
+import be.tftic.java.domain.entities.User;
 import be.tftic.java.il.configs.JwtConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -75,7 +75,8 @@ public class JwtUtils {
      * @param c l'utilisateur pour lequel générer le jeton JWT
      * @return le jeton JWT généré pour l'utilisateur
      */
-    public String generateToken(Utilisateur c) {
+
+    public String generateToken(User c){
         return builder
                 .setSubject(c.getUsername())
                 .claim("id", c.getId())

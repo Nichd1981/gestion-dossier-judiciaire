@@ -34,7 +34,7 @@ public class AuditionSpecification {
 	/**
 	 * Méthode de spécification pour la recherche d'auditions en fonction d'un mot-clé.
 	 *
-	 * @param motCle le mot-clé pour la recherche d'auditions
+	 * @param keyword le mot-clé pour la recherche d'auditions
 	 * @return la spécification de recherche d'auditions en fonction d'un mot-clé
 	 */
 	public static Specification<Audition> getByKeyword(String keyword) {
