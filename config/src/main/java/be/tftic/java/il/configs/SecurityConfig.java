@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * Classe de configuration de la sécurité de l'application.
- *
  * Cette classe permet de configurer les différents éléments de la sécurité de
  * l'application, tels que l'authentification, l'autorisation, le chiffrement
  * des mots de passe, etc. Elle utilise les annotations @Configuration,
@@ -29,7 +28,6 @@ public class SecurityConfig {
 
     /**
      * Crée un gestionnaire d'authentification pour l'application.
-     *
      * Cette méthode est annotée avec @Bean pour indiquer à Spring de
      * créer et gérer une instance unique de cette classe. Elle utilise la classe
      * AuthenticationConfiguration de Spring Security pour créer un
@@ -46,7 +44,6 @@ public class SecurityConfig {
 
     /**
      * Crée une chaîne de filtres de sécurité pour l'application.
-     *
      * Cette méthode est annotée avec @Bean pour indiquer à Spring de
      * créer et gérer une instance unique de cette classe. Elle utilise la classe
      * HttpSecurity de Spring Security pour créer une chaîne de filtres
@@ -70,7 +67,6 @@ public class SecurityConfig {
 
     /**
      * Crée un encodeur de mots de passe pour l'application.
-     *
      * Cette méthode est annotée avec @Bean pour indiquer à Spring de
      * créer et gérer une instance unique de cette classe. Elle utilise la classe
      * BCryptPasswordEncoder de Spring Security pour créer un encodeur

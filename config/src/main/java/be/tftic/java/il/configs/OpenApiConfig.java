@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Classe de configuration de l'API ouverte de l'application.
- *
  * Cette classe permet de configurer l'API ouverte de l'application à l'aide de la bibliothèque
  * OpenAPI de Swagger. Elle est annotée avec @Configuration pour indiquer à Spring de
  * créer et gérer une instance unique de cette classe.
@@ -20,7 +19,6 @@ public class OpenApiConfig {
 
     /**
      * Crée une configuration personnalisée de l'API ouverte de l'application.
-     *
      * Cette méthode est annotée avec @Bean pour indiquer à Spring de créer et gérer
      * une instance unique de cette classe. Elle utilise la classe OpenAPI de Swagger
      * pour créer une configuration personnalisée de l'API ouverte de l'application. Dans cette

@@ -6,7 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.NonNullApi;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,6 @@ import java.io.IOException;
 
 /**
  * Classe de filtre de requêtes HTTP pour l'authentification JWT.
- *
  * Cette classe étend la classe OncePerRequestFilter de Spring pour créer un filtre de
  * requêtes HTTP qui est exécuté une seule fois par requête. Elle est utilisée pour extraire le jeton
  * JWT de l'en-tête d'autorisation de la requête HTTP, vérifier sa validité, et configurer le contexte
@@ -50,7 +48,6 @@ public class JwtFilters extends OncePerRequestFilter {
 
     /**
      * Méthode exécutée par le filtre de requêtes HTTP pour l'authentification JWT.
-     *
      * Cette méthode est appelée par la classe OncePerRequestFilter de Spring pour chaque
      * requête HTTP entrante. Elle extrait le jeton JWT de l'en-tête d'autorisation de la requête HTTP,
      * vérifie sa validité à l'aide de l'utilitaire JwtUtils, et configure le contexte de
@@ -68,9 +65,9 @@ public class JwtFilters extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String authorization = request.getHeader("Authorization");
-        if(authorization != null && authorization.startsWith("Bearer ")){
+        if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.substring(7);
-            if(jwtUtils.isValid(token)){
+            if (jwtUtils.isValid(token)) {
                 String username = jwtUtils.getUsername(token);
                 UserDetails user = userService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken upt = new UsernamePasswordAuthenticationToken(

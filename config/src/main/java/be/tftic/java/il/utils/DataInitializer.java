@@ -10,10 +10,22 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Classe responsable de l'initialisation des données au démarrage de l'application.
+ * Implémente l'interface {@link CommandLineRunner} pour exécuter des opérations
+ * lors du démarrage de l'application en tant que tâche de fond.
+ * Cette classe est annotée avec {@link Component} et {@link RequiredArgsConstructor}
+ * pour être détectée automatiquement comme un composant Spring et pour injecter
+ * automatiquement les dépendances via le constructeur.
+ * La méthode {@link #run(String...)} est exécutée au démarrage de l'application
+ * et vérifie si des données initiales doivent être créées dans les repositories.
+ * Si aucun enregistrement n'existe dans le repository des personnes, des exemples
+ * de données sont créés pour les entités Personne, Utilisateur, Adresse, Téléphone,
+ * Plainte, Déposition et Audition à des fins de démonstration.
+ */
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
@@ -28,6 +40,11 @@ public class DataInitializer implements CommandLineRunner {
     private final DepositionRepository depositionRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuditionRepository auditionRepository;
+
+    /**
+     * Méthode exécutée au démarrage de l'application pour initialiser les données.
+     * @param args les arguments de la ligne de commande, s'ils existent
+     */
 
     @Override
     public void run(String... args) {
