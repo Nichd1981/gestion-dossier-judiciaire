@@ -7,28 +7,51 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
+/**
+ * Classe représentant une déposition dans le cadre d'une plainte.
+ *
+ */
 @Entity
 @Table(name = "DEPOSITION")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Deposition {
 
+    /**
+     * Identifiant unique de la déposition.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Date de la déposition.
+     */
     @Column(name = "DATE_DEPOSITION", nullable = false)
     private LocalDate dateDeposition;
 
+    /**
+     * Contenu de la déposition.
+     */
     @Column(name = "DEPOSITION", nullable = false)
     private String deposition;
 
+    /**
+     * Plainte associée à la déposition.
+     */
     @ManyToOne
     @JoinColumn(name = "PLAINTE_ID", nullable = false)
     private Plainte plainte;
 
+    /**
+     * Constructeur de la classe `Déposition'.
+     *
+     * @param dateDeposition la date de la déposition
+     * @param deposition     le contenu de la déposition
+     * @param plainte       la plainte associée à la déposition
+     */
     public Deposition(LocalDate dateDeposition, String deposition, Plainte plainte) {
         this.dateDeposition = dateDeposition;
         this.deposition = deposition;

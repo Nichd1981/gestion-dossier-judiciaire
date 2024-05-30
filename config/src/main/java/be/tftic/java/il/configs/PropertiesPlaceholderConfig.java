@@ -6,20 +6,29 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.FileSystemResource;
 
 /**
- * Configuration class for the application.
- * It will replace property placeholders (application.yml) with the ones in the .env file.
- * This class is annotated with @Configuration to indicate that it is a source of bean definitions.
- * The AppConfig class is not instantiable, attempting to do so will result in an IllegalStateException.
+ * Classe de configuration des propriétés de l'application.
+ *
+ * Cette classe permet de configurer les propriétés de l'application à partir d'un
+ * fichier de propriétés externe, en utilisant la classe PropertySourcesPlaceholderConfigurer
+ * de Spring. Elle est annotée avec @Configuration pour indiquer à Spring de
+ * créer et gérer une instance unique de cette classe.
+ *
  */
 @Configuration
 public class PropertiesPlaceholderConfig {
 
     /**
-     * Bean definition for PropertySourcesPlaceholderConfigurer.
-     * This bean allows the application to use placeholders in property files.
-     * The placeholders are replaced with the actual values from the .env file.
+     * Crée un gestionnaire de propriétés pour l'application.
      *
-     * @return a PropertySourcesPlaceholderConfigurer with the location of the .env file set.
+     * Cette méthode est annotée avec @Bean et static pour indiquer à
+     * Spring de créer et gérer une instance unique de cette classe, et de la créer avant les
+     * autres beans de la classe PropertiesPlaceholderConfig. Elle utilise la classe
+     * PropertySourcesPlaceholderConfigurer de Spring pour créer un gestionnaire de
+     * propriétés à partir d'un fichier de propriétés externe. Dans cette implémentation, elle
+     * utilise la classe FileSystemResource de Spring pour charger le fichier de
+     * propriétés à partir du système de fichiers, en utilisant le chemin d'accès ".env".
+     *
+     * @return le gestionnaire de propriétés créé
      */
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
