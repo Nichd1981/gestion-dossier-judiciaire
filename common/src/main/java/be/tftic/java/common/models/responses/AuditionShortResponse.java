@@ -3,7 +3,7 @@ package be.tftic.java.common.models.responses;
 import be.tftic.java.domain.entities.Audition;
 import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 /**
@@ -26,31 +26,26 @@ public class AuditionShortResponse {
 	 * Le compte rendu de l'audition.
 	 */
 	String audition;
-
-	/**
-	 * Le numéro de la salle où l'audition a eu lieu.
-	 */
-	int numeroSalle;
-
-	/**
-	 * La personne convoquée à l'audition.
-	 */
-	PersonneShortResponse convoque;
-
-	/**
-	 * L'agent qui a mené l'audition.
-	 */
-	PersonneShortResponse agentTraitant;
-
-	/**
-	 * L'avocat de la personne convoquée, s'il y en a un.
-	 */
-	PersonneShortResponse avocat;
-
-	/**
-	 * La plainte associée à l'audition.
-	 */
-	PlainteShortResponse plainte;
+    /**
+     * Le numéro de la salle où l'audition a eu lieu.
+     */
+	String roomNumber;
+    /**
+     * La personne convoquée à l'audition.
+     */
+	PersonShortResponse citizen;
+    /**
+     * L'agent qui a mené l'audition.
+     */
+	PersonShortResponse agent;
+    /**
+     * L'avocat de la personne convoquée, s'il y en a un.
+     */
+	PersonShortResponse lawyer;
+    /**
+     * La plainte associée à l'audition.
+     */
+	ComplaintShortResponse complaint;
 
 	/**
 	 * Méthode statique pour construire une instance de {@link AuditionShortResponse} à partir d'un objet {@link Audition}.
@@ -62,11 +57,11 @@ public class AuditionShortResponse {
 		return AuditionShortResponse.builder()
 				.date(audition.getDateAudition())
 				.audition(audition.getDepositionAudition())
-				.numeroSalle(audition.getNumeroSalleAudition())
-				.convoque(PersonneShortResponse.fromEntity(audition.getConvoque()))
-				.agentTraitant(PersonneShortResponse.fromEntity(audition.getAgentTraitant()))
-				.avocat(PersonneShortResponse.fromEntity(audition.getAvocat()))
-				.plainte(PlainteShortResponse.fromEntity(audition.getPlainte()))
+				.roomNumber(audition.getRoomNumberAudition())
+				.citizen(PersonShortResponse.fromEntity(audition.getCitizen()))
+				.agent(PersonShortResponse.fromEntity(audition.getAgent()))
+				.lawyer(PersonShortResponse.fromEntity(audition.getLawyer()))
+				.complaint(ComplaintShortResponse.fromEntity(audition.getComplaint()))
 				.build();
 	}
 }

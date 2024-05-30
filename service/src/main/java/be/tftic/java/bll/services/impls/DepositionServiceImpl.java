@@ -5,14 +5,13 @@ import be.tftic.java.bll.specifications.DepositionSpecification;
 import be.tftic.java.common.models.requests.filter.DepositionFilterRequest;
 import be.tftic.java.common.models.responses.DepositionShortResponse;
 import be.tftic.java.dal.repositories.DepositionRepository;
-import be.tftic.java.dal.repositories.PlainteRepository;
+import be.tftic.java.dal.repositories.ComplaintRepository;
 import be.tftic.java.domain.entities.Deposition;
-import be.tftic.java.domain.entities.Plainte;
+import be.tftic.java.domain.entities.Complaint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Déposition.
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DepositionServiceImpl implements DepositionService {
 
-    private final PlainteRepository plainteRepository;
+    private final ComplaintRepository complaintRepository;
     private final DepositionRepository depositionRepository;
 
     /**
@@ -43,11 +42,11 @@ public class DepositionServiceImpl implements DepositionService {
      */
     @Override
     public List<DepositionShortResponse> findAllDeposition(Long id) {
-        Plainte plainte = plainteRepository.findById(id).orElseThrow(
+        Complaint plainte = complaintRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("La plainte n'existe pas")
         );
 
-        return depositionRepository.findByPlainte(plainte)
+        return depositionRepository.findByComplaint(plainte)
                 .stream()
                 .map(DepositionShortResponse::fromEntity)
                 .toList();

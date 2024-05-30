@@ -3,9 +3,9 @@ package be.tftic.java.il.utils;
 
 import be.tftic.java.dal.repositories.*;
 import be.tftic.java.domain.entities.*;
-import be.tftic.java.domain.enums.Genre;
+import be.tftic.java.domain.enums.Gender;
 import be.tftic.java.domain.enums.Role;
-import be.tftic.java.domain.enums.Statut;
+import be.tftic.java.domain.enums.ComplaintStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,113 +20,113 @@ public class DataInitializer implements CommandLineRunner {
 
     //TODO : pdt le refactoring, passer par les service plutot que les repository
 
-    private final PersonneRepository personneRepository;
-    private final AdresseRepository adresseRepository;
-    private final TelephoneRepository telephoneRepository;
-    private final PlainteRepository plainteRepository;
-    private final UtilisateurRepository utilisateurRepository;
+    private final PersonRepository personRepository;
+    private final AddressRepository addressRepository;
+    private final PhoneRepository phoneRepository;
+    private final ComplaintRepository complaintRepository;
+    private final UserRepository userRepository;
     private final DepositionRepository depositionRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuditionRepository auditionRepository;
 
     @Override
     public void run(String... args) {
-        if (personneRepository.count()==0){
-            Personne azzedine = new Personne("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Genre.HOMME, null, "", "");
-            Personne antoine = new Personne("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Genre.HOMME, null, "", "");
-            Personne nicolas = new Personne("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Genre.HOMME, null, "", "");
-            Personne valentine = new Personne("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Genre.FEMME, null, "", "");
-            valentine.setAvocat(azzedine);
-            personneRepository.save(azzedine);
-            personneRepository.save(valentine);
-            personneRepository.save(antoine);
-            personneRepository.save(nicolas);
+        if (personRepository.count()==0){
+            Person azzedine = new Person("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Gender.MAN, null, "", "");
+            Person antoine = new Person("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Gender.MAN, null, "", "");
+            Person nicolas = new Person("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Gender.MAN, null, "", "");
+            Person valentine = new Person("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Gender.WOMAN, null, "", "");
+            valentine.setLawyer(azzedine);
+            personRepository.save(azzedine);
+            personRepository.save(valentine);
+            personRepository.save(antoine);
+            personRepository.save(nicolas);
 
-            Utilisateur admin = Utilisateur.builder()
-                            .email("antoinegeoris@outlook.be")
-                            .motDePasse(passwordEncoder.encode("12341234"))
+            User admin = User.builder()
+                            .mail("antoinegeoris@outlook.be")
+                            .password(passwordEncoder.encode("12341234"))
                             .role(Role.ADMIN)
-                            .personne(antoine)
+                            .person(antoine)
                             .build();
 
-            Utilisateur agent = Utilisateur.builder()
-                                        .email("quinet.nicolas@gmail.com")
-                                        .motDePasse(passwordEncoder.encode("12341234"))
-                                        .role(Role.AGENT)
-                                        .personne(nicolas)
-                                        .build();
+            User agent = User.builder()
+                                .mail("quinet.nicolas@gmail.com")
+                                .password(passwordEncoder.encode("12341234"))
+                                .role(Role.AGENT)
+                                .person(nicolas)
+                                .build();
 
-            Utilisateur citoyen = Utilisateur.builder()
-                                        .email("valentineevidence83@gmail.com")
-                                        .motDePasse(passwordEncoder.encode("12341234"))
-                                        .role(Role.CITOYEN)
-                                        .personne(valentine)
-                                        .build();
+            User citizen = User.builder()
+                                .mail("valentineevidence83@gmail.com")
+                                .password(passwordEncoder.encode("12341234"))
+                                .role(Role.CITIZEN)
+                                .person(valentine)
+                                .build();
 
-            Utilisateur citoyen2 = Utilisateur.builder()
-                    .email("antoinegeoris99@outlook.be")
-                    .motDePasse(passwordEncoder.encode("12341234"))
-                    .role(Role.CITOYEN)
-                    .personne(antoine)
+            User citizen2 = User.builder()
+                    .mail("antoinegeoris99@outlook.be")
+                    .password(passwordEncoder.encode("12341234"))
+                    .role(Role.CITIZEN)
+                    .person(antoine)
                     .build();
 
-            Utilisateur avocat = Utilisateur.builder()
-                    .email("azzedinehassaini@gmail.com")
-                    .motDePasse(passwordEncoder.encode("12341234"))
-                    .role(Role.AVOCAT)
-                    .personne(azzedine)
+            User lawyer = User.builder()
+                    .mail("azzedinehassaini@gmail.com")
+                    .password(passwordEncoder.encode("12341234"))
+                    .role(Role.LAWYER)
+                    .person(azzedine)
                     .build();
 
-            utilisateurRepository.save(admin);
-            utilisateurRepository.save(agent);
-            utilisateurRepository.save(citoyen);
-            utilisateurRepository.save(citoyen2);
-            utilisateurRepository.save(avocat);
+            userRepository.save(admin);
+            userRepository.save(agent);
+            userRepository.save(citizen);
+            userRepository.save(citizen2);
+            userRepository.save(lawyer);
 
-            Adresse adresse1 = new Adresse("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
-            Adresse adresse2 = new Adresse("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", valentine);
-            Adresse adresse3 = new Adresse("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
-            Adresse adresse4 = new Adresse("Rue test4", "1", "Ville", "1234", "Belgique", "Domicile", nicolas);
-            adresseRepository.save(adresse1);
-            adresseRepository.save(adresse2);
-            adresseRepository.save(adresse3);
-            adresseRepository.save(adresse4);
+            Address address1 = new Address("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
+            Address address2 = new Address("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", valentine);
+            Address address3 = new Address("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
+            Address address4 = new Address("Rue test4", "1", "Ville", "1234", "Belgique", "Domicile", nicolas);
+            addressRepository.save(address1);
+            addressRepository.save(address2);
+            addressRepository.save(address3);
+            addressRepository.save(address4);
 
-            Telephone tel1 = new Telephone("0498123456", "GSM", azzedine);
-            Telephone tel2 = new Telephone("0498123457", "GSM", valentine);
-            Telephone tel3 = new Telephone("0498123458", "GSM", antoine);
-            Telephone tel4 = new Telephone("0498123459", "GSM", nicolas);
-            telephoneRepository.save(tel1);
-            telephoneRepository.save(tel2);
-            telephoneRepository.save(tel3);
-            telephoneRepository.save(tel4);
+            Phone phone1 = new Phone("0498123456", "GSM", azzedine);
+            Phone phone2 = new Phone("0498123457", "GSM", valentine);
+            Phone phone3 = new Phone("0498123458", "GSM", antoine);
+            Phone phone4 = new Phone("0498123459", "GSM", nicolas);
+            phoneRepository.save(phone1);
+            phoneRepository.save(phone2);
+            phoneRepository.save(phone3);
+            phoneRepository.save(phone4);
 
-            Plainte plainte = new Plainte("VAL-1234-5678", Statut.ENREGISTREE, LocalDate.of(2024,1,10).atStartOfDay(), valentine, nicolas);
-            plainte.getPersonnesConcernees().add(antoine);
-            plainteRepository.save(plainte);
+            Complaint complaint = new Complaint("VAL-1234-5678", ComplaintStatus.REGISTERED, LocalDate.of(2024,1,10).atStartOfDay(), valentine, nicolas);
+            complaint.getPersonConcerned().add(antoine);
+            complaintRepository.save(complaint);
 
-            Plainte plainte2 = new Plainte("AZZ-1234-5679", Statut.ENREGISTREE, LocalDate.of(2024,2,10).atStartOfDay(), azzedine, nicolas);
-            plainte2.getPersonnesConcernees().add(antoine);
-            plainteRepository.save(plainte2);
+            Complaint complaint2 = new Complaint("AZZ-1234-5679", ComplaintStatus.REGISTERED, LocalDate.of(2024,2,10).atStartOfDay(), azzedine, nicolas);
+            complaint2.getPersonConcerned().add(antoine);
+            complaintRepository.save(complaint2);
 
-            Plainte plainte3 = new Plainte("VAL-1234-5670", Statut.EN_COURS, LocalDate.of(2024,3,10).atStartOfDay(), valentine, nicolas);
-            plainte3.getPersonnesConcernees().add(antoine);
-            plainteRepository.save(plainte3);
+            Complaint complaint3 = new Complaint("VAL-1234-5670", ComplaintStatus.IN_PROGRESS, LocalDate.of(2024,3,10).atStartOfDay(), valentine, nicolas);
+            complaint3.getPersonConcerned().add(antoine);
+            complaintRepository.save(complaint3);
 
-            Plainte plainte4 = new Plainte("ANT-1234-5670", Statut.EN_COURS, LocalDate.of(2024,4,10).atStartOfDay(), antoine, nicolas);
-            plainte4.getPersonnesConcernees().add(valentine);
-            plainteRepository.save(plainte4);
+            Complaint complaint4 = new Complaint("ANT-1234-5670", ComplaintStatus.IN_PROGRESS, LocalDate.of(2024,4,10).atStartOfDay(), antoine, nicolas);
+            complaint4.getPersonConcerned().add(valentine);
+            complaintRepository.save(complaint4);
 
-            Deposition deposition = new Deposition(LocalDate.of(2024, 1, 5), "Ceci est une arnaque !", plainte);
+            Deposition deposition = new Deposition(LocalDate.of(2024, 1, 5), "Ceci est une arnaque !", complaint);
             depositionRepository.save(deposition);
-            Deposition deposition2 = new Deposition(LocalDate.of(2024, 10, 5), "C'est quoi ça encore ?!", plainte);
+            Deposition deposition2 = new Deposition(LocalDate.of(2024, 10, 5), "C'est quoi ça encore ?!", complaint);
             depositionRepository.save(deposition2);
-            Deposition deposition3 = new Deposition(LocalDate.of(2024, 5, 5), "Je suis perdu !", plainte);
+            Deposition deposition3 = new Deposition(LocalDate.of(2024, 5, 5), "Je suis perdu !", complaint);
             depositionRepository.save(deposition3);
 
-            Audition audition  = new Audition(LocalDateTime.of(2024, 1, 5, 10, 0), 2, "Ceci est une audition !", valentine, nicolas, azzedine, plainte );
+            Audition audition  = new Audition(LocalDateTime.of(2024, 1, 5, 10, 0), "2", "Ceci est une audition !", valentine, nicolas, azzedine, complaint );
             auditionRepository.save(audition);
-            Audition audition2  = new Audition(LocalDateTime.of(2025, 7, 7, 10, 0), 2, "Ceci est une audition Bis repetita !", valentine, nicolas, azzedine, plainte );
+            Audition audition2  = new Audition(LocalDateTime.of(2025, 7, 7, 10, 0), "2", "Ceci est une audition Bis repetita !", valentine, nicolas, azzedine, complaint );
             auditionRepository.save(audition2);
 
         }

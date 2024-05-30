@@ -1,29 +1,21 @@
 package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.AuditionService;
-import be.tftic.java.bll.services.PersonneService;
+import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.bll.specifications.AuditionSpecification;
 import be.tftic.java.common.models.requests.create.AuditionCreateRequest;
-import be.tftic.java.bll.specifications.PlainteSpecification;
 import be.tftic.java.common.models.requests.filter.AuditionFilterRequest;
 import be.tftic.java.common.models.responses.AuditionShortResponse;
 import be.tftic.java.dal.repositories.AuditionRepository;
-import be.tftic.java.dal.repositories.PersonneRepository;
-import be.tftic.java.dal.repositories.PlainteRepository;
+import be.tftic.java.dal.repositories.ComplaintRepository;
 import be.tftic.java.domain.entities.Audition;
-import be.tftic.java.domain.entities.Personne;
-import be.tftic.java.domain.entities.Plainte;
-import be.tftic.java.domain.entities.Utilisateur;
-import be.tftic.java.domain.entities.*;
-import be.tftic.java.domain.enums.Statut;
-import be.tftic.java.domain.enums.TypePlainte;
+import be.tftic.java.domain.entities.Person;
+import be.tftic.java.domain.entities.Complaint;
+import be.tftic.java.domain.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -43,26 +35,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuditionServiceImpl implements AuditionService {
 
-	private final PlainteRepository plainteRepository;
+	private final ComplaintRepository complaintRepository;
 	private final AuditionRepository auditionRepository;
-	private final PersonneService personneService;
+	private final PersonService personService;
 
 	@Override
 	public void create(AuditionCreateRequest request) {
 		Audition audition = request.toEntity();
 
-		Utilisateur user = (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Personne agent = user.getPersonne();
-		audition.setAgentTraitant(agent);
-		Personne citizen = personneService.findById(request.citizenId());
-		audition.setConvoque(citizen);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Person agent = user.getPerson();
+		audition.setAgent(agent);
+		Person citizen = personService.findById(request.citizenId());
+		audition.setCitizen(citizen);
 		if (request.lawyerId() != null){
-			Personne lawyer = personneService.findById(request.lawyerId());
-			audition.setAvocat(lawyer);
+			Person lawyer = personService.findById(request.lawyerId());
+			audition.setLawyer(lawyer);
 		}
 
-		Plainte plainte = getComplaint(request.complaintId());
-		audition.setPlainte(plainte);
+		Complaint complaint = getComplaint(request.complaintId());
+		audition.setComplaint(complaint);
 		auditionRepository.save(audition);
 	}
 
@@ -76,11 +68,11 @@ public class AuditionServiceImpl implements AuditionService {
 	 */
     @Override
 	public List<AuditionShortResponse> findAllAudition(Long id) {
-		Plainte plainte = plainteRepository.findById(id).orElseThrow(
+		Complaint complaint = complaintRepository.findById(id).orElseThrow(
 				() -> new RuntimeException("La plainte n'existe pas")
 		);
 
-		return auditionRepository.findByPlainte(plainte)
+		return auditionRepository.findByComplaint(complaint)
 				.stream()
 				.map(AuditionShortResponse::fromEntity)
 				.toList();
@@ -104,10 +96,6 @@ public class AuditionServiceImpl implements AuditionService {
 	 * Les critères de recherche incluent une personne, une borne inférieure de date, une borne supérieure de date et un mot-clé.
 	 * Les auditions sont filtrées en fonction des critères fournis, et seules les auditions correspondantes sont renvoyées.
 	 *
-	 * @param personne la personne à utiliser pour le filtrage des auditions. Si null, ce critère est ignoré.
-	 * @param lowerBound la borne inférieure de date à utiliser pour le filtrage des auditions. Si null, ce critère est ignoré.
-	 * @param upperBound la borne supérieure de date à utiliser pour le filtrage des auditions. Si null, ce critère est ignoré.
-	 * @param motCle le mot-clé à utiliser pour le filtrage des auditions. Si null ou vide, ce critère est ignoré.
 	 * @return la liste des auditions qui correspondent aux critères de recherche donnés, ou une liste vide si aucune audition ne correspond.
 	 */
 	@Override
@@ -119,8 +107,8 @@ public class AuditionServiceImpl implements AuditionService {
 				.toList();
 	}
 
-    private Plainte getComplaint(Long plainteId){
-		return plainteRepository.findById(plainteId).orElseThrow(
+    private Complaint getComplaint(Long complaintId){
+		return complaintRepository.findById(complaintId).orElseThrow(
 				() -> new RuntimeException("La plainte n'existe pas")
         );
     }
@@ -132,7 +120,7 @@ public class AuditionServiceImpl implements AuditionService {
 	 *
 	 * @param lowerBound la borne inférieure de date à utiliser pour le filtrage des auditions. Si null, ce critère est ignoré.
 	 * @param upperBound la borne supérieure de date à utiliser pour le filtrage des auditions. Si null, ce critère est ignoré.
-	 * @param motCle le mot-clé à utiliser pour le filtrage des auditions. Si null ou vide, ce critère est ignoré.
+	 * @param keyword le mot-clé à utiliser pour le filtrage des auditions. Si null ou vide, ce critère est ignoré.
 	 * @return la spécification pour le filtrage des auditions en fonction des critères de recherche donnés.
 	 */
 		private Specification<Audition> getSpecification(LocalDate lowerBound, LocalDate upperBound, String keyword) {

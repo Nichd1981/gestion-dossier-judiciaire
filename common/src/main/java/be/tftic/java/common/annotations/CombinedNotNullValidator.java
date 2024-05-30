@@ -1,6 +1,6 @@
 package be.tftic.java.common.annotations;
 
-import be.tftic.java.common.models.requests.filter.JugementFilterRequest;
+import be.tftic.java.common.models.requests.filter.JudgmentFilterRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapperImpl;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class CombinedNotNullValidator implements ConstraintValidator<CombinedNotNull, JugementFilterRequest> {
+public class CombinedNotNullValidator implements ConstraintValidator<CombinedNotNull, JudgmentFilterRequest> {
 
     /**
      * Tableau de noms de champs à vérifier pour l'annotation @CombinedNotNull.
@@ -39,7 +39,7 @@ public class CombinedNotNullValidator implements ConstraintValidator<CombinedNot
      * @return true si la contrainte est respectée, false sinon
      */
     @Override
-    public boolean isValid(final JugementFilterRequest filter, final ConstraintValidatorContext context) {
+    public boolean isValid(final JudgmentFilterRequest filter, final ConstraintValidatorContext context) {
 
         final BeanWrapperImpl beanWrapper = new BeanWrapperImpl(filter);
 

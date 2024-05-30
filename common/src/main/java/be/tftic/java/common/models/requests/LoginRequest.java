@@ -1,6 +1,6 @@
 package be.tftic.java.common.models.requests;
 
-import be.tftic.java.domain.entities.Utilisateur;
+import be.tftic.java.domain.entities.User;
 
 /**
  * Classe de requête de connexion.
@@ -9,28 +9,25 @@ import be.tftic.java.domain.entities.Utilisateur;
  *
  */
 public record LoginRequest(
-
-        /**
+         /**
          * L'adresse e-mail de l'utilisateur.
          */
-        String email,
+        String mail,
 
         /**
          * Le mot de passe de l'utilisateur.
          */
-        String motDePasse
-
+        String password
 ) {
-
     /**
      * Méthode pour convertir la requête de connexion en une entité d'utilisateur.
      *
      * @return l'entité d'utilisateur créée à partir de la requête de connexion
      */
-    public Utilisateur toEntity() {
-        return Utilisateur.builder()
-                .email(this.email)
-                .motDePasse(this.motDePasse)
+    public User toEntity() {
+        return User.builder()
+                .mail(mail)
+                .password(password)
                 .build();
     }
 }

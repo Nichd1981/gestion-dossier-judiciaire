@@ -1,8 +1,8 @@
 package be.tftic.java.controllers;
 
-import be.tftic.java.bll.services.UtilisateurService;
+import be.tftic.java.bll.services.UserService;
 import be.tftic.java.common.models.requests.LoginRequest;
-import be.tftic.java.common.models.responses.UtilisateurTokenResponse;
+import be.tftic.java.common.models.responses.UserTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +26,7 @@ public class AuthController {
     /**
      * Service pour la gestion des utilisateurs.
      */
-    private final UtilisateurService utilisateurService;
+    private final UserService userService;
 
     /**
      * Traite une requête HTTP POST pour l'authentification d'un utilisateur.
@@ -39,7 +39,7 @@ public class AuthController {
      */
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
-    public ResponseEntity<UtilisateurTokenResponse> login(@RequestBody LoginRequest form) {
-        return ResponseEntity.ok(utilisateurService.login(form.toEntity()));
+    public ResponseEntity<UserTokenResponse> login(@RequestBody LoginRequest form) {
+        return ResponseEntity.ok(userService.login(form.toEntity()));
     }
 }

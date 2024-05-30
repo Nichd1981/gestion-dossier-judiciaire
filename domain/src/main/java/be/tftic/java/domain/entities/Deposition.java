@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
 /**
  * Classe représentant une déposition dans le cadre d'une plainte.
@@ -42,19 +41,19 @@ public class Deposition {
      * Plainte associée à la déposition.
      */
     @ManyToOne
-    @JoinColumn(name = "PLAINTE_ID", nullable = false)
-    private Plainte plainte;
+    @JoinColumn(name = "COMPLAINT_ID", nullable = false)
+    private Complaint complaint;
 
     /**
      * Constructeur de la classe `Déposition'.
      *
      * @param dateDeposition la date de la déposition
      * @param deposition     le contenu de la déposition
-     * @param plainte       la plainte associée à la déposition
+     * @param complaint       la plainte associée à la déposition
      */
-    public Deposition(LocalDate dateDeposition, String deposition, Plainte plainte) {
+    public Deposition(LocalDate dateDeposition, String deposition, Complaint complaint) {
         this.dateDeposition = dateDeposition;
         this.deposition = deposition;
-        this.plainte = plainte;
+        this.complaint = complaint;
     }
 }
