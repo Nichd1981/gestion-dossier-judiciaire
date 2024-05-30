@@ -9,38 +9,60 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-
-/**<h1>JWT Configuration</h1>
- * <p>
- * This class is responsible for JWT configuration.
- * It is annotated with @Component to indicate that an instance of this class should be created at startup.
- * It is also annotated with @ConfigurationProperties(prefix = "jwt") to bind properties prefixed with "jwt"
- * from the application's configuration files to this class's fields.
- * </p>
- * <p>
- * The class has three fields: algorithm, secret, and expireAt, which represent the JWT algorithm, secret key,
- * and expiration time respectively. These fields are populated with values from the application's configuration files.
- * </p>
- * <p>
- * The class also has a SecretKey field, secretKey, which is used to store the secret key in a format suitable for
- * creating a JWT signature. This field is populated in the init method, which is annotated with @PostConstruct
- * to ensure it is executed after Spring has completed the field injection.
- * </p>
+/**
+ * Classe de configuration de la sécurité JWT.
+ *
+ * Cette classe est annotée avec @Component et @ConfigurationProperties
+ * pour indiquer à Spring de créer et gérer une instance unique de cette classe, et de la configurer
+ * à partir des propriétés de l'application dans le fichier de configuration ou dans les variables
+ * d'environnement. Elle est utilisée pour stocker et gérer les propriétés de sécurité JWT, telles que
+ * l'algorithme de chiffrement, la clé secrète, et la durée de vie des jetons JWT.
+ *
  */
 @Component
 @ConfigurationProperties(prefix = "jwt")
 @Getter @Setter
 public class JwtConfig {
 
+    /**
+     * Algorithme de chiffrement utilisé pour les jetons JWT.
+     *
+     * Par défaut, cette propriété est définie à "HS256", qui est l'algorithme de chiffrement symétrique
+     * HMAC-SHA256.
+     */
     private String algorithm;
+
+    /**
+     * Clé secrète utilisée pour les jetons JWT.
+     *
+     * Cette propriété doit être définie à une valeur aléatoire et secrète, et ne doit pas être stockée
+     * dans le code source ou dans un fichier de configuration accessible en lecture. Elle peut être
+     * stockée dans un coffre-fort de clés ou dans une variable d'environnement.
+     */
     private String secret;
+
+    /**
+     * Durée de vie des jetons JWT, en secondes.
+     *
+     * Par défaut, cette propriété est définie à 86400 secondes, soit 24 heures.
+     */
     private long expireAt;
 
+    /**
+     * Clé secrète au format SecretKey de Java.
+     *
+     * Cette propriété est initialisée à partir de la propriété "secret" dans la méthode
+     * init(), en utilisant la classe SecretKeySpec de Java.
+     */
     private SecretKey secretKey;
 
     /**
-     * This method is executed after Spring has completed the field injection.
-     * It creates a new SecretKeySpec object using the secret and algorithm fields and assigns it to the secretKey field.
+     * Méthode d'initialisation de la classe JwtConfig.
+     *
+     * Cette méthode est annotée avec @PostConstruct pour indiquer à Spring de l'appeler
+     * après la création et l'injection de dépendances de l'instance de la classe JwtConfig.
+     * Elle est utilisée pour initialiser la propriété secretKey à partir de la propriété
+     * "secret".
      */
     @PostConstruct
     public void init() {

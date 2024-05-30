@@ -7,8 +7,11 @@ import be.tftic.java.domain.entities.Telephone;
 import be.tftic.java.domain.entities.Utilisateur;
 import be.tftic.java.domain.enums.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Téléphone.
