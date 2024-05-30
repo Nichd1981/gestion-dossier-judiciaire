@@ -66,3 +66,7 @@ public class AuditionShortResponse {
 				.convoque(PersonneShortResponse.fromEntity(audition.getConvoque()))
 				.agentTraitant(PersonneShortResponse.fromEntity(audition.getAgentTraitant()))
 				.avocat(PersonneShortResponse.fromEntity(audition.getAvocat()))
+				.plainte(PlainteShortResponse.fromEntity(audition.getPlainte()))
+				.build();
+	}
+}
