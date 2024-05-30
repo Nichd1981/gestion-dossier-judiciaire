@@ -14,8 +14,8 @@ public class AuditionSpecification {
 		return ((root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("dateAudition"), upperBound));
 	}
 
-	public static Specification<Audition> getByMotCle(String motCle){
-		return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("depositionAudition"), "%"+motCle+"%"));
+	public static Specification<Audition> getByKeyword(String keyword) {
+		return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("depositionAudition"), "%" + keyword + "%"));
 	}
 
 }

@@ -1,8 +1,10 @@
 package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.UtilisateurService;
+import be.tftic.java.common.models.responses.UtilisateurTokenResponse;
 import be.tftic.java.dal.repositories.UtilisateurRepository;
 import be.tftic.java.domain.entities.Utilisateur;
+import be.tftic.java.il.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +29,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
     /**
      * Récupère un utilisateur à partir de son nom d'utilisateur.
@@ -50,13 +53,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
      * @throws RuntimeException si l'utilisateur n'existe pas ou si le mot de passe est incorrect.
      */
     @Override
-    public Utilisateur login(Utilisateur utilisateur) {
+    public UtilisateurTokenResponse login(Utilisateur utilisateur) {
         Utilisateur existingUser = utilisateurRepository.getUserByUsername(utilisateur.getEmail()).orElseThrow();
+        UtilisateurTokenResponse dto = UtilisateurTokenResponse.fromEntity(existingUser);
+        String token = jwtUtils.generateToken(utilisateur);
+        dto.setToken(token);
 
         if (!passwordEncoder.matches(utilisateur.getPassword(), existingUser.getPassword())) {
             throw new RuntimeException("Wrong password");
         }
-        return existingUser;
+
+        return dto;
     }
 
 }

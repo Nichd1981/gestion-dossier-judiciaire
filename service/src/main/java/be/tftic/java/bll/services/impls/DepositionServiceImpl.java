@@ -2,7 +2,7 @@ package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.DepositionService;
 import be.tftic.java.bll.specifications.DepositionSpecification;
-import be.tftic.java.common.models.requests.DepositionFilterRequest;
+import be.tftic.java.common.models.requests.filter.DepositionFilterRequest;
 import be.tftic.java.common.models.responses.DepositionShortResponse;
 import be.tftic.java.dal.repositories.DepositionRepository;
 import be.tftic.java.dal.repositories.PlainteRepository;
@@ -42,12 +42,15 @@ public class DepositionServiceImpl implements DepositionService {
      * @throws RuntimeException si la plainte n'existe pas dans la base de données.
      */
     @Override
-    public List<Deposition> findAllDeposition(Long id) {
+    public List<DepositionShortResponse> findAllDeposition(Long id) {
         Plainte plainte = plainteRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("La plainte n'existe pas")
         );
 
-        return depositionRepository.findByPlainte(plainte);
+        return depositionRepository.findByPlainte(plainte)
+                .stream()
+                .map(DepositionShortResponse::fromEntity)
+                .toList();
     }
 
     /**
@@ -60,9 +63,10 @@ public class DepositionServiceImpl implements DepositionService {
      */
     @Override
     public List<DepositionShortResponse> findByCriteria(DepositionFilterRequest f) {
-        return depositionRepository.findAll(getSpecification(f)).stream()
+        return depositionRepository.findAll(getSpecification(f))
+                .stream()
                 .map(DepositionShortResponse::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
@@ -90,5 +94,4 @@ public class DepositionServiceImpl implements DepositionService {
 
         return spec;
     }
-
 }

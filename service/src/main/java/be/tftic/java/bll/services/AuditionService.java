@@ -1,19 +1,19 @@
 package be.tftic.java.bll.services;
 
-import be.tftic.java.domain.entities.Audition;
-import be.tftic.java.domain.entities.Personne;
+import be.tftic.java.common.models.requests.create.AuditionCreateRequest;
+import be.tftic.java.common.models.requests.filter.AuditionFilterRequest;
+import be.tftic.java.common.models.responses.AuditionShortResponse;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
 public interface AuditionService {
 
-	List<Audition> findAllAudition(Long id);
+	void create(AuditionCreateRequest request);
 
-	List<Audition> findAll();
+	List<AuditionShortResponse> findAllAudition(Long id);
 
-	List<Audition> findAuditionByCriteria(Personne personne, LocalDate lowerBound, LocalDate upperBound, String motCle);
+	List<AuditionShortResponse> findAll();
 
-
+	List<AuditionShortResponse> findAuditionByCriteria(AuditionFilterRequest f);
 }

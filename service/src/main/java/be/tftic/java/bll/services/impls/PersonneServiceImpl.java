@@ -3,7 +3,9 @@ package be.tftic.java.bll.services.impls;
 import be.tftic.java.bll.services.PersonneService;
 import be.tftic.java.dal.repositories.PersonneRepository;
 import be.tftic.java.domain.entities.Personne;
+import be.tftic.java.domain.entities.Utilisateur;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,9 +37,12 @@ public class PersonneServiceImpl implements PersonneService {
      */
     @Override
     public Personne findById(Long id) {
-        return personneRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Personne non trouvée")
-        );
+        return getPersonne(id);
+    }
+
+    @Override
+    public Personne findByNationalRegister(String nationalNumber) {
+        return getPersonne(nationalNumber);
     }
 
     /**
@@ -52,9 +57,12 @@ public class PersonneServiceImpl implements PersonneService {
     @Override
     public Long update(Long id, Personne personne) {
 
-        Personne toUpdate = personneRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Personne not found")
-        );
+        if (id == null) {
+            Utilisateur user = (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            id = user.getPersonne().getId();
+        }
+
+        Personne toUpdate = getPersonne(id);
 
         toUpdate.setNom(personne.getNom());
         toUpdate.setPrenom(personne.getPrenom());
@@ -69,5 +77,18 @@ public class PersonneServiceImpl implements PersonneService {
         return id;
     }
 
-}
+    private Personne getPersonne(Long id){
+        return personneRepository.findById(id).orElseThrow(
+                //TODO : utiliser une exception custom quand on gerera les exceptions
+                () -> new RuntimeException("Personne not found")
+        );
+    }
 
+    private Personne getPersonne(String nationalRegisterNumber){
+        return personneRepository.findByRegistreNational(nationalRegisterNumber).orElseThrow(
+                //TODO : utiliser une exception custom quand on gerera les exceptions
+                () -> new RuntimeException("Personne not found")
+        );
+    }
+
+}

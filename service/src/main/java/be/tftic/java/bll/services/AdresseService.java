@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services;
 
+
 import be.tftic.java.domain.entities.Adresse;
 
 /**
@@ -8,6 +9,8 @@ import be.tftic.java.domain.entities.Adresse;
  * La séparation entre l'interface et l'implémentation permet de garantir que les méthodes nécessaires sont fournies
  * et facilite le remplacement ou l'extension de l'implémentation.
  */
+import java.nio.file.AccessDeniedException;
+
 public interface AdresseService {
 
     /**
@@ -19,6 +22,7 @@ public interface AdresseService {
      * @return l'identifiant de l'adresse mise à jour, qui est le même que l'identifiant fourni en entrée.
      * @throws RuntimeException si l'adresse à mettre à jour n'est pas trouvée dans la base de données.
      */
-    Long update(Long id, Adresse adresse);
+    Long update(Long id, Adresse adresse) throws AccessDeniedException;
+
 
 }

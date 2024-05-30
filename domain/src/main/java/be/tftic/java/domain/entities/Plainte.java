@@ -63,19 +63,6 @@ public class Plainte {
     @OneToMany(mappedBy = "plainte", cascade = CascadeType.ALL)
     private Set<Deposition> depositions = new HashSet<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plainte plainte = (Plainte) o;
-        return Objects.equals(id, plainte.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
     @Builder
     public Plainte(String numeroDossier, Statut statut, LocalDateTime datePlainte, Personne plaignant, Personne agentTraitant) {
         this.numeroDossier = numeroDossier;
@@ -85,16 +72,4 @@ public class Plainte {
         this.agentTraitant = agentTraitant;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plainte plainte = (Plainte) o;
-        return Objects.equals(numeroDossier, plainte.numeroDossier);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(numeroDossier);
-    }
 }

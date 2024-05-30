@@ -4,15 +4,19 @@ import be.tftic.java.bll.services.JugementService;
 import be.tftic.java.bll.services.PersonneService;
 import be.tftic.java.bll.services.PlainteService;
 import be.tftic.java.bll.specifications.PlainteSpecification;
-import be.tftic.java.common.models.requests.ClotureEnqueteRequest;
-import be.tftic.java.common.models.requests.PlainteCreateRequest;
+import be.tftic.java.common.models.requests.update.ClotureEnqueteRequest;
+import be.tftic.java.common.models.requests.create.PlainteCreateRequest;
+import be.tftic.java.common.models.requests.filter.PlainteFilterRequest;
+import be.tftic.java.common.models.responses.PlainteShortResponse;
 import be.tftic.java.dal.repositories.PlainteRepository;
 import be.tftic.java.domain.entities.Personne;
 import be.tftic.java.domain.entities.Plainte;
+import be.tftic.java.domain.entities.Utilisateur;
 import be.tftic.java.domain.enums.Statut;
 import be.tftic.java.domain.enums.TypePlainte;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -45,8 +49,13 @@ public class PlainteServiceImpl implements PlainteService {
      * @return la liste des plaintes déposées par la personne, ou une liste vide si aucune plainte n'a été déposée.
      */
     @Override
-    public List<Plainte> findByPlaignantId(Long id) {
-        return plainteRepository.findByPlaignantId(id);
+    public List<PlainteShortResponse> findByPlaignantId() {
+        Utilisateur user = (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return plainteRepository.findByPlaignantId(user.getPersonne().getId())
+                .stream()
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
     }
 
     /**
@@ -56,8 +65,13 @@ public class PlainteServiceImpl implements PlainteService {
      * @return la liste des plaintes dans lesquelles la personne est impliquée, ou une liste vide si aucune plainte ne concerne la personne.
      */
     @Override
-    public List<Plainte> findByPersonneConcernee(Personne personne) {
-        return plainteRepository.findByPersonnesConcernees(personne);
+    public List<PlainteShortResponse> findByPersonneConcernee() {
+        Utilisateur user = (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return plainteRepository.findByPersonnesConcernees(user.getPersonne())
+                .stream()
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
     }
 
     /**
@@ -66,8 +80,11 @@ public class PlainteServiceImpl implements PlainteService {
      * @return la liste de toutes les plaintes, ou une liste vide si aucune plainte n'est enregistrée.
      */
     @Override
-    public List<Plainte> findAll() {
-        return plainteRepository.findAll();
+    public List<PlainteShortResponse> findAll() {
+        return plainteRepository.findAll()
+                .stream()
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
     }
 
     /**
@@ -81,6 +98,7 @@ public class PlainteServiceImpl implements PlainteService {
     @Override
     public Plainte findById(Long id) {
         return plainteRepository.findById(id).orElseThrow(
+                // TODO : gestion exceptions custom
                 () -> new RuntimeException("Le plainte n'existe pas")
         );
     }
@@ -96,6 +114,7 @@ public class PlainteServiceImpl implements PlainteService {
     @Override
     public Plainte findByNumeroDossier(String numeroDossier) {
         return plainteRepository.findByNumeroDossier(numeroDossier).orElseThrow(
+                // TODO : gestion exceptions custom
                 () -> new RuntimeException("Le plainte n'existe pas")
         );
     }
@@ -112,9 +131,13 @@ public class PlainteServiceImpl implements PlainteService {
      * @return la liste des plaintes qui correspondent aux critères de recherche donnés, ou une liste vide si aucune plainte ne correspond.
      */
     @Override
-    public List<Plainte> findByCriteria(String numeroDossier, LocalDate lowerBound, LocalDate upperBound, String statut) {
-        Specification<Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut, null, null);
-        return plainteRepository.findAll(spec);
+    public List<PlainteShortResponse> findByCriteria(PlainteFilterRequest f) {
+        Specification<Plainte> spec = getSpecification(f.getNumeroDossier(), f.getDateLowerBound(), f.getDateUpperBound(), f.getStatut(), null, null);
+
+        return plainteRepository.findAll(spec)
+                .stream()
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
     }
 
     /**
@@ -190,9 +213,20 @@ public class PlainteServiceImpl implements PlainteService {
      * @return la liste des plaintes qui correspondent aux critères de recherche donnés et qui ont été déposées par la personne donnée, ou une liste vide si aucune plainte ne correspond.
      */
     @Override
-    public List<Plainte> findByPlaignantIdWithCriteria(Personne plaignant, String type, LocalDate upperBound, LocalDate lowerBound, String numeroDossier, String statut) {
-        Specification <Plainte> spec = getSpecification(numeroDossier, lowerBound, upperBound, statut, type, plaignant);
-        return plainteRepository.findAll(spec);
+    public List<PlainteShortResponse> findByPlaignantIdWithCriteria(PlainteFilterRequest f) {
+        Utilisateur plaignant = (Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
+        Specification <Plainte> spec = getSpecification(f.getNumeroDossier(),
+                                                        f.getDateLowerBound(),
+                                                        f.getDateUpperBound(),
+                                                        f.getStatut(),
+                                                        f.getType(),
+                                                        plaignant.getPersonne());
+        return plainteRepository.findAll(spec)
+                .stream()
+                .map(PlainteShortResponse::fromEntity)
+                .toList();
     }
 
     /**

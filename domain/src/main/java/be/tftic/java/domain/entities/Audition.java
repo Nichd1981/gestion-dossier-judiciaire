@@ -1,10 +1,7 @@
 package be.tftic.java.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -111,6 +108,7 @@ public class Audition {
      * @param avocat l'avocat de la personne convoquée, si elle en a un.
      * @param plainte la plainte associée à l'audition.
      */
+    @Builder
     public Audition(LocalDateTime dateAudition, int numeroSalleAudition, String depositionAudition, Personne convoque, Personne agentTraitant, Personne avocat, Plainte plainte){
         this.dateAudition = dateAudition;
         this.numeroSalleAudition = numeroSalleAudition;
@@ -120,5 +118,4 @@ public class Audition {
         this.avocat = avocat;
         this.plainte = plainte;
     }
-
 }

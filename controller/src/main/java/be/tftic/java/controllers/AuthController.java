@@ -3,8 +3,6 @@ package be.tftic.java.controllers;
 import be.tftic.java.bll.services.UtilisateurService;
 import be.tftic.java.common.models.requests.LoginRequest;
 import be.tftic.java.common.models.responses.UtilisateurTokenResponse;
-import be.tftic.java.domain.entities.Utilisateur;
-import be.tftic.java.il.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,11 +29,6 @@ public class AuthController {
     private final UtilisateurService utilisateurService;
 
     /**
-     * Utilitaire pour la gestion des JWT (Json Web Token).
-     */
-    private final JwtUtils jwtUtils;
-
-    /**
      * Traite une requête HTTP POST pour l'authentification d'un utilisateur.
      *
      * @PreAuthorize("isAnonymous()") indique que cette méthode ne peut être appelée que si l'utilisateur n'est pas authentifié.
@@ -47,10 +40,6 @@ public class AuthController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
     public ResponseEntity<UtilisateurTokenResponse> login(@RequestBody LoginRequest form) {
-        Utilisateur utilisateur = utilisateurService.login(form.toEntity());
-        UtilisateurTokenResponse dto = UtilisateurTokenResponse.fromEntity(utilisateur);
-        String token = jwtUtils.generateToken(utilisateur);
-        dto.setToken(token);
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(utilisateurService.login(form.toEntity()));
     }
 }

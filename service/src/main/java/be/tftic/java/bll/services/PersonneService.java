@@ -7,6 +7,8 @@ public interface PersonneService {
 
     Personne findById(Long id);
 
+    Personne findByNationalRegister(String nationalRegister);
+
     Long update(Long id, Personne personne);
 
 }

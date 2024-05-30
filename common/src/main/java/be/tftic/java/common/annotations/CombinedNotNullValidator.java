@@ -1,6 +1,6 @@
 package be.tftic.java.common.annotations;
 
-import be.tftic.java.common.models.requests.JugementFilterRequest;
+import be.tftic.java.common.models.requests.filter.JugementFilterRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapperImpl;
