@@ -3,13 +3,11 @@ package be.tftic.java.common.models.responses;
 import be.tftic.java.domain.entities.Person;
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Classe de réponse détaillée pour les personnes.
- *
  * Cette classe est annotée avec @Data de Lombok pour générer automatiquement les
  * getters, setters, constructeurs, et méthodes toString(), hashCode(),
  * et equals(). Elle est utilisée pour stocker et transmettre les informations détaillées
@@ -68,18 +66,18 @@ public class PersonDetailResponse {
     /**
      * Liste des adresses associées à la personne.
      */
-    List<AdresseResponse> address;
+    List<AddressResponse> address;
 
     /**
      * Liste des numéros de téléphone associés à la personne.
      */
-    List<TelephoneResponse> phones;
+    List<PhoneResponse> phones;
 
     /**
      * Méthode de création d'une instance de PersonneDetailResponse à partir d'une entité
      * Personne.
      *
-     * @param personne l'entité Personne à partir de laquelle créer l'instance de PersonneDetailResponse.
+     * @param person l'entité Personne à partir de laquelle créer l'instance de PersonneDetailResponse.
      *
      * @return l'instance de PersonneDetailResponse créée à partir de l'entité Personne.
      */
