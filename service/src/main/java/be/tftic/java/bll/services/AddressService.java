@@ -1,14 +1,14 @@
 package be.tftic.java.bll.services;
 
 import be.tftic.java.domain.entities.Address;
+import java.nio.file.AccessDeniedException;
+
 /**
  * Interface pour le service AdresseService.
  * Cette interface définit les méthodes que doit fournir une implémentation du service AdresseService.
  * La séparation entre l'interface et l'implémentation permet de garantir que les méthodes nécessaires sont fournies
  * et facilite le remplacement ou l'extension de l'implémentation.
  */
-import java.nio.file.AccessDeniedException;
-
 public interface AddressService {
 
     /**

@@ -5,7 +5,6 @@ import lombok.*;
 
 /**
  * Classe représentant un téléphone.
- *
  * Cette classe permet de stocker les informations relatives à un téléphone,
  * telles que son numéro et son libellé, ainsi que la personne à laquelle il
  * est associé.
@@ -20,7 +19,6 @@ public class Phone {
 
     /**
      * Identifiant unique du téléphone.
-     *
      * Cet identifiant est généré automatiquement par la base de données lorsque
      * le téléphone est créé.
      */
@@ -30,7 +28,6 @@ public class Phone {
 
     /**
      * Numéro du téléphone.
-     *
      * Ce numéro est obligatoire et doit être unique pour chaque téléphone. Il
      * peut être utilisé pour appeler ou envoyer des messages à la personne à
      * laquelle le téléphone est associé.
@@ -41,7 +38,6 @@ public class Phone {
 
     /**
      * Libellé du téléphone.
-     *
      * Ce libellé est obligatoire et permet de donner un nom ou une description
      * au téléphone (par exemple : "téléphone personnel", "téléphone
      * professionnel", "téléphone fixe", etc.).
@@ -52,7 +48,6 @@ public class Phone {
 
     /**
      * Personne à laquelle le téléphone est associé.
-     *
      * Cette personne est obligatoire et doit être une instance de la classe
      * Personne. Elle permet de lier le téléphone à une personne
      * en particulier et de retrouver facilement tous les téléphones associés à
@@ -64,7 +59,6 @@ public class Phone {
 
     /**
      * Constructeur de la classe Telephone.
-     *
      * Ce constructeur permet de créer une nouvelle instance de la classe
      * Telephone en définissant son numéro, son libellé et la
      * personne à laquelle il est associé.
