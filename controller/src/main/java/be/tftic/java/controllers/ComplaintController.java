@@ -71,7 +71,7 @@ public class ComplaintController {
     /**
      * Récupère la liste des plaintes déposées par l'utilisateur authentifié.
      *
-     * @PreAuthorize("hasAuthority('CITOYEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode.
+     * @PreAuthorize("hasAuthority('CITIZEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode.
      *
      * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes déposées par l'utilisateur authentifié
      */
@@ -83,7 +83,7 @@ public class ComplaintController {
     /**
      * Récupère la liste des plaintes où l'utilisateur authentifié est la personne concernée.
      *
-     * @PreAuthorize("hasAuthority('CITOYEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode.
+     * @PreAuthorize("hasAuthority('CITIZEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode.
      *
      * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes concernant l'utilisateur authentifié
      */
@@ -96,7 +96,7 @@ public class ComplaintController {
     /**
      * Récupère la liste des plaintes déposées par l'utilisateur authentifié, filtrées selon différents critères.
      *
-     * @PreAuthorize("hasAuthority('CITOYEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode
+     * @PreAuthorize("hasAuthority('CITIZEN')") Garantit que seuls les utilisateurs ayant le rôle "CITOYEN" peuvent accéder à cette méthode
      *
      * @param f L'objet PlainteFilterRequest contenant les critères de filtrage
      * @return Une ResponseEntity contenant une liste de PlainteShortResponse représentant les plaintes déposées par l'utilisateur authentifié et correspondant aux critères de filtrage

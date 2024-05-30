@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  * Classe représentant un utilisateur du système.
- *
  * Cette classe permet de stocker les informations relatives à un utilisateur,
  * telles que son adresse e-mail, son mot de passe et son rôle, ainsi que la
  * personne à laquelle il est associé. Elle implémente l'interface
@@ -32,7 +31,6 @@ public class User implements UserDetails {
 
     /**
      * Identifiant unique de l'utilisateur.
-     *
      * Cet identifiant est généré automatiquement par la base de données lorsque
      * l'utilisateur est créé.
      */
@@ -42,7 +40,6 @@ public class User implements UserDetails {
 
     /**
      * Adresse e-mail de l'utilisateur.
-     *
      * Cette adresse e-mail est obligatoire et doit être unique pour chaque
      * utilisateur. Elle est utilisée comme nom d'utilisateur pour l'authentification.
      */
@@ -51,7 +48,6 @@ public class User implements UserDetails {
 
     /**
      * Mot de passe de l'utilisateur.
-     *
      * Ce mot de passe est obligatoire et doit être stocké de manière sécurisée
      * (par exemple : en utilisant un algorithme de hachage tel que BCrypt). Il
      * est utilisé pour l'authentification de l'utilisateur.
@@ -61,7 +57,6 @@ public class User implements UserDetails {
 
     /**
      * Rôle de l'utilisateur.
-     *
      * Ce rôle est obligatoire et est défini pour préciser les autorisations
      * de l'utilisateur (par exemple : "ADMIN", "CITOYEN", "AVOCAT", "AGENT"). Il est
      * utilisé pour l'autorisation de l'utilisateur.
@@ -72,7 +67,6 @@ public class User implements UserDetails {
 
     /**
      * Personne à laquelle l'utilisateur est associé.
-     *
      * Cette personne est obligatoire et doit être une instance de la classe Personne.
      * Elle permet de lier l'utilisateur à une personne
      * en particulier et de retrouver facilement tous les utilisateurs associés à
@@ -84,7 +78,6 @@ public class User implements UserDetails {
 
     /**
      * Renvoie les autorisations de l'utilisateur.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer une liste d'objets GrantedAuthority
      * représentant les autorisations de l'utilisateur. Dans cette
@@ -100,7 +93,6 @@ public class User implements UserDetails {
 
     /**
      * Renvoie le mot de passe de l'utilisateur.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer le mot de passe de l'utilisateur tel qu'il est stocké dans
      * la base de données. Dans cette implémentation, elle renvoie simplement la
@@ -115,7 +107,6 @@ public class User implements UserDetails {
 
     /**
      * Renvoie le nom d'utilisateur de l'utilisateur.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer le nom d'utilisateur de l'utilisateur tel qu'il est utilisé
      * pour l'authentification. Dans cette implémentation, elle renvoie simplement
@@ -130,7 +121,6 @@ public class User implements UserDetails {
 
     /**
      * Indique si le compte de l'utilisateur est expiré.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer true si le compte de l'utilisateur est expiré
      * et false sinon. Dans cette implémentation, elle renvoie
@@ -147,7 +137,6 @@ public class User implements UserDetails {
 
     /**
      * Indique si le compte de l'utilisateur est verrouillé.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer true si le compte de l'utilisateur est verrouillé
      * et false sinon. Dans cette implémentation, elle renvoie
@@ -163,7 +152,6 @@ public class User implements UserDetails {
 
     /**
      * Indique si les informations d'authentification de l'utilisateur sont expirées.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer <true si les informations d'authentification de
      * l'utilisateur sont expirées et false sinon. Dans cette
@@ -179,7 +167,6 @@ public class User implements UserDetails {
 
     /**
      * Indique si l'utilisateur est activé.
-     *
      * Cette méthode est requise par l'interface UserDetails et
      * doit renvoyer true si l'utilisateur est activé et false sinon.
      * Dans cette implémentation, elle renvoie toujours true.

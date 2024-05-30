@@ -12,7 +12,6 @@ import java.util.Date;
 
 /**
  * Classe utilitaire pour la gestion des jetons JSON Web Token (JWT).
- *
  * Cette classe permet de générer des jetons JWT pour l'authentification et
  * l'autorisation des utilisateurs, ainsi que de vérifier et d'extraire des
  * informations à partir de ces jetons. Elle utilise la bibliothèque
@@ -24,7 +23,6 @@ public class JwtUtils {
 
     /**
      * Configuration de la sécurité JWT.
-     *
      * Cette configuration est injectée automatiquement par Spring à partir de
      * la classe JwtConfig. Elle contient notamment la clé secrète
      * utilisée pour signer les jetons et la durée de vie des jetons.
@@ -33,7 +31,6 @@ public class JwtUtils {
 
     /**
      * Constructeur de jetons JWT.
-     *
      * Ce constructeur est initialisé avec la clé secrète de la configuration
      * et est utilisé pour créer de nouveaux jetons JWT.
      */
@@ -41,7 +38,6 @@ public class JwtUtils {
 
     /**
      * Parseur de jetons JWT.
-     *
      * Ce parseur est initialisé avec la clé secrète de la configuration et est
      * utilisé pour vérifier et extraire des informations à partir de jetons JWT
      * existants.
@@ -50,7 +46,6 @@ public class JwtUtils {
 
     /**
      * Constructeur de la classe JwtUtils.
-     *
      * Ce constructeur est utilisé par Spring pour créer une instance de la
      * classe JwtUtils et injecter automatiquement la configuration
      * de sécurité JWT.
@@ -65,7 +60,6 @@ public class JwtUtils {
 
     /**
      * Génère un jeton JWT pour un utilisateur donné.
-     *
      * Cette méthode utilise le constructeur de jetons JWT pour créer un nouveau
      * jeton à partir des informations de l'utilisateur (notamment son nom
      * d'utilisateur et son identifiant). Elle définit également la date d'émission
@@ -87,7 +81,6 @@ public class JwtUtils {
 
     /**
      * Extrait les revendications d'un jeton JWT.
-     *
      * Cette méthode utilise le parseur de jetons JWT pour vérifier et extraire
      * les revendications (Claims) d'un jeton JWT donné. Les
      * revendications sont un ensemble de paires clé-valeur qui contiennent
@@ -102,7 +95,6 @@ public class JwtUtils {
 
     /**
      * Extrait l'identifiant de l'utilisateur associé à un jeton JWT.
-     *
      * Cette méthode utilise la méthode getClaims() pour extraire
      * les revendications du jeton JWT, puis renvoie la valeur de la revendication
      * "id" sous forme de Long.
@@ -116,7 +108,6 @@ public class JwtUtils {
 
     /**
      * Extrait le nom d'utilisateur associé à un jeton JWT.
-     *
      * Cette méthode utilise la méthode getClaims() pour extraire
      * les revendications du jeton JWT, puis renvoie la valeur de la revendication
      * "sub" (pour "subject") sous forme de String.
@@ -130,7 +121,6 @@ public class JwtUtils {
 
     /**
      * Vérifie si un jeton JWT est valide.
-     *
      * Cette méthode utilise la méthode getClaims() pour extraire
      * les revendications du jeton JWT, puis vérifie si la date courante est
      * comprise entre la date d'émission et la date d'expiration du jeton.

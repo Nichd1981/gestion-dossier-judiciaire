@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @RestController indique que cette classe est un Contrôleur REST.
  * @RequiredArgsConstructor indique que le compilateur doit générer un constructeur avec les arguments requis.
- * @RequestMapping("/jugement") indique que les requêtes HTTP qui correspondent à cette annotation seront traitées par cette classe.
+ * @RequestMapping("/judgment") indique que les requêtes HTTP qui correspondent à cette annotation seront traitées par cette classe.
  */
 @RestController
 @RequiredArgsConstructor
@@ -66,7 +66,7 @@ public class JudgmentController {
      * Traite une requête HTTP PUT pour clôturer un jugement
      *
      * @PreAuthorize("hasAuthority('AGENT')") indique que cette méthode ne peut être appelée que si l'utilisateur à l'autorité 'AGENT'
-     * @PutMapping("/cloture") indique que cette méthode traite une requête HTTP PUT envoyée à l'URL "/jugement/cloture".
+     * @PutMapping("/closed") indique que cette méthode traite une requête HTTP PUT envoyée à l'URL "/jugement/cloture".
      *
      * @param judgment les informations de mise à jour du jugement.
      * @RequestBody indique une conversion de la requête HTTP en objet 'JugementUpdateRequest'.
