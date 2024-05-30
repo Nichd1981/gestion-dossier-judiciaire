@@ -65,6 +65,7 @@ public class Address {
      * @Setter indique que Lombok génère une méthode setter pour cet attribut.
      * @Column(name = "CODE_POSTAL", nullable = false) indique que cet attribut est mappé sur la colonne "CODE_POSTAL" dans la table de la base de données et qu'il ne peut pas être null.
      */
+
     @Setter
     @Column(name = "POSTCODE", nullable = false)
     private String postcode;
