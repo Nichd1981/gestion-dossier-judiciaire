@@ -6,7 +6,6 @@ import lombok.Data;
 
 /**
  * Classe de réponse pour les téléphones.
- *
  * Cette classe est annotée avec @Data de Lombok pour générer automatiquement les
  * getters, setters, constructeurs, et méthodes toString(), hashCode(),
  * et equals(). Elle est utilisée pour stocker et transmettre les informations d'un
@@ -30,7 +29,7 @@ public class PhoneResponse {
     /**
      * Méthode de création d'une instance de TelephoneResponse à partir d'une entité Telephone.
      *
-     * @param telephone l'entité Telephone à partir de laquelle créer l'instance de TelephoneResponse.
+     * @param phone l'entité Telephone à partir de laquelle créer l'instance de TelephoneResponse.
      *
      * @return l'instance de TelephoneResponse créée à partir de l'entité Telephone
      */

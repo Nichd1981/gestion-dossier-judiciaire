@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 /**
  * Classe de réponse courte pour les personnes.
- *
  * Cette classe est annotée avec @Data de Lombok pour générer automatiquement les
  * getters, setters, constructeurs, et méthodes toString(), hashCode(),
  * et equals(). Elle est utilisée pour stocker et transmettre les informations les plus
@@ -53,7 +52,7 @@ public class PersonShortResponse {
      * Méthode de création d'une instance de PersonneShortResponse à partir d'une entité
      * Personne.
      *
-     * @param personne l'entité Personne à partir de laquelle créer l'instance de
+     * @param person l'entité Personne à partir de laquelle créer l'instance de
      *                   PersonneShortResponse
      * @return l'instance de PersonneShortResponse créée à partir de l'entité 
      *         Personne

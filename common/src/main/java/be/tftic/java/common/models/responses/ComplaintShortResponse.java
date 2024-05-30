@@ -37,18 +37,18 @@ public class ComplaintShortResponse {
     /**
      * Informations courtes sur le plaignant.
      */
-    PersonneShortResponse complaint;
+    PersonShortResponse complaint;
 
     /**
      * Informations courtes sur l'agent traitant la plainte.
      */
-    PersonneShortResponse agent;
+    PersonShortResponse agent;
 
     /**
      * Méthode de création d'une instance de PlainteShortResponse à partir d'une entité
      * Plainte.
      *
-     * @param plainte l'entité Plainte à partir de laquelle créer l'instance de
+     * @param complaint l'entité Plainte à partir de laquelle créer l'instance de
      *                PlainteShortResponse
      * @return l'instance de PlainteShortResponse créée à partir de l'entité
      * Plainte

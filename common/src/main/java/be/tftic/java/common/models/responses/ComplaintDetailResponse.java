@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Classe de réponse détaillée pour les plaintes.
- *
  * Cette classe est annotée avec @Data de Lombok pour générer automatiquement les
  * getters, setters, constructeurs, et méthodes toString(), hashCode(),
  * et equals(). Elle est utilisée pour stocker et transmettre les informations détaillées
@@ -54,7 +53,7 @@ public class ComplaintDetailResponse {
      * Méthode de création d'une instance de PlainteDetailResponse à partir d'une entité
      * Plainte.
      *
-     * @param plainte l'entité Plainte à partir de laquelle créer l'instance de
+     * @param complaint l'entité Plainte à partir de laquelle créer l'instance de
      *                PlainteDetailResponse
      * @return l'instance de PlainteDetailResponse créée à partir de l'entité 
      * Plainte
