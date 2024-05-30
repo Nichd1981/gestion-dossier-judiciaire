@@ -9,7 +9,7 @@ import be.tftic.java.domain.entities.User;
  *
  */
 public record LoginRequest(
-        /**
+         /**
          * L'adresse e-mail de l'utilisateur.
          */
         String mail,
@@ -17,8 +17,7 @@ public record LoginRequest(
         /**
          * Le mot de passe de l'utilisateur.
          */
-        String motDePasse
-
+        String password
 ) {
     /**
      * Méthode pour convertir la requête de connexion en une entité d'utilisateur.

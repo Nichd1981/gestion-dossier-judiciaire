@@ -10,7 +10,6 @@ import java.util.Set;
 
 /**
  * Classe représentant une personne.
- *
  * Cette classe permet de stocker les informations relatives à une personne,
  * telles que son numéro de registre national, son nom, son prénom, sa date de
  * naissance, son lieu de naissance, son genre, sa date de décès, sa photo,
@@ -26,7 +25,6 @@ public class Person {
 
     /**
      * Identifiant unique de la personne.
-     *
      * Cet identifiant est généré automatiquement par la base de données lorsque
      * la personne est créée.
      */
@@ -36,7 +34,6 @@ public class Person {
 
     /**
      * Numéro de registre national de la personne.
-     *
      * Ce numéro est unique pour chaque personne et permet de l'identifier de
      * manière certaine. Il est obligatoire et ne peut pas être modifié une
      * fois qu'il a été défini.
@@ -46,7 +43,6 @@ public class Person {
 
     /**
      * Nom de la personne.
-     *
      * Ce nom est obligatoire et ne peut pas être vide. Il peut être modifié à
      * tout moment.
      */
@@ -56,7 +52,6 @@ public class Person {
 
     /**
      * Prénom de la personne.
-     *
      * Ce prénom est obligatoire et ne peut pas être vide. Il peut être modifié
      * à tout moment.
      */
@@ -66,7 +61,6 @@ public class Person {
 
     /**
      * Date de naissance de la personne.
-     *
      * Cette date est obligatoire et ne peut pas être dans le futur. Elle peut
      * être modifiée à tout moment.
      */
@@ -76,7 +70,6 @@ public class Person {
 
     /**
      * Lieu de naissance de la personne.
-     *
      * Ce lieu est obligatoire et ne peut pas être vide. Il peut être modifié à
      * tout moment.
      */
@@ -86,7 +79,6 @@ public class Person {
 
     /**
      * Genre de la personne.
-     *
      * Ce genre est obligatoire et peut prendre les valeurs suivantes : "HOMME",
      * "FEMME" ou "AUTRE". Il peut être modifié à tout moment.
      */
@@ -97,7 +89,6 @@ public class Person {
 
     /**
      * Date de décès de la personne.
-     *
      * Cette date est facultative et peut-être dans le futur. Elle peut être
      * modifiée à tout moment.
      */
@@ -107,7 +98,6 @@ public class Person {
 
     /**
      * Photo de la personne.
-     *
      * Cette photo est facultative et peut être modifiée à tout moment.
      */
     @Setter
@@ -116,16 +106,14 @@ public class Person {
 
     /**
      * Empreinte de la personne.
-     *
      * Cette empreinte est facultative et peut être modifiée à tout moment.
      */
     @Setter
-    @Column(name = "IMPRINT", nullable = true)
+    @Column(name = "IMPRINT")
     private String imprint;
 
     /**
      * Avocat de la personne.
-     *
      * Cet avocat est facultatif et peut être modifié à tout moment. Il est
      * représenté par une autre instance de la classe Personne.
      */
@@ -136,7 +124,6 @@ public class Person {
 
     /**
      * Adresses de la personne.
-     *
      * Ces adresses sont facultatives et peuvent être modifiées à tout moment.
      * Elles sont représentées par des instances de la classe Adresse.
      */
@@ -145,7 +132,6 @@ public class Person {
 
     /**
      * Téléphones de la personne.
-     *
      * Ces téléphones sont facultatifs et peuvent être modifiés à tout moment.
      * Ils sont représentés par des instances de la classe Telephone.
      */
@@ -154,7 +140,6 @@ public class Person {
 
     /**
      * Constructeur de la classe Personne.
-     *
      * Ce constructeur permet de créer une nouvelle instance de la classe
      * Personne en définissant son numéro de registre national, son
      * nom, son prénom, sa date de naissance, son lieu de naissance, son genre,
@@ -188,7 +173,6 @@ public class Person {
     /**
      * Renvoie true si la personne est égale à l'objet en paramètre,
      * false sinon.
-     *
      * Deux instances de la classe Personne sont égales si elles ont
      * le même numéro de registre national.
      *
@@ -205,7 +189,6 @@ public class Person {
 
     /**
      * Renvoie le code de hachage de la personne.
-     *
      * Le code de hachage est calculé à partir du numéro de registre national de
      * la personne.
      *
