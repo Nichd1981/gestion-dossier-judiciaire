@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Interface pour les opérations de persistance des entités Personne.
+ * Fournit des méthodes pour les opérations CRUD de base.
+ * Hérite de JpaRepository pour les opérations CRUD.
+ */
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
