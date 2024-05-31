@@ -46,4 +46,7 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Long>, Jpa
     @Query("SELECT c FROM Complaint c WHERE :person MEMBER OF c.personConcerned")
     List<Complaint> findByPersonConcerned(Person person);
 
+    @Query("SELECT c FROM Complaint c WHERE c.complainant.id = :customersId AND c.complainant.lawyer.id = :lawyerId")
+    List<Complaint> findComplaintByCustomersAndLawyer(Long customersId, Long lawyerId);
+
 }

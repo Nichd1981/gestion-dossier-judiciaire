@@ -84,4 +84,6 @@ public interface ComplaintService {
      */
     List<ComplaintShortResponse> findByComplaintIdWithCriteria(ComplaintFilterRequest f);
 
+    List<ComplaintShortResponse> getComplaintByCustomerAndLawyer(Long customerId, Long lawyerId);
+
 }

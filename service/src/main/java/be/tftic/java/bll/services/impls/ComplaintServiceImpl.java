@@ -216,6 +216,13 @@ public class ComplaintServiceImpl implements ComplaintService {
                 .toList();
     }
 
+    public List<ComplaintShortResponse> getComplaintByCustomerAndLawyer(Long customerId, Long lawyerId) {
+        return complaintRepository.findComplaintByCustomersAndLawyer(customerId, lawyerId)
+                .stream()
+                .map(ComplaintShortResponse::fromEntity)
+                .toList();
+    }
+
     /**
      * Construit une spécification pour le filtrage des plaintes en fonction des critères de recherche donnés.
      * Les critères de recherche incluent un numéro de dossier, une borne inférieure de date, une borne supérieure de date, un statut, un type de plainte et une personne.

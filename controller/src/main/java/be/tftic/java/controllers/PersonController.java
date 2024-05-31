@@ -2,11 +2,15 @@ package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.update.PersonUpdateRequest;
+import be.tftic.java.common.models.responses.PersonShortResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Contrôleur REST pour gérer les opérations liées aux personnes.
@@ -44,5 +48,11 @@ public class PersonController {
     @PutMapping
     public ResponseEntity<Long> updatePerson(@RequestBody @Valid PersonUpdateRequest person) {
         return ResponseEntity.ok(personService.update(null, person.toEntity()));
+    }
+
+    @PreAuthorize("hasAuthority('LAWYER')")
+    @GetMapping("/lawyer/{lawyerId:\\d+}")
+    public ResponseEntity<List<PersonShortResponse>> getCustomersByLawyer(@PathVariable Long lawyerId) {
+        return ResponseEntity.ok(personService.getCustomersForLawyer(lawyerId));
     }
 }

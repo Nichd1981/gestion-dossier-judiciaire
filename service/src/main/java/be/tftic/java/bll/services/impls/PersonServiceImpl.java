@@ -1,12 +1,15 @@
 package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.PersonService;
+import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Personne.
@@ -91,4 +94,10 @@ public class PersonServiceImpl implements PersonService {
         );
     }
 
+    public List<PersonShortResponse> getCustomersForLawyer(Long lawyerId) {
+        return personRepository.findCustomersByLawyer(lawyerId)
+                .stream()
+                .map(PersonShortResponse::fromEntity)
+                .toList();
+    }
 }
