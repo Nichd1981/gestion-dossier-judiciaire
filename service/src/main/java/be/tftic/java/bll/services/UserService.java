@@ -1,7 +1,10 @@
 package be.tftic.java.bll.services;
 
+import be.tftic.java.common.models.requests.auth.LoginRequest;
+import be.tftic.java.common.models.requests.auth.RegisterRequest;
 import be.tftic.java.common.models.responses.UserTokenResponse;
 import be.tftic.java.domain.entities.User;
+import be.tftic.java.domain.enums.Role;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,8 +29,18 @@ public interface UserService extends UserDetailsService {
     /**
      * Connecte un utilisateur en vérifiant ses informations d'identification.
      *
-     * @param user l'objet Utilisateur contenant les informations d'identification de l'utilisateur
+     * @param request l'objet Utilisateur contenant les informations d'identification de l'utilisateur
      * @return l'objet Utilisateur si les informations d'identification sont valides, sinon null
      */
-    UserTokenResponse login(User user);
+    UserTokenResponse login(LoginRequest request);
+
+    /**
+     * Register a new User as a Citizen or a Lawyer
+     * @param request User dto containing all information needed to register
+     * @param role Role of the user (Citizen or Lawyer)
+     * @return USerTokenDTO : DTO containing the needed information to authenticate a user (mail + JWT Token)
+     */
+    UserTokenResponse register(RegisterRequest request, Role role);
+
+
 }

@@ -2,10 +2,7 @@ package be.tftic.java.domain.entities;
 
 import be.tftic.java.domain.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,6 +40,7 @@ public class User implements UserDetails {
      * Cette adresse e-mail est obligatoire et doit être unique pour chaque
      * utilisateur. Elle est utilisée comme nom d'utilisateur pour l'authentification.
      */
+    @Setter
     @Column(name = "MAIL", nullable = false, unique = true)
     private String mail;
 
@@ -52,6 +50,7 @@ public class User implements UserDetails {
      * (par exemple : en utilisant un algorithme de hachage tel que BCrypt). Il
      * est utilisé pour l'authentification de l'utilisateur.
      */
+    @Setter
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
@@ -61,6 +60,7 @@ public class User implements UserDetails {
      * de l'utilisateur (par exemple : "ADMIN", "CITOYEN", "AVOCAT", "AGENT"). Il est
      * utilisé pour l'autorisation de l'utilisateur.
      */
+    @Setter
     @Column(name = "ROLE", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -72,6 +72,7 @@ public class User implements UserDetails {
      * en particulier et de retrouver facilement tous les utilisateurs associés à
      * une personne.
      */
+    @Setter
     @ManyToOne
     @JoinColumn(name = "PERSON_ID", nullable = false)
     private Person person;

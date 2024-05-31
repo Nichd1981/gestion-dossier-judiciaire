@@ -1,8 +1,11 @@
-package be.tftic.java.controllers;
+package be.tftic.java.controllers.auth;
 
 import be.tftic.java.bll.services.UserService;
-import be.tftic.java.common.models.requests.LoginRequest;
+import be.tftic.java.common.models.requests.auth.LoginRequest;
+import be.tftic.java.common.models.requests.auth.RegisterRequest;
 import be.tftic.java.common.models.responses.UserTokenResponse;
+import be.tftic.java.domain.enums.Role;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +42,34 @@ public class AuthController {
      */
     @PreAuthorize("isAnonymous()")
     @PostMapping("/login")
-    public ResponseEntity<UserTokenResponse> login(@RequestBody LoginRequest form) {
-        return ResponseEntity.ok(userService.login(form.toEntity()));
+    public ResponseEntity<UserTokenResponse> login(@Valid @RequestBody LoginRequest form) {
+        return ResponseEntity.ok(userService.login(form));
     }
+
+    /**
+     * Allows a citizen to register
+     * @param form Register information of a citizen (mail, password, personal information)
+     * @return Dto containing user's authentication's token
+     */
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/register/citizen")
+    public ResponseEntity<UserTokenResponse> registerAsCitizen(
+            @Valid @RequestBody RegisterRequest form
+    ){
+        return ResponseEntity.ok(userService.register(form, Role.CITIZEN));
+    }
+
+    /**
+     * Allows a lawyer to register
+     * @param form Register information of a lawyer (mail, password, personal information)
+     * @return Dto containing user's authentication's token
+     */
+    @PreAuthorize("isAnonymous()")
+    @PostMapping("/register/lawyer")
+    public ResponseEntity<UserTokenResponse> registerAsLawyer(
+            @Valid @RequestBody RegisterRequest form
+    ){
+        return ResponseEntity.ok(userService.register(form, Role.LAWYER));
+    }
+
 }

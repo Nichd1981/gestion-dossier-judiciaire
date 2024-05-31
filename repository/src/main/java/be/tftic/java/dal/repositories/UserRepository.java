@@ -22,4 +22,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Query("SELECT u FROM User u where u.mail like :mail")
     Optional<User> getUserByUsername(String mail);
+
+    /**
+     * Checks if a user already exists based on email address
+     * @param mail Email address to check
+     * @return true if the user exists, false otherwise
+     */
+    @Query("""
+            select count(u) > 0
+            from User u
+            where u.mail = :mail
+            """)
+    boolean existsByEmail(String mail);
 }
