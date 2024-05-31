@@ -150,4 +150,10 @@ public class ComplaintController {
         complaintService.closedSurvey(form);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PreAuthorize("hasAuthority('LAWYER')")
+    @GetMapping("/lawyer/{customerId:\\d+}/{lawyerId:\\d+}")
+    public ResponseEntity<List<ComplaintShortResponse>> getComplaintByCustomerAndLawyer(@PathVariable Long customerId, @PathVariable Long lawyerId) {
+        return ResponseEntity.ok(complaintService.getComplaintByCustomerAndLawyer(customerId, lawyerId));
+    }
 }

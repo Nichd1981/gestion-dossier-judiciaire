@@ -1,7 +1,10 @@
 package be.tftic.java.bll.services;
 
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
+import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.domain.entities.Person;
+
+import java.util.List;
 
 /**
  * Interface pour les opérations de gestion des personnes.
@@ -45,5 +48,7 @@ public interface PersonService {
      * @return l'identifiant de la personne mise à jour
      */
     Long update(Long id, Person person);
+
+    List<PersonShortResponse> getCustomersForLawyer(Long lawyerId);
 
 }
