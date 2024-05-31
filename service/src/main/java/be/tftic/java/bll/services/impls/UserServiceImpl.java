@@ -1,9 +1,14 @@
 package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.UserService;
+import be.tftic.java.common.models.requests.auth.LoginRequest;
+import be.tftic.java.common.models.requests.auth.RegisterRequest;
 import be.tftic.java.common.models.responses.UserTokenResponse;
+import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.dal.repositories.UserRepository;
+import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.User;
+import be.tftic.java.domain.enums.Role;
 import be.tftic.java.il.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +33,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PersonServiceImpl personService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
@@ -48,20 +54,58 @@ public class UserServiceImpl implements UserService {
      * Connecte un utilisateur en vérifiant son nom d'utilisateur (adresse e-mail) et son mot de passe.
      * Si l'utilisateur n'existe pas ou si le mot de passe est incorrect, une exception RuntimeException est levée.
      *
-     * @param user les informations de connexion de l'utilisateur, y compris le nom d'utilisateur (adresse e-mail) et le mot de passe.
+     * @param request les informations de connexion de l'utilisateur, y compris le nom d'utilisateur (adresse e-mail) et le mot de passe.
      * @return l'utilisateur connecté.
      * @throws RuntimeException si l'utilisateur n'existe pas ou si le mot de passe est incorrect.
      */
     @Override
-    public UserTokenResponse login(User user) {
-        User existingUser = userRepository.getUserByUsername(user.getMail()).orElseThrow();
+    public UserTokenResponse login(LoginRequest request) {
+        User existingUser = userRepository.getUserByUsername(request.mail()).orElseThrow();
         UserTokenResponse dto = UserTokenResponse.fromEntity(existingUser);
-        String token = jwtUtils.generateToken(user);
+        String token = jwtUtils.generateToken(existingUser);
         dto.setToken(token);
 
-        if (!passwordEncoder.matches(user.getPassword(), existingUser.getPassword())) {
+        if (!passwordEncoder.matches(request.password(), existingUser.getPassword())) {
             throw new RuntimeException("Mot de passe incorrect");
         }
+
+        return dto;
+    }
+
+    /**
+     * Register a new User as a Citizen or a Lawyer
+     * @param request User dto containing all information needed to register
+     * @param role Role of the user (Citizen or Lawyer)
+     * @return USerTokenDTO : DTO containing the needed information to authenticate a user (mail + JWT Token)
+     */
+    @Override
+    public UserTokenResponse register(RegisterRequest request, Role role) {
+
+        if (userRepository.existsByEmail(request.mail())) {
+            throw new RuntimeException("User with email " + request.mail() + " already exist.");
+        }
+        String hashedPassword = passwordEncoder.encode(request.password());
+
+        Person p;
+        // Check if the person entity already exists
+        if (personService.existsByNationalRegister(request.person().nationalRegisterNumber())){
+            p = personService.findByNationalRegister(request.person().nationalRegisterNumber());
+        } else {
+            p = personService.create(request.person());
+        }
+
+        User user = User.builder()
+                .mail(request.mail())
+                .password(hashedPassword)
+                .role(role)
+                .person(p)
+                .build();
+
+        userRepository.save(user);
+
+        UserTokenResponse dto = UserTokenResponse.fromEntity(user);
+        String token = jwtUtils.generateToken(user);
+        dto.setToken(token);
 
         return dto;
     }

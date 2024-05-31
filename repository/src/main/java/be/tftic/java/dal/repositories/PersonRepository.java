@@ -18,6 +18,18 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Optional<Person> findByNationalRegister(String nationalRegister);
 
+    /**
+     * Checks if a person already exists based on national register number
+     * @param nationalRegister national register number to check
+     * @return True if the person already exists in DB, false if the person doesn't exist in DB
+     */
+    @Query("""
+            select count(p) > 0
+            from Person p
+            where p.nationalRegister = :nationalRegister
+            """)
+    boolean existsByNationalRegister(String nationalRegister);
+
     @Query("SELECT p FROM Person p WHERE p.lawyer.id = :lawyerId")
     List<Person> findCustomersByLawyer(Long lawyerId);
 

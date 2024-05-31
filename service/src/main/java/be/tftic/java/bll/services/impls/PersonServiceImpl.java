@@ -1,6 +1,7 @@
 package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.PersonService;
+import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.domain.entities.Person;
@@ -30,6 +31,12 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
 
+    @Override
+    public Person create(PersonCreateRequest request) {
+        Person p = request.toEntity();
+        return personRepository.save(p);
+    }
+
     /**
      * Récupère une personne donnée à partir de son identifiant unique.
      * Si la personne n'existe pas, une exception RuntimeException est levée.
@@ -46,6 +53,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person findByNationalRegister(String nationalNumber) {
         return getPerson(nationalNumber);
+    }
+
+    @Override
+    public boolean existsByNationalRegister(String nationalRegister) {
+        return personRepository.existsByNationalRegister(nationalRegister);
     }
 
     /**

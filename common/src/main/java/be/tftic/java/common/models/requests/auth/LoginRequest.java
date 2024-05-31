@@ -1,6 +1,8 @@
-package be.tftic.java.common.models.requests;
+package be.tftic.java.common.models.requests.auth;
 
 import be.tftic.java.domain.entities.User;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * Classe de requête de connexion.
@@ -9,14 +11,16 @@ import be.tftic.java.domain.entities.User;
  *
  */
 public record LoginRequest(
-         /**
-         * L'adresse e-mail de l'utilisateur.
-         */
+
+        /*** L'adresse e-mail de l'utilisateur.*/
+        @Email
+        @NotBlank
         String mail,
 
         /**
          * Le mot de passe de l'utilisateur.
          */
+        @NotBlank
         String password
 ) {
     /**

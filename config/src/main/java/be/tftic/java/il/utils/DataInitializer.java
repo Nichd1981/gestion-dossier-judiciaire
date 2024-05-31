@@ -49,10 +49,10 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (personRepository.count()==0){
-            Person azzedine = new Person("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Gender.MAN, null, "", "");
-            Person antoine = new Person("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Gender.MAN, null, "", "");
-            Person nicolas = new Person("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Gender.MAN, null, "", "");
-            Person valentine = new Person("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Gender.WOMAN, null, "", "");
+            Person azzedine = new Person("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13).atStartOfDay(), "La Louvière", Gender.MALE, null, "", "");
+            Person antoine = new Person("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9).atStartOfDay(), "Charleroi", Gender.MALE, null, "", "");
+            Person nicolas = new Person("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8).atStartOfDay(), "Ottignies", Gender.MALE, null, "", "");
+            Person valentine = new Person("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23).atStartOfDay(), "Dinant", Gender.FEMALE, null, "", "");
             valentine.setLawyer(azzedine);
             personRepository.save(azzedine);
             personRepository.save(valentine);
