@@ -2,6 +2,7 @@ package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.services.JudgmentService;
 import be.tftic.java.bll.specifications.JudgmentSpecification;
+import be.tftic.java.common.models.requests.filter.JudgmentFilterRequest;
 import be.tftic.java.common.models.requests.update.JudgmentUpdateRequest;
 import be.tftic.java.common.models.responses.JudgmentResponse;
 import be.tftic.java.dal.repositories.JudgmentRepository;
@@ -57,7 +58,9 @@ public class JudgmentServiceImpl implements JudgmentService {
      */
     @Override
     public List<JudgmentResponse> findAllForComplaint(Long complaintId) {
-        return this.findWithCriteria(complaintId, null, null, null, null, null);
+        JudgmentFilterRequest request = new JudgmentFilterRequest();
+        request.setComplaintId(complaintId);
+        return this.findWithCriteria(request);
     }
 
     /**
@@ -65,18 +68,17 @@ public class JudgmentServiceImpl implements JudgmentService {
      * Les critères de recherche incluent un identifiant ou un numéro de dossier de plainte, une borne inférieure de date, une borne supérieure de date, un mot-clé et une décision.
      * Les jugements sont filtrés en fonction des critères fournis, et seuls les jugements correspondants sont renvoyés.
      *
-     * @param complaintId l'identifiant unique de la plainte pour laquelle récupérer les jugements, ou null si le numéro de dossier est utilisé.
-     * @param fileNumber le numéro de dossier de la plainte pour laquelle récupérer les jugements, ou null si l'identifiant est utilisé.
-     * @param lowerBound la borne inférieure de date à utiliser pour le filtrage des jugements, ou null si ce critère est ignoré.
-     * @param upperBound la borne supérieure de date à utiliser pour le filtrage des jugements, ou null si ce critère est ignoré.
-     * @param keyWord le mot-clé à utiliser pour le filtrage des jugements, ou null si ce critère est ignoré.
-     * @param decision la décision à utiliser pour le filtrage des jugements, ou null si ce critère est ignoré.
      * @return la liste des jugements qui correspondent aux critères de recherche donnés, ou une liste vide si aucun jugement ne correspond.
      */
     @Override
-    public List<JudgmentResponse> findWithCriteria(Long complaintId, String fileNumber, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision) {
-        Complaint complaint = (complaintId != null ? getComplaint(complaintId) : getComplaint(fileNumber));
-        Specification<Judgment> spec = getSpecification(complaint, lowerBound, upperBound, keyWord, decision);
+    public List<JudgmentResponse> findWithCriteria(JudgmentFilterRequest request) {
+        Complaint complaint = (request.getComplaintId() != null ? getComplaint(request.getComplaintId()) : getComplaint(request.getNumberFileComplaint()));
+        Specification<Judgment> spec = getSpecification(
+                complaint,
+                request.getDateLowerBound(),
+                request.getDateUpperBound(),
+                request.getKeywords(),
+                request.getDecision());
 
         return judgmentRepository.findAll(spec)
                 .stream()
