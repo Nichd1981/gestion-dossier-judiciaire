@@ -81,21 +81,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserTokenResponse register(RegisterRequest request, Role role) {
 
-        if (userRepository.existsByEmail(request.mail())) {
-            throw new RuntimeException("User with email " + request.mail() + " already exist.");
+        if (userRepository.existsByEmail(request.getMail())) {
+            throw new RuntimeException("User with email " + request.getMail() + " already exist.");
         }
-        String hashedPassword = passwordEncoder.encode(request.password());
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
 
         Person p;
         // Check if the person entity already exists
-        if (personService.existsByNationalRegister(request.person().nationalRegisterNumber())){
-            p = personService.findByNationalRegister(request.person().nationalRegisterNumber());
+        if (personService.existsByNationalRegister(request.getPerson().nationalRegisterNumber())){
+            p = personService.findByNationalRegister(request.getPerson().nationalRegisterNumber());
         } else {
-            p = personService.create(request.person());
+            p = personService.create(request.getPerson());
         }
 
         User user = User.builder()
-                .mail(request.mail())
+                .mail(request.getMail())
                 .password(hashedPassword)
                 .role(role)
                 .person(p)
