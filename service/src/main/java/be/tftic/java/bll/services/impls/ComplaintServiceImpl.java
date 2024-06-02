@@ -216,8 +216,9 @@ public class ComplaintServiceImpl implements ComplaintService {
                 .toList();
     }
 
-    public List<ComplaintShortResponse> getComplaintByCustomerAndLawyer(Long customerId, Long lawyerId) {
-        return complaintRepository.findComplaintByCustomersAndLawyer(customerId, lawyerId)
+    public List<ComplaintShortResponse> getComplaintByCustomerAndLawyer(Long customerId) {
+        User lawyer = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return complaintRepository.findComplaintByCustomersAndLawyer(customerId, lawyer.getPerson().getId())
                 .stream()
                 .map(ComplaintShortResponse::fromEntity)
                 .toList();
