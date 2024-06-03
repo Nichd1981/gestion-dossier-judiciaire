@@ -107,7 +107,12 @@ public class AuditionServiceImpl implements AuditionService {
 				.toList();
 	}
 
-    private Complaint getComplaint(Long complaintId){
+	@Override
+	public Audition findById(Long id) {
+		return auditionRepository.findById(id).orElseThrow(() -> new RuntimeException("Proute"));
+	}
+
+	private Complaint getComplaint(Long complaintId){
 		return complaintRepository.findById(complaintId).orElseThrow(
 				() -> new RuntimeException("La plainte n'existe pas")
         );
@@ -137,5 +142,7 @@ public class AuditionServiceImpl implements AuditionService {
 		}
 		return spec;
 	}
+
+
 
 }
