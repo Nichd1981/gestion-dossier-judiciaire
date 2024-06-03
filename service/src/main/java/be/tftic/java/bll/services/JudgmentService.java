@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services;
 
+import be.tftic.java.common.models.requests.filter.JudgmentFilterRequest;
 import be.tftic.java.common.models.requests.update.JudgmentUpdateRequest;
 import be.tftic.java.common.models.responses.JudgmentResponse;
 import java.time.LocalDate;
@@ -30,15 +31,10 @@ public interface JudgmentService {
     /**
      * Recherche des jugements selon des critères spécifiques.
      *
-     * @param complaintId l'identifiant de la plainte pour laquelle effectuer la recherche de jugements
-     * @param fileNumber le numéro de dossier du jugement
-     * @param lowerBound la date de début de la période de recherche
-     * @param upperBound la date de fin de la période de recherche
-     * @param keyWord le mot-clé à rechercher dans les jugements
-     * @param decision la décision du jugement
+     * @param filter DTO containing all the filter to apply to the search
      * @return une liste d'entités Jugement correspondant aux critères de recherche spécifiés
      */
-    List<JudgmentResponse> findWithCriteria(Long complaintId, String fileNumber, LocalDate lowerBound, LocalDate upperBound, String keyWord, String decision);
+    List<JudgmentResponse> findWithCriteria(JudgmentFilterRequest filter);
 
     /**
      * Clôture un jugement en mettant à jour ses informations.

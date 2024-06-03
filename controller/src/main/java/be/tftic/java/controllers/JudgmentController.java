@@ -53,13 +53,7 @@ public class JudgmentController {
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping("/filter")
     public ResponseEntity<List<JudgmentResponse>> getWithCriteria(@RequestBody @Valid JudgmentFilterRequest filter){
-       //TODO : Passer le filtre en paramètre
-        return ResponseEntity.ok(judgmentService.findWithCriteria(filter.getComplaintId(),
-                                                                filter.getNumberFileComplaint(),
-                                                                filter.getDateLowerBound(),
-                                                                filter.getDateUpperBound(),
-                                                                filter.getKeywords(),
-                                                                filter.getDecision()));
+        return ResponseEntity.ok(judgmentService.findWithCriteria(filter));
     }
 
     /**

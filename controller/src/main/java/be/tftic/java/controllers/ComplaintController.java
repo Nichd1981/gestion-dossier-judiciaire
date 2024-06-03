@@ -152,8 +152,8 @@ public class ComplaintController {
     }
 
     @PreAuthorize("hasAuthority('LAWYER')")
-    @GetMapping("/lawyer/{customerId:\\d+}/{lawyerId:\\d+}")
-    public ResponseEntity<List<ComplaintShortResponse>> getComplaintByCustomerAndLawyer(@PathVariable Long customerId, @PathVariable Long lawyerId) {
-        return ResponseEntity.ok(complaintService.getComplaintByCustomerAndLawyer(customerId, lawyerId));
+    @GetMapping("/lawyer/{customerId:\\d+}")
+    public ResponseEntity<List<ComplaintShortResponse>> getComplaintByCustomerAndLawyer(@PathVariable Long customerId) {
+        return ResponseEntity.ok(complaintService.getComplaintByCustomerAndLawyer(customerId));
     }
 }
