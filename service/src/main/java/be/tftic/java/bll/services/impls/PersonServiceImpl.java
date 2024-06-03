@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.common.models.responses.PersonShortResponse;
@@ -94,15 +95,13 @@ public class PersonServiceImpl implements PersonService {
 
     private Person getPerson(Long id){
         return personRepository.findById(id).orElseThrow(
-                //TODO : utiliser une exception custom quand on gerera les exceptions
-                () -> new RuntimeException("Personne introuvable")
+                () -> new EntityNotFoundException("Person not found")
         );
     }
 
     private Person getPerson(String nationalRegister){
         return personRepository.findByNationalRegister(nationalRegister).orElseThrow(
-                //TODO : utiliser une exception custom quand on gerera les exceptions
-                () -> new RuntimeException("Personne introuvable")
+                () -> new EntityNotFoundException("Person not found")
         );
     }
 

@@ -29,7 +29,7 @@ public class AddressController {
     @PreAuthorize("hasAnyAuthority('AGENT','CITIZEN')")
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Long> updateAddress(@PathVariable Long id,
-                                              @RequestBody @Valid AddressUpdateRequest address) throws AccessDeniedException {
+                                              @RequestBody @Valid AddressUpdateRequest address) {
         return ResponseEntity.ok(addresService.update(id, address.toEntity()));
     }
 }
