@@ -14,6 +14,8 @@ public interface AuditionService {
 
 	void create(AuditionCreateRequest request);
 
+	AuditionShortResponse findById(Long id);
+
 	/**
 	 * Récupère toutes les auditions associées à une plainte spécifique.
 	 *

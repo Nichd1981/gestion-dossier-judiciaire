@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document PDF</title>
+</head>
+<body th:object="${audition}">
+<h1 th:text="*{date.toString()}">Title</h1>
+<p th:text="*{audition}">Audition</p>
+<p th:text="*{roomNumber}">Room</p>
+</body>
+</html>

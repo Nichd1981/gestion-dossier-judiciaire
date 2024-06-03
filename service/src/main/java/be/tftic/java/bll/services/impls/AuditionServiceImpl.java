@@ -59,6 +59,13 @@ public class AuditionServiceImpl implements AuditionService {
 		auditionRepository.save(audition);
 	}
 
+	@Override
+	public AuditionShortResponse findById(Long id) {
+		return AuditionShortResponse.fromEntity(auditionRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundException("Audition not found")
+		));
+	}
+
 	/**
 	 * Récupère toutes les auditions associées à une plainte donnée.
 	 * Si la plainte n'existe pas, une exception RuntimeException est levée.
