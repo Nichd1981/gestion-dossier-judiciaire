@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
 import be.tftic.java.bll.services.AuditionService;
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.bll.specifications.AuditionSpecification;
@@ -68,9 +69,7 @@ public class AuditionServiceImpl implements AuditionService {
 	 */
     @Override
 	public List<AuditionShortResponse> findAllAudition(Long id) {
-		Complaint complaint = complaintRepository.findById(id).orElseThrow(
-				() -> new RuntimeException("La plainte n'existe pas")
-		);
+		Complaint complaint = getComplaint(id);
 
 		return auditionRepository.findByComplaint(complaint)
 				.stream()
@@ -109,8 +108,8 @@ public class AuditionServiceImpl implements AuditionService {
 
     private Complaint getComplaint(Long complaintId){
 		return complaintRepository.findById(complaintId).orElseThrow(
-				() -> new RuntimeException("La plainte n'existe pas")
-        );
+				() -> new EntityNotFoundException("Complaint not found")
+		);
     }
 
 	/**

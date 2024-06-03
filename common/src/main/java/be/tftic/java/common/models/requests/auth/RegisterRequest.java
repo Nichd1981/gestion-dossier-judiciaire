@@ -1,6 +1,6 @@
 package be.tftic.java.common.models.requests.auth;
 
-import be.tftic.java.common.annotations.ValidPassword;
+import be.tftic.java.common.annotations.StrongPassword;
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.domain.entities.User;
 import jakarta.validation.constraints.Email;
@@ -15,7 +15,7 @@ public final class RegisterRequest {
     private final String mail;
 
     @NotBlank
-    @ValidPassword
+    @StrongPassword
     private final String password;
 
     private final PersonCreateRequest person;

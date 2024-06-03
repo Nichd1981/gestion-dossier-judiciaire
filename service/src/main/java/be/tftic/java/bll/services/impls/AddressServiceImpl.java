@@ -1,5 +1,7 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.user.UserDeniedAccessException;
 import be.tftic.java.bll.services.AddressService;
 import be.tftic.java.dal.repositories.AddressRepository;
 import be.tftic.java.domain.entities.Address;
@@ -30,8 +32,19 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
 
+    /**
+     * Met à jour l'adresse avec l'identifiant donné en utilisant les informations fournies.
+     * Si l'adresse à mettre à jour n'est pas trouvée, une exception RuntimeException est levée.
+     *
+     * @param id l'identifiant unique de l'adresse à mettre à jour.
+     * @param address l'objet Adresse contenant les nouvelles informations de l'adresse.
+     * Les propriétés de cet objet sont utilisées pour remplacer les valeurs correspondantes de l'adresse existante.
+     * @return l'identifiant de l'adresse mise à jour, qui est le même que l'identifiant fourni en entrée.
+     * @throws RuntimeException si l'adresse à mettre à jour n'est pas trouvée dans la base de données.
+     *
+     */
     @Override
-    public Long update(Long id, Address address) throws AccessDeniedException {
+    public Long update(Long id, Address address) {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -40,24 +53,12 @@ public class AddressServiceImpl implements AddressService {
             Set<Address> addresses = person.getAddress();
             if (addresses.stream().noneMatch(a -> a.getId().equals(id))) {
                 // L'adresse que l'on veut modifier n'est pas une des adresses de ce citoyen
-                throw new AccessDeniedException("Interdit : vous ne pouvez pas modifier cette adresse");
+                throw new UserDeniedAccessException();
             }
         }
 
-        /**
-         * Met à jour l'adresse avec l'identifiant donné en utilisant les informations fournies.
-         * Si l'adresse à mettre à jour n'est pas trouvée, une exception RuntimeException est levée.
-         *
-         * @param id l'identifiant unique de l'adresse à mettre à jour.
-         * @param adresse l'objet Adresse contenant les nouvelles informations de l'adresse.
-         * Les propriétés de cet objet sont utilisées pour remplacer les valeurs correspondantes de l'adresse existante.
-         * @return l'identifiant de l'adresse mise à jour, qui est le même que l'identifiant fourni en entrée.
-         * @throws RuntimeException si l'adresse à mettre à jour n'est pas trouvée dans la base de données.
-         *
-         */
         Address toUpdate = addressRepository.findById(id).orElseThrow(
-                // TODO : utiliser une exception customisée pour gérer les cas d'échec de manière plus précise et adaptée à l'application.
-                () -> new RuntimeException("Adresse not found")
+                () -> new EntityNotFoundException("Address not found")
         );
 
         // Met à jour les propriétés de l'adresse existante avec les nouvelles valeurs fournies.

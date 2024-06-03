@@ -1,5 +1,7 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.complaint.CloseComplaintException;
 import be.tftic.java.bll.services.JudgmentService;
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.bll.services.ComplaintService;
@@ -7,6 +9,7 @@ import be.tftic.java.bll.specifications.ComplaintSpecification;
 import be.tftic.java.common.models.requests.filter.ComplaintFilterRequest;
 import be.tftic.java.common.models.requests.update.ClosedSurveyRequest;
 import be.tftic.java.common.models.requests.create.ComplaintCreateRequest;
+import be.tftic.java.common.models.responses.ComplaintDetailResponse;
 import be.tftic.java.common.models.responses.ComplaintShortResponse;
 import be.tftic.java.dal.repositories.ComplaintRepository;
 import be.tftic.java.domain.entities.Person;
@@ -93,11 +96,8 @@ public class ComplaintServiceImpl implements ComplaintService {
      * @throws RuntimeException si la plainte n'existe pas.
      */
     @Override
-    public Complaint findById(Long id) {
-        return complaintRepository.findById(id).orElseThrow(
-                // TODO : gestion exceptions custom
-                () -> new RuntimeException("La plainte n'existe pas")
-        );
+    public ComplaintDetailResponse findById(Long id) {
+        return ComplaintDetailResponse.fromEntity(getComplaint(id));
     }
 
     /**
@@ -109,11 +109,8 @@ public class ComplaintServiceImpl implements ComplaintService {
      * @throws RuntimeException si la plainte n'existe pas.
      */
     @Override
-    public Complaint findByFileNumber(String fileNumber) {
-        return complaintRepository.findByFileNumber(fileNumber).orElseThrow(
-                // TODO : gestion exceptions custom
-                () -> new RuntimeException("La plainte n'existe pas")
-        );
+    public ComplaintDetailResponse findByFileNumber(String fileNumber) {
+        return ComplaintDetailResponse.fromEntity(getComplaint(fileNumber));
     }
 
     /**
@@ -160,7 +157,7 @@ public class ComplaintServiceImpl implements ComplaintService {
      */
     @Override
     public void openSurvey(Long id) {
-        Complaint toUpdate = this.findById(id);
+        Complaint toUpdate = getComplaint(id);
 
         toUpdate.setStatus(ComplaintStatus.IN_PROGRESS);
         complaintRepository.save(toUpdate);
@@ -175,12 +172,11 @@ public class ComplaintServiceImpl implements ComplaintService {
      */
     @Override
     public void closedSurvey(ClosedSurveyRequest form) {
-        Complaint toUpdate = this.findById(form.complaintId());
+        Complaint toUpdate = getComplaint(form.complaintId());
 
         // Si la plainte n'est pas encore ouverte, exception!
         if (toUpdate.getStatus() != ComplaintStatus.IN_PROGRESS) {
-            //TODO : custom exception
-            throw new RuntimeException("La plainte doit être \"En cours\" pour pouvoir être clôturée.");
+            throw new CloseComplaintException();
         }
 
         toUpdate.setStatus(ComplaintStatus.CLOSED);
@@ -222,6 +218,18 @@ public class ComplaintServiceImpl implements ComplaintService {
                 .stream()
                 .map(ComplaintShortResponse::fromEntity)
                 .toList();
+    }
+
+    private Complaint getComplaint(Long complaintId){
+        return complaintRepository.findById(complaintId).orElseThrow(
+                () -> new EntityNotFoundException("Complaint not found")
+        );
+    }
+
+    private Complaint getComplaint(String fileNumber){
+        return complaintRepository.findByFileNumber(fileNumber).orElseThrow(
+                () -> new EntityNotFoundException("Complaint not found")
+        );
     }
 
     /**
