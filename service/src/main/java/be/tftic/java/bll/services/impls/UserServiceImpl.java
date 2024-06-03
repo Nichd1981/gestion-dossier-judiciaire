@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.user.UserEmailAlreadyExistException;
 import be.tftic.java.bll.services.UserService;
 import be.tftic.java.common.models.requests.auth.LoginRequest;
 import be.tftic.java.common.models.requests.auth.RegisterRequest;
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
     public UserTokenResponse register(RegisterRequest request, Role role) {
 
         if (userRepository.existsByEmail(request.getMail())) {
-            throw new RuntimeException("User with email " + request.getMail() + " already exist.");
+            throw new UserEmailAlreadyExistException("User with email " + request.getMail() + " already exist.");
         }
         String hashedPassword = passwordEncoder.encode(request.getPassword());
 
