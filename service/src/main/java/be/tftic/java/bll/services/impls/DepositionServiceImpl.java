@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
 import be.tftic.java.bll.services.DepositionService;
 import be.tftic.java.bll.specifications.DepositionSpecification;
 import be.tftic.java.common.models.requests.filter.DepositionFilterRequest;
@@ -42,9 +43,7 @@ public class DepositionServiceImpl implements DepositionService {
      */
     @Override
     public List<DepositionShortResponse> findAllDeposition(Long id) {
-        Complaint plainte = complaintRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("La plainte n'existe pas")
-        );
+        Complaint plainte = getComplaint(id);
 
         return depositionRepository.findByComplaint(plainte)
                 .stream()
@@ -66,6 +65,12 @@ public class DepositionServiceImpl implements DepositionService {
                 .stream()
                 .map(DepositionShortResponse::fromEntity)
                 .toList();
+    }
+
+    private Complaint getComplaint(Long complaintId){
+        return complaintRepository.findById(complaintId).orElseThrow(
+                () -> new EntityNotFoundException("Complaint not found")
+        );
     }
 
     /**

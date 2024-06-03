@@ -1,6 +1,7 @@
 package be.tftic.java.bll.services.impls;
 
 import be.tftic.java.bll.exceptions.user.UserEmailAlreadyExistException;
+import be.tftic.java.bll.exceptions.user.UserPasswordException;
 import be.tftic.java.bll.services.UserService;
 import be.tftic.java.common.models.requests.auth.LoginRequest;
 import be.tftic.java.common.models.requests.auth.RegisterRequest;
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
         dto.setToken(token);
 
         if (!passwordEncoder.matches(request.password(), existingUser.getPassword())) {
-            throw new RuntimeException("Mot de passe incorrect");
+            throw new UserPasswordException();
         }
 
         return dto;

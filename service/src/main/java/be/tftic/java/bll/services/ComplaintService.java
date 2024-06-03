@@ -3,6 +3,7 @@ package be.tftic.java.bll.services;
 import be.tftic.java.common.models.requests.create.ComplaintCreateRequest;
 import be.tftic.java.common.models.requests.filter.ComplaintFilterRequest;
 import be.tftic.java.common.models.requests.update.ClosedSurveyRequest;
+import be.tftic.java.common.models.responses.ComplaintDetailResponse;
 import be.tftic.java.common.models.responses.ComplaintShortResponse;
 import be.tftic.java.domain.entities.Complaint;
 import java.util.List;
@@ -28,7 +29,7 @@ public interface ComplaintService {
      * @param id l'identifiant de la plainte à récupérer
      * @return l'entité Plainte correspondant à l'identifiant spécifié
      */
-    Complaint findById(Long id);
+    ComplaintDetailResponse findById(Long id);
 
     /**
      * Récupère une plainte par son numéro de dossier.
@@ -36,7 +37,7 @@ public interface ComplaintService {
      * @param fileNumber le numéro de dossier de la plainte à récupérer
      * @return l'entité Plainte correspondant au numéro de dossier spécifié
      */
-    Complaint findByFileNumber(String fileNumber);
+    ComplaintDetailResponse findByFileNumber(String fileNumber);
 
     /**
      * Récupère toutes les plaintes associées à un plaignant spécifique.

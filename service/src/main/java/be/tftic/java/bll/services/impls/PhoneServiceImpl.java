@@ -1,5 +1,7 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.user.UserDeniedAccessException;
 import be.tftic.java.bll.services.PhoneService;
 import be.tftic.java.dal.repositories.PhoneRepository;
 import be.tftic.java.domain.entities.Person;
@@ -48,13 +50,12 @@ public class PhoneServiceImpl implements PhoneService {
             Set<Phone> tels = person.getPhones();
 
             if (tels.stream().noneMatch(t -> t.getId().equals(id))) {
-                throw new AccessDeniedException("Interdit : vous ne pouvez pas modifier ce numéro");
+                throw new UserDeniedAccessException();
             }
         }
 
         Phone toUpdate = phoneRepository.findById(id).orElseThrow(
-                //TODO : utiliser une exception custom quand on gerera les exceptions
-                () -> new RuntimeException("Numéro de téléphone introuvable")
+                () -> new EntityNotFoundException("Phone not found")
         );
 
         toUpdate.setNumber(phone.getNumber());

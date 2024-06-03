@@ -52,7 +52,7 @@ public class ComplaintController {
      */
     @GetMapping("/{id:\\d+}")
     public ResponseEntity<ComplaintDetailResponse> getOne(@PathVariable Long id){
-        return ResponseEntity.ok(ComplaintDetailResponse.fromEntity(complaintService.findById(id)));
+        return ResponseEntity.ok(complaintService.findById(id));
     }
 
     /**

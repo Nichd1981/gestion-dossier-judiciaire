@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.exceptions.EntityNotFoundException;
 import be.tftic.java.bll.services.JudgmentService;
 import be.tftic.java.bll.specifications.JudgmentSpecification;
 import be.tftic.java.common.models.requests.filter.JudgmentFilterRequest;
@@ -110,11 +111,16 @@ public class JudgmentServiceImpl implements JudgmentService {
      * @param complaintId l'identifiant unique de la plainte à récupérer.
      * @return la plainte correspondant à l'identifiant unique donné.
      */
-    private Complaint getComplaint(Long complaintId) {
-        return complaintRepository.findById(complaintId)
-                .orElseThrow(
-                        () -> new RuntimeException("La plainte n'existe pas")
-                );
+    private Complaint getComplaint(Long complaintId){
+        return complaintRepository.findById(complaintId).orElseThrow(
+                () -> new EntityNotFoundException("Complaint not found")
+        );
+    }
+
+    private Judgment getJudgment(Long judgmentId){
+        return judgmentRepository.findById(judgmentId).orElseThrow(
+                () -> new EntityNotFoundException("Judgement not found")
+        );
     }
 
     /**
@@ -125,10 +131,9 @@ public class JudgmentServiceImpl implements JudgmentService {
      * @return la plainte correspondant au numéro de dossier donné.
      */
     private Complaint getComplaint(String fileNumber) {
-        return complaintRepository.findById(Long.valueOf(fileNumber))
-                .orElseThrow(
-                        () -> new RuntimeException("La plainte n'existe pas")
-                );
+        return complaintRepository.findByFileNumber(fileNumber).orElseThrow(
+                () -> new EntityNotFoundException("Complaint not found")
+        );
     }
 
     /**
