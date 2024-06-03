@@ -20,5 +20,5 @@ public interface AddressService {
      * @return l'identifiant de l'adresse mise à jour, qui est le même que l'identifiant fourni en entrée.
      * @throws RuntimeException si l'adresse à mettre à jour n'est pas trouvée dans la base de données.
      */
-    Long update(Long id, Address address) throws AccessDeniedException;
+    Long update(Long id, Address address);
 }

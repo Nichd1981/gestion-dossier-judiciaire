@@ -32,8 +32,19 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
 
+    /**
+     * Met à jour l'adresse avec l'identifiant donné en utilisant les informations fournies.
+     * Si l'adresse à mettre à jour n'est pas trouvée, une exception RuntimeException est levée.
+     *
+     * @param id l'identifiant unique de l'adresse à mettre à jour.
+     * @param address l'objet Adresse contenant les nouvelles informations de l'adresse.
+     * Les propriétés de cet objet sont utilisées pour remplacer les valeurs correspondantes de l'adresse existante.
+     * @return l'identifiant de l'adresse mise à jour, qui est le même que l'identifiant fourni en entrée.
+     * @throws RuntimeException si l'adresse à mettre à jour n'est pas trouvée dans la base de données.
+     *
+     */
     @Override
-    public Long update(Long id, Address address) throws AccessDeniedException {
+    public Long update(Long id, Address address) {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -46,17 +57,6 @@ public class AddressServiceImpl implements AddressService {
             }
         }
 
-        /**
-         * Met à jour l'adresse avec l'identifiant donné en utilisant les informations fournies.
-         * Si l'adresse à mettre à jour n'est pas trouvée, une exception RuntimeException est levée.
-         *
-         * @param id l'identifiant unique de l'adresse à mettre à jour.
-         * @param adresse l'objet Adresse contenant les nouvelles informations de l'adresse.
-         * Les propriétés de cet objet sont utilisées pour remplacer les valeurs correspondantes de l'adresse existante.
-         * @return l'identifiant de l'adresse mise à jour, qui est le même que l'identifiant fourni en entrée.
-         * @throws RuntimeException si l'adresse à mettre à jour n'est pas trouvée dans la base de données.
-         *
-         */
         Address toUpdate = addressRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Address not found")
         );

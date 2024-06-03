@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 @Component
-public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
+public class PasswordConstraintValidator implements ConstraintValidator<StrongPassword, String> {
 
     @Override
-    public void initialize(ValidPassword arg0) {
+    public void initialize(StrongPassword arg0) {
     }
 
     @Override

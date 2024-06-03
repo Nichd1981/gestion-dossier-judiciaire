@@ -6,7 +6,6 @@ import be.tftic.java.bll.services.UserService;
 import be.tftic.java.common.models.requests.auth.LoginRequest;
 import be.tftic.java.common.models.requests.auth.RegisterRequest;
 import be.tftic.java.common.models.responses.UserTokenResponse;
-import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.dal.repositories.UserRepository;
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.User;

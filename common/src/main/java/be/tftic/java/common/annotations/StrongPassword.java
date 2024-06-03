@@ -20,9 +20,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({ ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Constraint(validatedBy = PasswordConstraintValidator.class)
-public @interface ValidPassword {
+public @interface StrongPassword {
 
-    String message() default "Invalid Password";
+    String message() default "Weak password";
 
     Class<?>[] groups() default {};
 
