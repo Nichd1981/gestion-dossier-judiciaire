@@ -3,6 +3,8 @@ package be.tftic.java.bll.services;
 import be.tftic.java.common.models.requests.create.AuditionCreateRequest;
 import be.tftic.java.common.models.requests.filter.AuditionFilterRequest;
 import be.tftic.java.common.models.responses.AuditionShortResponse;
+import be.tftic.java.domain.entities.Audition;
+
 import java.util.List;
 
 /**
@@ -34,4 +36,6 @@ public interface AuditionService {
 	 * @return une liste d'entités Audition correspondant aux critères de recherche spécifiés
 	 */
 	List<AuditionShortResponse> findAuditionByCriteria(AuditionFilterRequest f);
+
+	Audition findById(Long id);
 }

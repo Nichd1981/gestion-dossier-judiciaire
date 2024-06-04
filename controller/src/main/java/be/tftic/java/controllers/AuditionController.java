@@ -1,11 +1,15 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.AuditionService;
+import be.tftic.java.bll.services.impls.PdfServiceImpl;
 import be.tftic.java.common.models.requests.create.AuditionCreateRequest;
 import be.tftic.java.common.models.requests.filter.AuditionFilterRequest;
 import be.tftic.java.common.models.responses.AuditionShortResponse;
+import be.tftic.java.domain.entities.Audition;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +27,7 @@ import java.util.List;
 public class AuditionController {
 
 	private final AuditionService auditionService;
+	private final PdfServiceImpl pdfServiceImpl;
 
 	/**
 	 * Récupère toutes les auditions associées à une plainte donnée.
@@ -62,4 +67,13 @@ public class AuditionController {
 		return ResponseEntity.ok(auditionService.findAuditionByCriteria(f));
 	}
 
+	@GetMapping("/{id}/generate-pdf")
+	public ResponseEntity<byte[]> generatePdf(@PathVariable Long id) {
+		Audition audition = auditionService.findById(id);
+		byte[] pdf = pdfServiceImpl.generatePdf(audition);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=audition.pdf");
+		return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+	}
 }

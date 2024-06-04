@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Audition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .date-cell {
+            background-color: #e0e0e0;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-cell {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body th:object="${audition}">
+<h1>Audition</h1>
+<table>
+    <tr>
+        <th class="date-cell" colspan="3" th:text="*{#temporals.format(dateAudition, 'dd/MM/yyyy HH:mm')}"></th>
+    </tr>
+    <tr>
+        <th>Salle de l'audition</th>
+        <td class="info-cell" colspan="2" th:text="*{roomNumberAudition}"></td>
+    </tr>
+    <tr>
+        <th>Agent</th>
+        <td class="info-cell" colspan="2" th:text="*{agent.name} + ' ' + *{agent.firstname}"></td>
+    </tr>
+    <tr>
+        <th>Citoyen</th>
+        <td class="info-cell" colspan="2" th:text="*{citizen.name} + ' ' + *{citizen.firstname}"></td>
+    </tr>
+    <tr>
+        <th>Avocat</th>
+        <td class="info-cell" colspan="2" th:text="*{lawyer != null ? lawyer.name : ''} + ' ' + *{lawyer.firstname}"></td>
+    </tr>
+    <tr>
+        <th class="date-cell" colspan="3">Plainte</th>
+    </tr>
+    <tr>
+        <th>Numéro de dossier</th>
+        <td class="info-cell" colspan="2" th:text="*{complaint.fileNumber}"></td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td class="info-cell" colspan="2" th:text="*{complaint.status}"></td>
+    </tr>
+    <tr>
+        <th colspan="3">Dépot de plainte</th>
+    </tr>
+    <tr>
+        <td class="info-cell" colspan="3" th:text="*{complaint}"></td>
+    </tr>
+    <tr>
+        <th colspan="3">Audition</th>
+    </tr>
+    <tr>
+        <td class="info-cell" colspan="3" th:text="*{depositionAudition}"></td>
+    </tr>
+</table>
+</body>
+</html>
