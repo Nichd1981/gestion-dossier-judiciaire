@@ -4,6 +4,6 @@ import be.tftic.java.domain.entities.Audition;
 
 public interface PdfService {
 
-    byte[] generatePdfAudition(Audition audition);
+    byte[] generatePdfAudition(Long id);
 
 }
