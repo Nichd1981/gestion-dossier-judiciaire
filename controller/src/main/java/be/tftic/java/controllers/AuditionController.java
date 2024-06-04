@@ -71,7 +71,7 @@ public class AuditionController {
 	public ResponseEntity<byte[]> generatePdf(@PathVariable Long id) {
 		byte[] pdf = pdfServiceImpl.generatePdfAudition(id);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=audition.pdf");
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=audition.pdf");
 		return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
 	}
 }
