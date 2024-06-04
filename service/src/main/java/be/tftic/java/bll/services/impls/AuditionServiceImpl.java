@@ -108,7 +108,13 @@ public class AuditionServiceImpl implements AuditionService {
 
 	@Override
 	public Audition findById(Long id) {
-		return auditionRepository.findById(id).orElseThrow(() -> new RuntimeException("Proute"));
+		return getAudition(id);
+	}
+
+	private Audition getAudition(Long id){
+		return auditionRepository.findById(id).orElseThrow(
+				() -> new EntityNotFoundException("Audition not found")
+		);
 	}
 
 	private Complaint getComplaint(Long complaintId){

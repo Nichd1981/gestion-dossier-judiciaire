@@ -6,6 +6,10 @@ public class ApplicationException extends RuntimeException {
         super(message);
     }
 
+    public ApplicationException(String message, Exception e) {
+        super(message, e);
+    }
+
     @Override
     public String toString() {
         StackTraceElement element = this.getStackTrace()[0];
