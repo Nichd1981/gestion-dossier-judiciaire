@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Clôture d'enquête judiciaire</title>
+    </head>
+    <body>
+        <p>Bonjour <span th:text="${gender}"></span>
+            <span th:text="${complainantName}"></span>,</p>
+        <p>Nous tenons à vous informer que l'enquête judiciaire concernant l'affaire
+            <strong><span th:text="${fileNumber}"></span></strong> a été cloturée.</p>
+
+        <p>Détails de l'enquête :</p>
+        <ul>
+            <li><Strong>Numéro de l'affaire :</Strong> <span th:text="${fileNumber}"></span></li>
+            <li><Strong>Date d'ouverture de la plainte :</Strong> <span th:text="${complaintDate}"></span></li>
+            <li><Strong>Statut de la plainte :</Strong> <span th:text="${complaintStatus}"></span></li>
+            <li><Strong>Officier en charge :</Strong> <span th:text="*{agent}"></span></li>
+        </ul>
+
+        <p>Cordialement,</p>
+        <p><strong>Le département juridique</strong></p>
+    </body>
+</html>

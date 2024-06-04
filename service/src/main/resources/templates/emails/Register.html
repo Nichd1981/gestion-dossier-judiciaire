@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <p>Bonjour <span th:text="${gender == 'MALE'} ? 'MR' : 'Mme'"></span>
+            <span th:text="${name}"></span>,</p>
+        <p>Merci pour votre inscription à notre application judiciaire. Voici votre login et votre rôle :</p>
+        <ul>
+            <li><strong>Mail :</strong> <span th:text="${mail}"></span></li>
+            <li><strong>Rôle :</strong> <span th:text="${role}"></span></li>
+        </ul>
+
+        <p>Cordialement,</p>
+        <p>Le département juridique</p>
+    </body>
+</html>

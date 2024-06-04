@@ -70,6 +70,7 @@ public class Complaint {
      * Elle est obligatoire et ne peut pas être modifiée une fois qu'elle a été
      * définie.
      */
+    @Setter
     @Column(name = "COMPLAINT_DATE")
     private LocalDateTime complaintDate;
 

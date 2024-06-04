@@ -17,11 +17,18 @@ import be.tftic.java.domain.entities.Complaint;
 import be.tftic.java.domain.entities.User;
 import be.tftic.java.domain.enums.ComplaintStatus;
 import be.tftic.java.domain.enums.ComplaintType;
+import be.tftic.java.domain.enums.Gender;
+import be.tftic.java.il.utils.MailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +50,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final ComplaintRepository complaintRepository;
     private final PersonService personService;
     private final JudgmentService judgmentService;
+    private final MailUtils mailUtils;
 
     /**
      * Récupère toutes les plaintes déposées par une personne donnée.
@@ -185,6 +193,20 @@ public class ComplaintServiceImpl implements ComplaintService {
         if (ComplaintType.valueOf(form.type()) == ComplaintType.OFFENSE || ComplaintType.valueOf(form.type()) == ComplaintType.CRIME) {
             judgmentService.create(form.complaintId());
         }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String dateFormatted = toUpdate.getComplaintDate().format(formatter);
+
+
+
+        Context context = new Context();
+        context.setVariable("complainantName", toUpdate.getComplainant().getName());
+        context.setVariable("gender", toUpdate.getComplainant().getGender().equals(Gender.MALE) ? "Mr" : "Mme");
+        context.setVariable("fileNumber", toUpdate.getFileNumber());
+        context.setVariable("complaintDate", dateFormatted);
+        context.setVariable("complaintStatus", toUpdate.getStatus());
+        context.setVariable("agent", toUpdate.getAgent().getName());
+        mailUtils.sendEmail("a.hassaini@stag.technofuturtic.education", "Complaint", "Clotûre d'enquête", context);
         complaintRepository.save(toUpdate);
     }
 
