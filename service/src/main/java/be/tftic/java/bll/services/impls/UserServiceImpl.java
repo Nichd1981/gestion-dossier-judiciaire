@@ -9,13 +9,16 @@ import be.tftic.java.common.models.responses.UserTokenResponse;
 import be.tftic.java.dal.repositories.UserRepository;
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.User;
+import be.tftic.java.domain.enums.Gender;
 import be.tftic.java.domain.enums.Role;
 import be.tftic.java.il.utils.JwtUtils;
+import be.tftic.java.il.utils.MailUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Utilisateur.
@@ -37,6 +40,7 @@ public class UserServiceImpl implements UserService {
     private final PersonServiceImpl personService;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private final MailUtils mailUtils;
 
     /**
      * Récupère un utilisateur à partir de son nom d'utilisateur.
@@ -102,7 +106,13 @@ public class UserServiceImpl implements UserService {
                 .person(p)
                 .build();
 
+        Context context = new Context();
+        context.setVariable("gender", user.getPerson().getGender() == Gender.MALE ? "Mr" : "Mme");
+        context.setVariable("name", user.getPerson().getName());
+        context.setVariable("mail", user.getMail());
+        context.setVariable("role", user.getRole());
         userRepository.save(user);
+        mailUtils.sendEmail(user.getMail(), "Register", "Confirmation d'inscription", context);
 
         UserTokenResponse dto = UserTokenResponse.fromEntity(user);
         String token = jwtUtils.generateToken(user);
