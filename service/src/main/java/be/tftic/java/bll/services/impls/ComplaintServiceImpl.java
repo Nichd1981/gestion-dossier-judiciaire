@@ -201,12 +201,12 @@ public class ComplaintServiceImpl implements ComplaintService {
 
         Context context = new Context();
         context.setVariable("complainantName", toUpdate.getComplainant().getName());
-        context.setVariable("gender", toUpdate.getComplainant().getGender() == Gender.MALE ? "Mr" : "Mme");
+        context.setVariable("gender", toUpdate.getComplainant().getGender().equals(Gender.MALE) ? "Mr" : "Mme");
         context.setVariable("fileNumber", toUpdate.getFileNumber());
         context.setVariable("complaintDate", dateFormatted);
         context.setVariable("complaintStatus", toUpdate.getStatus());
         context.setVariable("agent", toUpdate.getAgent().getName());
-        mailUtils.sendEmail("antoinegeoris@hotmail.fr", "Complaint", "Clotûre d'enquête", context);
+        mailUtils.sendEmail("a.hassaini@stag.technofuturtic.education", "Complaint", "Clotûre d'enquête", context);
         complaintRepository.save(toUpdate);
     }
 

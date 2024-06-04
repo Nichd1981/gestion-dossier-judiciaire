@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         Context context = new Context();
-        context.setVariable("gender", user.getPerson().getGender() == Gender.MALE ? "Mr" : "Mme");
+        context.setVariable("gender", user.getPerson().getGender().equals(Gender.MALE) ? "Mr" : "Mme");
         context.setVariable("name", user.getPerson().getName());
         context.setVariable("mail", user.getMail());
         context.setVariable("role", user.getRole());
