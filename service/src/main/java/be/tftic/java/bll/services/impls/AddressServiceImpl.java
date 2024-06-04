@@ -11,8 +11,7 @@ import be.tftic.java.domain.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import java.nio.file.AccessDeniedException;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Adresse.
@@ -50,7 +49,7 @@ public class AddressServiceImpl implements AddressService {
 
         if (user.getRole() == Role.CITIZEN){
             Person person = user.getPerson();
-            Set<Address> addresses = person.getAddress();
+            List<Address> addresses = addressRepository.findByPerson(person);
             if (addresses.stream().noneMatch(a -> a.getId().equals(id))) {
                 // L'adresse que l'on veut modifier n'est pas une des adresses de ce citoyen
                 throw new UserDeniedAccessException();

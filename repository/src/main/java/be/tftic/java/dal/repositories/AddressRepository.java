@@ -1,8 +1,12 @@
 package be.tftic.java.dal.repositories;
 
 import be.tftic.java.domain.entities.Address;
+import be.tftic.java.domain.entities.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Interface pour la gestion des opérations de persistance liées à l'entité Adresse.
@@ -16,4 +20,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
+
+    @Query("""
+            SELECT a
+            FROM Address a
+            WHERE a.person = :person
+            """)
+    List<Address> findByPerson(Person person);
+
 }

@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -47,7 +49,7 @@ public class PhoneServiceImpl implements PhoneService {
 
         if (user.getRole() == Role.CITIZEN) {
             Person person = user.getPerson();
-            Set<Phone> tels = person.getPhones();
+            List<Phone> tels = phoneRepository.findByPerson(person);
 
             if (tels.stream().noneMatch(t -> t.getId().equals(id))) {
                 throw new UserDeniedAccessException();

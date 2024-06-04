@@ -74,7 +74,7 @@ public class DataInitializer implements CommandLineRunner {
                                 .build();
 
             User citizen = User.builder()
-                                .mail("valentineevidence83@gmail.com")
+                                .mail("a.hassaini@stag.technofuturtic.education")
                                 .password(passwordEncoder.encode("12341234"))
                                 .role(Role.CITIZEN)
                                 .person(valentine)
