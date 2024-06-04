@@ -1,5 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
+import be.tftic.java.bll.services.PdfService;
 import be.tftic.java.domain.entities.Audition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,17 +17,16 @@ import java.io.OutputStream;
 
 @Service
 @RequiredArgsConstructor
-public class PdfServiceImpl {
+public class PdfServiceImpl implements PdfService {
 
 	private final TemplateEngine templateEngine;
 
-	public byte[] generatePdf(Audition audition) {
-
+	public byte[] generatePdfAudition(Audition audition) {
 
 		Context context = new Context();
 		context.setVariable("audition", audition);
 
-		String htmlContent = templateEngine.process("PdfHtml", context);
+		String htmlContent = templateEngine.process("audition/audition", context);
 
 		try (OutputStream outputStream = new ByteArrayOutputStream()) {
 			ITextRenderer renderer = new ITextRenderer();
