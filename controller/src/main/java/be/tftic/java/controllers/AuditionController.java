@@ -70,11 +70,10 @@ public class AuditionController {
 	@GetMapping("/{id}/generate-pdf")
 	public ResponseEntity<byte[]> generatePdf(@PathVariable Long id) {
 		Audition audition = auditionService.findById(id);
-		byte[] pdfContent = pdfServiceImpl.generatePdf(audition);
+		byte[] pdf = pdfServiceImpl.generatePdf(audition);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=audition.pdf");
-		return new ResponseEntity<>(pdfContent, headers, HttpStatus.OK);
+		return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
 	}
-
 }
