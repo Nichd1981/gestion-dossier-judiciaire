@@ -33,12 +33,12 @@ public class PdfServiceImpl implements PdfService {
 
 		String htmlContent = templateEngine.process("audition/audition", context);
 
-		try (OutputStream outputStream = new ByteArrayOutputStream()) {
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 			ITextRenderer renderer = new ITextRenderer();
 			renderer.setDocumentFromString(htmlContent);
 			renderer.layout();
 			renderer.createPDF(outputStream);
-			return ((ByteArrayOutputStream) outputStream).toByteArray();
+			return outputStream.toByteArray();
 		} catch (Exception e) {
 			throw new ApplicationException("Error while generating PDF", e);
 		}
