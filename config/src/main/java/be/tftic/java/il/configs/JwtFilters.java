@@ -47,6 +47,17 @@ public class JwtFilters extends OncePerRequestFilter {
     }
 
     /**
+     * Check if the request should not be filtered.
+     * The request should not be filtered if the servlet path starts with auth/login.
+     * @param request The request to check.
+     * @return True if the request should not be filtered, false otherwise.
+     */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getServletPath().startsWith("/auth/login");
+    }
+
+    /**
      * Méthode exécutée par le filtre de requêtes HTTP pour l'authentification JWT.
      * Cette méthode est appelée par la classe OncePerRequestFilter de Spring pour chaque
      * requête HTTP entrante. Elle extrait le jeton JWT de l'en-tête d'autorisation de la requête HTTP,
@@ -67,15 +78,18 @@ public class JwtFilters extends OncePerRequestFilter {
         String authorization = request.getHeader("Authorization");
         if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.substring(7);
-            if (jwtUtils.isValid(token)) {
-                String username = jwtUtils.getUsername(token);
-                UserDetails user = userService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken upt = new UsernamePasswordAuthenticationToken(
-                        user,
-                        token,
-                        user.getAuthorities()
-                );
-                SecurityContextHolder.getContext().setAuthentication(upt);
+            if (!token.isEmpty()) {
+                if (jwtUtils.isValid(token)) {
+                    System.out.println("valide");
+                    String username = jwtUtils.getUsername(token);
+                    UserDetails user = userService.loadUserByUsername(username);
+                    UsernamePasswordAuthenticationToken upt = new UsernamePasswordAuthenticationToken(
+                            user,
+                            null,
+                            user.getAuthorities()
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(upt);
+                }
             }
         }
         filterChain.doFilter(request,response);
