@@ -77,7 +77,7 @@ public class DataInitializer implements CommandLineRunner {
                                 .mail("a.hassaini@stag.technofuturtic.education")
                                 .password(passwordEncoder.encode("12341234"))
                                 .role(Role.CITIZEN)
-                                .person(valentine)
+                                .person(azzedine)
                                 .build();
 
             User citizen2 = User.builder()
@@ -88,10 +88,10 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
 
             User lawyer = User.builder()
-                    .mail("azzedinehassaini@gmail.com")
+                    .mail("valentine@gmail.com")
                     .password(passwordEncoder.encode("12341234"))
                     .role(Role.LAWYER)
-                    .person(azzedine)
+                    .person(valentine)
                     .build();
 
             userRepository.save(admin);
@@ -141,9 +141,9 @@ public class DataInitializer implements CommandLineRunner {
             Deposition deposition3 = new Deposition(LocalDate.of(2024, 5, 5), "Je suis perdu !", complaint);
             depositionRepository.save(deposition3);
 
-            Audition audition  = new Audition(LocalDateTime.of(2024, 1, 5, 10, 0), "2", "Ceci est une audition !", valentine, nicolas, azzedine, complaint );
+            Audition audition  = new Audition(LocalDateTime.of(2024, 1, 5, 10, 0), "2", "Ceci est une audition !", azzedine, nicolas, valentine, complaint );
             auditionRepository.save(audition);
-            Audition audition2  = new Audition(LocalDateTime.of(2025, 7, 7, 10, 0), "2", "Ceci est une audition Bis repetita !", valentine, nicolas, azzedine, complaint );
+            Audition audition2  = new Audition(LocalDateTime.of(2025, 7, 7, 10, 0), "2", "Ceci est une audition Bis repetita !", azzedine, nicolas, valentine, complaint );
             auditionRepository.save(audition2);
 
         }
