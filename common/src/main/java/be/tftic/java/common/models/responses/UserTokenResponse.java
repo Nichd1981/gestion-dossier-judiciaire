@@ -1,6 +1,7 @@
 package be.tftic.java.common.models.responses;
 
 import be.tftic.java.domain.entities.User;
+import be.tftic.java.domain.enums.Role;
 import lombok.Builder;
 import lombok.Data;
 
@@ -26,6 +27,8 @@ public class UserTokenResponse {
      */
     String mail;
 
+    Role role;
+
     /**
      * Jeton JWT pour l'authentification de l'utilisateur.
      */
@@ -43,6 +46,7 @@ public class UserTokenResponse {
         return UserTokenResponse.builder()
                 .id(user.getId())
                 .mail(user.getMail())
+                .role(user.getRole())
                 .build();
     }
 }
