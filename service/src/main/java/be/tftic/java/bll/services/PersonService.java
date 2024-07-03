@@ -3,7 +3,9 @@ package be.tftic.java.bll.services;
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.domain.entities.Person;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -51,4 +53,5 @@ public interface PersonService {
 
     List<PersonShortResponse> getCustomersForLawyer(Long lawyerId);
 
+    void uploadFile(Long id, MultipartFile file, String type) throws IOException;
 }

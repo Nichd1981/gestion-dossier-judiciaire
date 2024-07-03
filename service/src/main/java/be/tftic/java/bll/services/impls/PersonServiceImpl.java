@@ -10,8 +10,15 @@ import be.tftic.java.domain.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Personne.
@@ -110,5 +117,29 @@ public class PersonServiceImpl implements PersonService {
                 .stream()
                 .map(PersonShortResponse::fromEntity)
                 .toList();
+    }
+
+    public void uploadFile(Long id, MultipartFile file, String type) throws IOException {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Personnne non trouvée avec ID : " + id));
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        String fileUrl = uploadFileToLocalFileSystem(file, fileName);
+
+        if ("picture".equals(type)) {
+            person.setPicture(fileUrl);
+        } else if ("imprint".equals(type)) {
+            person.setImprint(fileUrl);
+        }
+    }
+
+    private String uploadFileToLocalFileSystem(MultipartFile file, String fileName) throws IOException {
+        String uploadPath = "/uploads/";
+        Path path = Paths.get(uploadPath + fileName);
+        Files.write(path, file.getBytes());
+
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/uploads/")
+                .path(fileName)
+                .toUriString();
     }
 }

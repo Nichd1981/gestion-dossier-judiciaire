@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -53,5 +55,13 @@ public class PersonController {
     @GetMapping("/lawyer/{lawyerId:\\d+}")
     public ResponseEntity<List<PersonShortResponse>> getCustomersByLawyer(@PathVariable Long lawyerId) {
         return ResponseEntity.ok(personService.getCustomersForLawyer(lawyerId));
+    }
+
+    @PostMapping("/{id:\\d+}/upload")
+    public ResponseEntity<Void> uploadFile(@PathVariable long id,
+                                           @RequestParam("file")MultipartFile file,
+                                           @RequestParam("type") String type) throws IOException {
+        personService.uploadFile(id, file, type);
+        return ResponseEntity.ok().build();
     }
 }
