@@ -25,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/complaint")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class ComplaintController {
 
     private final ComplaintService complaintService;
