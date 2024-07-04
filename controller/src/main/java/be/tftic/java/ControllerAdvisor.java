@@ -1,6 +1,5 @@
 package be.tftic.java;
 
-
 import be.tftic.java.bll.exceptions.EntityNotFoundException;
 import be.tftic.java.bll.exceptions.complaint.CloseComplaintException;
 import be.tftic.java.bll.exceptions.user.UserDeniedAccessException;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import java.util.List;
 
 @Slf4j

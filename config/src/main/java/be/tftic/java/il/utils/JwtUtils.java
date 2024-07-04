@@ -7,7 +7,6 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 /**
