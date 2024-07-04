@@ -2,11 +2,15 @@ package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.update.PersonUpdateRequest;
+import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +25,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/person")
+@CrossOrigin("*")
 public class PersonController {
 
     private final PersonService personService;
@@ -53,5 +58,23 @@ public class PersonController {
     @GetMapping("/lawyer/{lawyerId:\\d+}")
     public ResponseEntity<List<PersonShortResponse>> getCustomersByLawyer(@PathVariable Long lawyerId) {
         return ResponseEntity.ok(personService.getCustomersForLawyer(lawyerId));
+    }
+
+    @PreAuthorize("hasAnyAuthority('AGENT', 'CITIZEN', 'LAWYER')")
+    @GetMapping("/details")
+    public ResponseEntity<PersonDetailResponse> getDetailsPerson() {
+        return ResponseEntity.ok(personService.findUserDetails());
+    }
+
+    @PreAuthorize("hasAnyAuthority('AGENT', 'ADMIN')")
+    @GetMapping("/list/details")
+    public ResponseEntity<List<PersonShortResponse>> getListDetailsPerson() {
+        return ResponseEntity.ok(personService.getAllDetailsPerson());
+    }
+
+//    @PreAuthorize("hasAnyAuthority('AGENT', 'ADMIN')")
+    @GetMapping("/{id}/details")
+    public ResponseEntity<PersonDetailResponse> getDetailsFromListPerson(@PathVariable Long id) {
+        return ResponseEntity.ok(personService.findDetailsById(id));
     }
 }

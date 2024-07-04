@@ -26,12 +26,12 @@ public class PersonDetailResponse {
     /**
      * Nom de famille de la personne.
      */
-    String name;
+    String lastName;
 
     /**
      * Prénom de la personne.
      */
-    String firstname;
+    String firstName;
 
     /**
      * Date de naissance de la personne.
@@ -57,6 +57,8 @@ public class PersonDetailResponse {
      * Photo de la personne, si disponible.
      */
     String picture;
+
+    Person lawyer;
 
     /**
      * Empreinte digitale de la personne, si disponible.
@@ -84,13 +86,14 @@ public class PersonDetailResponse {
     public static PersonDetailResponse fromEntity(Person person){
         return PersonDetailResponse.builder()
                 .nationalRegister(person.getNationalRegister())
-                .name(person.getName())
-                .firstname(person.getFirstname())
+                .lastName(person.getName())
+                .firstName(person.getFirstname())
                 .birthDate(person.getBirthdate())
                 .birthPlace(person.getBirthplace())
                 .gender(person.getGender().toString())
                 .deathDate(person.getDeathDate())
                 .picture(person.getPicture())
+                .lawyer(person.getLawyer())
                 .imprint(person.getImprint())
                 .address(person.getAddress().stream().map(AddressResponse::fromEntity).toList())
                 .phones(person.getPhones().stream().map(PhoneResponse::fromEntity).toList())

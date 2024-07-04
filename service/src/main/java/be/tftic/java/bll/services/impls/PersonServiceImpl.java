@@ -3,6 +3,7 @@ package be.tftic.java.bll.services.impls;
 import be.tftic.java.bll.exceptions.EntityNotFoundException;
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
+import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.domain.entities.Person;
@@ -49,6 +50,25 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person findById(Long id) {
        return getPerson(id);
+    }
+
+    @Override
+    public PersonDetailResponse findDetailsById(Long id) {
+        return PersonDetailResponse.fromEntity(findById(id));
+    }
+
+    @Override
+    public PersonDetailResponse findUserDetails() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return PersonDetailResponse.fromEntity(findById(user.getPerson().getId()));
+    }
+
+    @Override
+    public List<PersonShortResponse> getAllDetailsPerson() {
+        return personRepository.findAll()
+                .stream()
+                .map(PersonShortResponse::fromEntity)
+                .toList();
     }
 
     @Override

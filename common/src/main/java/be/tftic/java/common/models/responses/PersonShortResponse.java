@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Data
 public class PersonShortResponse {
 
+    Long id;
     /**
      * Numéro de registre national de la personne.
      */
@@ -59,6 +60,7 @@ public class PersonShortResponse {
      */
     public static PersonShortResponse fromEntity(Person person){
         return PersonShortResponse.builder()
+                .id(person.getId())
                 .nationalRegister(person.getNationalRegister())
                 .name(person.getName())
                 .firstname(person.getFirstname())
