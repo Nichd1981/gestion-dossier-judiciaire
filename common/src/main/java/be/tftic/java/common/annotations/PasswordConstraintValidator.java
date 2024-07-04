@@ -4,7 +4,6 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.passay.*;
 import org.springframework.stereotype.Component;
-
 import java.util.Arrays;
 
 @Component

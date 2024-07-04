@@ -4,14 +4,11 @@ import be.tftic.java.bll.services.UserService;
 import be.tftic.java.common.models.requests.auth.LoginRequest;
 import be.tftic.java.common.models.requests.auth.RegisterRequest;
 import be.tftic.java.common.models.responses.UserTokenResponse;
-import be.tftic.java.domain.entities.User;
 import be.tftic.java.domain.enums.Role;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**

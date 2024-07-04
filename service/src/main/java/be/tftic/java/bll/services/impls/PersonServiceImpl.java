@@ -10,7 +10,6 @@ import be.tftic.java.domain.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**

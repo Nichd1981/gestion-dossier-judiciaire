@@ -1,6 +1,5 @@
 package be.tftic.java.il.utils;
 
-import ch.qos.logback.classic.pattern.EnsureExceptionHandling;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

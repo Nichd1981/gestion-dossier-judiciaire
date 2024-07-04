@@ -3,7 +3,6 @@ package be.tftic.java.common.models.responses;
 import be.tftic.java.domain.entities.Deposition;
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDate;
 
 /**

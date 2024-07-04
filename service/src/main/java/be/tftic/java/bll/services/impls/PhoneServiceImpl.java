@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Set;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Téléphone.

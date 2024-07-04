@@ -3,7 +3,6 @@ package be.tftic.java.bll.services;
 import be.tftic.java.common.models.requests.filter.JudgmentFilterRequest;
 import be.tftic.java.common.models.requests.update.JudgmentUpdateRequest;
 import be.tftic.java.common.models.responses.JudgmentResponse;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
