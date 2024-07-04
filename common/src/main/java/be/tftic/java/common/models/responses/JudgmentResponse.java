@@ -4,7 +4,6 @@ import be.tftic.java.domain.entities.Judgment;
 import be.tftic.java.domain.enums.JudgmentDecision;
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Builder

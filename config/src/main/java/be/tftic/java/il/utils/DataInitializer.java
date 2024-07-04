@@ -1,6 +1,5 @@
 package be.tftic.java.il.utils;
 
-
 import be.tftic.java.dal.repositories.*;
 import be.tftic.java.domain.entities.*;
 import be.tftic.java.domain.enums.Gender;

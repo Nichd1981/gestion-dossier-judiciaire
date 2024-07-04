@@ -1,7 +1,6 @@
 package be.tftic.java.bll.services;
 
 import be.tftic.java.domain.entities.Address;
-import java.nio.file.AccessDeniedException;
 
 /**
  * Interface pour le service AdresseService.
