@@ -102,7 +102,7 @@ public class DataInitializer implements CommandLineRunner {
             Address address1 = new Address("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
             Address address2 = new Address("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", valentine);
             Address address3 = new Address("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
-            Address address4 = new Address("Rue test4", "1", "Ville", "1234", "Belgique", "Domicile", nicolas);
+            Address address4 = new Address("Rue test4", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
             addressRepository.save(address1);
             addressRepository.save(address2);
             addressRepository.save(address3);

@@ -12,10 +12,10 @@ public record PersonUpdateRequest(
 
         @NotBlank(message = "Nom ne peut pas être vide")
         @Size(min = 1, max = 50)
-        String name,
+        String lastName,
         @NotBlank(message = "Prénom ne peut pas être vide")
         @Size(min = 1, max = 50)
-        String firstname,
+        String firstName,
         @NotNull
         Gender gender,
         String picture,
@@ -29,8 +29,8 @@ public record PersonUpdateRequest(
 
     public Person toEntity(){
         return Person.builder()
-                .name(name)
-                .firstname(firstname)
+                .name(lastName)
+                .firstname(firstName)
                 .gender(gender)
                 .picture(picture)
                 .imprint(imprint)

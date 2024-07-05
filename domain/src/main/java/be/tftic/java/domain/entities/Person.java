@@ -127,7 +127,7 @@ public class Person {
      * Ces adresses sont facultatives et peuvent être modifiées à tout moment.
      * Elles sont représentées par des instances de la classe Adresse.
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private Set<Address> address = new HashSet<>();
 
     /**
@@ -135,7 +135,7 @@ public class Person {
      * Ces téléphones sont facultatifs et peuvent être modifiés à tout moment.
      * Ils sont représentés par des instances de la classe Telephone.
      */
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private Set<Phone> phones = new HashSet<>();
 
     /**
@@ -198,4 +198,5 @@ public class Person {
     public int hashCode() {
         return Objects.hashCode(nationalRegister);
     }
+
 }

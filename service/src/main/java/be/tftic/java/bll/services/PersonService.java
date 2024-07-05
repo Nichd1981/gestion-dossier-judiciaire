@@ -4,8 +4,6 @@ import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.domain.entities.Person;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
