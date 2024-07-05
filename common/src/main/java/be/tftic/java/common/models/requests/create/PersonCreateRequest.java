@@ -2,14 +2,15 @@ package be.tftic.java.common.models.requests.create;
 
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.enums.Gender;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 public record PersonCreateRequest(
 
         String nationalRegisterNumber,
         String firstName,
         String lastName,
-        LocalDateTime birthDate,
+        LocalDate birthDate,
         String birthPlace,
         String gender,
         String picture

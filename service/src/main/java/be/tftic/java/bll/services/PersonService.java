@@ -1,8 +1,12 @@
 package be.tftic.java.bll.services;
 
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
+import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.domain.entities.Person;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.List;
 
 /**
@@ -16,6 +20,12 @@ public interface PersonService {
      * @param request DTO containing required information to create a person
      */
     Person create(PersonCreateRequest request);
+
+    PersonDetailResponse findDetailsById(Long id);
+
+    PersonDetailResponse findUserDetails();
+
+    List<PersonShortResponse> getAllDetailsPerson();
 
     /**
      * Récupère une personne par son identifiant.

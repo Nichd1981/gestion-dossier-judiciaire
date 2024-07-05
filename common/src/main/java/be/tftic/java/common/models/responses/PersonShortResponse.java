@@ -4,6 +4,7 @@ import be.tftic.java.domain.entities.Person;
 import lombok.Builder;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Classe de réponse courte pour les personnes.
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Data
 public class PersonShortResponse {
 
+    Long id;
     /**
      * Numéro de registre national de la personne.
      */
@@ -35,7 +37,7 @@ public class PersonShortResponse {
     /**
      * Date de naissance de la personne.
      */
-    LocalDateTime birthDate;
+    LocalDate birthDate;
 
     /**
      * Lieu de naissance de la personne.
@@ -58,6 +60,7 @@ public class PersonShortResponse {
      */
     public static PersonShortResponse fromEntity(Person person){
         return PersonShortResponse.builder()
+                .id(person.getId())
                 .nationalRegister(person.getNationalRegister())
                 .name(person.getName())
                 .firstname(person.getFirstname())

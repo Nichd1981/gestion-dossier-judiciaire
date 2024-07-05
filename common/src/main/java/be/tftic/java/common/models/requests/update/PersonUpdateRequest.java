@@ -5,7 +5,8 @@ import be.tftic.java.domain.enums.Gender;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 public record PersonUpdateRequest(
 
@@ -20,7 +21,7 @@ public record PersonUpdateRequest(
         String picture,
         String imprint,
         @NotNull
-        LocalDateTime birthDate,
+        LocalDate birthDate,
         @NotBlank(message = "Lieu de naissance ne peut pas être vide")
         String birthPlace
 
