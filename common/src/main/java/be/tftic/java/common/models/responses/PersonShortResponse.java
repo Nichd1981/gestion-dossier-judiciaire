@@ -3,8 +3,7 @@ package be.tftic.java.common.models.responses;
 import be.tftic.java.domain.entities.Person;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Classe de réponse courte pour les personnes.
@@ -37,7 +36,7 @@ public class PersonShortResponse {
     /**
      * Date de naissance de la personne.
      */
-    LocalDateTime birthDate;
+    LocalDate birthDate;
 
     /**
      * Lieu de naissance de la personne.

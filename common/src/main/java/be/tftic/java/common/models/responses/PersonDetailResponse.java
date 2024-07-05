@@ -3,7 +3,8 @@ package be.tftic.java.common.models.responses;
 import be.tftic.java.domain.entities.Person;
 import lombok.Builder;
 import lombok.Data;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class PersonDetailResponse {
     /**
      * Date de naissance de la personne.
      */
-    LocalDateTime birthDate;
+    LocalDate birthDate;
 
     /**
      * Lieu de naissance de la personne.
@@ -51,7 +52,7 @@ public class PersonDetailResponse {
     /**
      * Date de décès de la personne, si applicable.
      */
-    LocalDateTime deathDate;
+    LocalDate deathDate;
 
     /**
      * Photo de la personne, si disponible.

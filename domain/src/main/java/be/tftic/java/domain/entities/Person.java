@@ -3,7 +3,7 @@ package be.tftic.java.domain.entities;
 import be.tftic.java.domain.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -66,7 +66,7 @@ public class Person {
      */
     @Setter
     @Column(name = "BIRTHDATE", nullable = false)
-    private LocalDateTime birthdate;
+    private LocalDate birthdate;
 
     /**
      * Lieu de naissance de la personne.
@@ -94,7 +94,7 @@ public class Person {
      */
     @Setter
     @Column(name = "DEATH_DATE")
-    private LocalDateTime deathDate;
+    private LocalDate deathDate;
 
     /**
      * Photo de la personne.
@@ -157,8 +157,8 @@ public class Person {
      * @see Gender
      */
     @Builder
-    public Person(String nationalRegister, String name, String firstname, LocalDateTime birthdate,
-                  String birthplace, Gender gender, LocalDateTime deathDate, String picture, String imprint) {
+    public Person(String nationalRegister, String name, String firstname, LocalDate birthdate,
+                  String birthplace, Gender gender, LocalDate deathDate, String picture, String imprint) {
         this.nationalRegister = nationalRegister;
         this.name = name;
         this.firstname = firstname;
