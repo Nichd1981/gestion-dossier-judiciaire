@@ -29,6 +29,8 @@ public class UserTokenResponse {
 
     Role role;
 
+    Long personId;
+
     /**
      * Jeton JWT pour l'authentification de l'utilisateur.
      */
@@ -47,6 +49,7 @@ public class UserTokenResponse {
                 .id(user.getId())
                 .mail(user.getMail())
                 .role(user.getRole())
+                .personId(user.getPerson().getId())
                 .build();
     }
 }

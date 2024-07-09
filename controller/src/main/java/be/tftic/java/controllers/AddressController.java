@@ -6,12 +6,12 @@ import be.tftic.java.domain.entities.Address;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/address")
+@CrossOrigin("*")
 public class AddressController {
 
     private final AddressService addresService;
@@ -25,10 +25,11 @@ public class AddressController {
      * @throws IllegalArgumentException si l'identifiant de l'adresse est invalide
      * @see AddressService#update(Long, Address)
      */
-    @PreAuthorize("hasAnyAuthority('AGENT','CITIZEN')")
+    //@PreAuthorize("hasAnyAuthority('AGENT','CITIZEN')")
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Long> updateAddress(@PathVariable Long id,
                                               @RequestBody @Valid AddressUpdateRequest address) {
+        System.out.println("TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
         return ResponseEntity.ok(addresService.update(id, address.toEntity()));
     }
 }

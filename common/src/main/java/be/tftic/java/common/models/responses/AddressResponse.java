@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class AddressResponse {
 
+    Long id;
     String street;
     String number;
     String city;
@@ -17,6 +18,7 @@ public class AddressResponse {
 
     public static AddressResponse fromEntity(Address address) {
         return AddressResponse.builder()
+                .id(address.getId())
                 .street(address.getStreet())
                 .number(address.getNumber())
                 .city(address.getCity())

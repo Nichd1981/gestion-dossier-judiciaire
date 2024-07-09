@@ -45,6 +45,11 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Long update(Long id, Address address) {
 
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("Principal class: " + principal.getClass().getName());
+        System.out.println(principal.toString());
+
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (user.getRole() == Role.CITIZEN){

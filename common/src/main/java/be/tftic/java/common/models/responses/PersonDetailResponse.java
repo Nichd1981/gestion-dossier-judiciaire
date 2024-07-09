@@ -19,6 +19,8 @@ import java.util.List;
 @Data
 public class PersonDetailResponse {
 
+    Long id;
+
     /**
      * Numéro de registre national de la personne.
      */
@@ -69,7 +71,7 @@ public class PersonDetailResponse {
     /**
      * Liste des adresses associées à la personne.
      */
-    List<AddressResponse> address;
+    List<AddressResponse> addresses;
 
     /**
      * Liste des numéros de téléphone associés à la personne.
@@ -86,6 +88,7 @@ public class PersonDetailResponse {
      */
     public static PersonDetailResponse fromEntity(Person person){
         return PersonDetailResponse.builder()
+                .id(person.getId())
                 .nationalRegister(person.getNationalRegister())
                 .lastName(person.getName())
                 .firstName(person.getFirstname())
@@ -96,7 +99,7 @@ public class PersonDetailResponse {
                 .picture(person.getPicture())
                 .lawyer(person.getLawyer())
                 .imprint(person.getImprint())
-                .address(person.getAddress().stream().map(AddressResponse::fromEntity).toList())
+                .addresses(person.getAddress().stream().map(AddressResponse::fromEntity).toList())
                 .phones(person.getPhones().stream().map(PhoneResponse::fromEntity).toList())
                 .build();
     }

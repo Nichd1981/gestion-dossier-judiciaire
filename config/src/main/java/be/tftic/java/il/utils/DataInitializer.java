@@ -100,9 +100,9 @@ public class DataInitializer implements CommandLineRunner {
             userRepository.save(lawyer);
 
             Address address1 = new Address("Rue test", "1", "Ville", "1234", "Belgique", "Domicile", azzedine);
-            Address address2 = new Address("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", valentine);
-            Address address3 = new Address("Rue test3", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
-            Address address4 = new Address("Rue test4", "1", "Ville", "1234", "Belgique", "Domicile", antoine);
+            Address address2 = new Address("Rue test2", "1", "Ville", "1234", "Belgique", "Domicile", nicolas);
+            Address address3 = new Address("Rue Joseph Van Brusselt", "2C", "Charleroi", "6280", "Belgique", "Domicile", antoine);
+            Address address4 = new Address("Rue de la paix", "50", "Charleroi", "6044", "Belgique", "Domicile", antoine);
             addressRepository.save(address1);
             addressRepository.save(address2);
             addressRepository.save(address3);
@@ -110,7 +110,7 @@ public class DataInitializer implements CommandLineRunner {
 
             Phone phone1 = new Phone("0498123456", "GSM", azzedine);
             Phone phone2 = new Phone("0498123457", "GSM", valentine);
-            Phone phone3 = new Phone("0498123458", "GSM", antoine);
+            Phone phone3 = new Phone("0493760903", "GSM", antoine);
             Phone phone4 = new Phone("0498123459", "GSM", nicolas);
             phoneRepository.save(phone1);
             phoneRepository.save(phone2);
