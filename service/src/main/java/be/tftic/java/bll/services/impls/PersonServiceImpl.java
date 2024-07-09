@@ -1,6 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
-import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.entity.EntityNotFoundException;
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.common.models.responses.PersonDetailResponse;

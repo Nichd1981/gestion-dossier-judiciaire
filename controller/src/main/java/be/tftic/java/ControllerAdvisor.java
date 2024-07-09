@@ -1,6 +1,6 @@
 package be.tftic.java;
 
-import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.entity.EntityNotFoundException;
 import be.tftic.java.bll.exceptions.complaint.CloseComplaintException;
 import be.tftic.java.bll.exceptions.user.UserDeniedAccessException;
 import be.tftic.java.bll.exceptions.user.UserEmailAlreadyExistException;
