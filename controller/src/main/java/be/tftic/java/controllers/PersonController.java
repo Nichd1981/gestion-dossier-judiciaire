@@ -6,6 +6,7 @@ import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -73,4 +74,5 @@ public class PersonController {
     public ResponseEntity<PersonDetailResponse> getDetailsFromListPerson(@PathVariable Long id) {
         return ResponseEntity.ok(personService.findDetailsById(id));
     }
+
 }

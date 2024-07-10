@@ -50,7 +50,7 @@ public class DataInitializer implements CommandLineRunner {
         if (personRepository.count()==0){
             Person azzedine = new Person("881113-237-37","Hassaini", "Azzedine", LocalDate.of(1988,11,13), "La Louvière", Gender.MALE, null, "", "");
             Person antoine = new Person("881113-237-36","Georis", "Antoine", LocalDate.of(1999,9,9), "Charleroi", Gender.MALE, null, "", "");
-            Person nicolas = new Person("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8), "Ottignies", Gender.MALE, null, "", "");
+            Person nicolas = new Person("810208-183-31","Quinet", "Nicolas", LocalDate.of(1981,2,8), "Ottignies", Gender.MALE, null, "mario.jpg", "");
             Person valentine = new Person("112233-123-34","Collignon", "Valentine", LocalDate.of(1999,3,23), "Dinant", Gender.FEMALE, null, "", "");
             valentine.setLawyer(azzedine);
             personRepository.save(azzedine);

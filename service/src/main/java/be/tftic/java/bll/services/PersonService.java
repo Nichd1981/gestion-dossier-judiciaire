@@ -4,6 +4,7 @@ import be.tftic.java.common.models.requests.create.PersonCreateRequest;
 import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.domain.entities.Person;
+import org.springframework.core.io.InputStreamResource;
 
 import java.util.List;
 
@@ -57,5 +58,4 @@ public interface PersonService {
     Long update(Long id, Person person);
 
     List<PersonShortResponse> getCustomersForLawyer(Long lawyerId);
-
 }

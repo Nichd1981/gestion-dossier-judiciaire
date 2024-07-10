@@ -9,8 +9,14 @@ import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -130,4 +136,5 @@ public class PersonServiceImpl implements PersonService {
                 .map(PersonShortResponse::fromEntity)
                 .toList();
     }
+
 }
