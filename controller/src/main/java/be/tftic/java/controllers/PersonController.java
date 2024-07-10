@@ -34,7 +34,7 @@ public class PersonController {
      * @param person l'objet PersonneUpdateRequest contenant les nouvelles informations de la personne
      * @return une réponse contenant l'identifiant de la personne mise à jour
      */
-    //@PreAuthorize("hasAuthority('AGENT')")
+    @PreAuthorize("hasAuthority('AGENT')")
     @PutMapping("/{id:\\d+}")
     public ResponseEntity<Long> updatePerson(@PathVariable Long id, @RequestBody @Valid PersonUpdateRequest person) {
         return ResponseEntity.ok(personService.update(id, person.toEntity()));
@@ -69,7 +69,7 @@ public class PersonController {
         return ResponseEntity.ok(personService.getAllDetailsPerson());
     }
 
-//    @PreAuthorize("hasAnyAuthority('AGENT', 'ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AGENT', 'ADMIN')")
     @GetMapping("/{id}/details")
     public ResponseEntity<PersonDetailResponse> getDetailsFromListPerson(@PathVariable Long id) {
         return ResponseEntity.ok(personService.findDetailsById(id));

@@ -1,4 +1,6 @@
-package be.tftic.java.bll.exceptions;
+package be.tftic.java.bll.exceptions.entity;
+
+import be.tftic.java.bll.exceptions.ApplicationException;
 
 public class EntityNotFoundException extends ApplicationException {
 

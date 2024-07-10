@@ -1,6 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
-import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.entity.EntityNotFoundException;
 import be.tftic.java.bll.services.DepositionService;
 import be.tftic.java.bll.specifications.DepositionSpecification;
 import be.tftic.java.common.models.requests.filter.DepositionFilterRequest;

@@ -1,6 +1,6 @@
 package be.tftic.java.bll.services.impls;
 
-import be.tftic.java.bll.exceptions.EntityNotFoundException;
+import be.tftic.java.bll.exceptions.entity.EntityNotFoundException;
 import be.tftic.java.bll.exceptions.user.UserDeniedAccessException;
 import be.tftic.java.bll.services.PhoneService;
 import be.tftic.java.dal.repositories.PhoneRepository;
