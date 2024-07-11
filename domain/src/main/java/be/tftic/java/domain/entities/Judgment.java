@@ -69,4 +69,11 @@ public class Judgment {
         this.judgmentDate = judgmentDate;
         this.complaint = complaint;
     }
+
+    public Judgment(LocalDateTime judgmentDate, JudgmentDecision judgmentDecision, String commentary, Complaint complaint) {
+        this.judgmentDate = judgmentDate;
+        this.judgmentDecision = judgmentDecision;
+        this.commentary = commentary;
+        this.complaint = complaint;
+    }
 }

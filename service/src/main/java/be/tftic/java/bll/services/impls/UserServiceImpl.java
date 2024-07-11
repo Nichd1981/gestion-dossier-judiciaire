@@ -93,8 +93,8 @@ public class UserServiceImpl implements UserService {
 
         Person p;
         // Check if the person entity already exists
-        if (personService.existsByNationalRegister(request.getPerson().nationalRegisterNumber())){
-            p = personService.findByNationalRegister(request.getPerson().nationalRegisterNumber());
+        if (personService.existsByNationalRegister(request.getNationalRegisterNumber())){
+            p = personService.findByNationalRegister(request.getNationalRegisterNumber());
         } else {
             p = personService.create(request.getPerson());
         }
