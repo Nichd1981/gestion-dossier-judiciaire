@@ -19,8 +19,8 @@ public record PersonCreateRequest(
 
     public Person toEntity(){
         return Person.builder()
-                .name(firstName)
-                .firstname(lastName)
+                .name(lastName)
+                .firstname(firstName)
                 .nationalRegister(nationalRegisterNumber)
                 .birthdate(birthDate)
                 .birthplace(birthPlace)

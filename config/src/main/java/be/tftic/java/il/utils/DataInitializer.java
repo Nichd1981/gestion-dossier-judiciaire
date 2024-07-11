@@ -65,6 +65,9 @@ public class DataInitializer implements CommandLineRunner {
             persons.add(new Person("940808-890-08", "Petit", "Anne", LocalDate.of(1994, 8, 8), "Bruges", Gender.FEMALE, null, "", ""));
             persons.add(new Person("890909-901-09", "Moreau", "Thomas", LocalDate.of(1989, 9, 9), "Louvain", Gender.MALE, null, "", ""));
             persons.add(new Person("960101-012-10", "Legrand", "Isabelle", LocalDate.of(1996, 1, 1), "Verviers", Gender.FEMALE, null, "", ""));
+            persons.forEach(person -> {
+                person.setLawyer(persons.get(3));
+            });
             personRepository.saveAll(persons);
 
             // Adresses et numéros de téléphone
@@ -131,28 +134,33 @@ public class DataInitializer implements CommandLineRunner {
             complaints.add(new Complaint("LEG-2025-0008", ComplaintStatus.IN_PROGRESS, LocalDate.of(2025, 8, 16).atStartOfDay(), persons.get(9), persons.get(1)));
             complaintRepository.saveAll(complaints);
 
+            // Dépositions
+            List<Deposition> depositions = new ArrayList<>();
+            depositions.add(new Deposition(LocalDate.of(2024, 1, 15), "Déposition pour plainte DUP-2024-0001", complaints.get(0)));
+            depositionRepository.saveAll(depositions);
+
             // Auditions (20)
             List<Audition> auditions = new ArrayList<>();
-            auditions.add(new Audition(LocalDateTime.of(2024, 2, 1, 10, 0), "1", "Audition pour plainte DUP-2024-0001", persons.get(1), persons.get(2), persons.get(4), complaints.get(1)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 3, 5, 14, 30), "2", "Audition pour plainte MAR-2024-0002", persons.get(2), persons.get(3), persons.get(8), complaints.get(2)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 4, 10, 9, 15), "3", "Audition pour plainte LER-2024-0003", persons.get(3), persons.get(4), persons.get(8), complaints.get(3)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 5, 15, 11, 45), "4", "Audition pour plainte DUB-2024-0004", persons.get(4), persons.get(5), persons.get(4), complaints.get(4)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 6, 20, 13, 30), "5", "Audition pour plainte LAM-2024-0005", persons.get(5), persons.get(6), persons.get(8), complaints.get(5)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 7, 25, 15, 0), "6", "Audition pour plainte ROU-2024-0006", persons.get(6), persons.get(7), persons.get(4), complaints.get(6)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 8, 30, 10, 30), "7", "Audition pour plainte LEF-2024-0007", persons.get(7), persons.get(8), persons.get(8), complaints.get(7)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 10, 5, 14, 0), "8", "Audition pour plainte PET-2024-0008", persons.get(8), persons.get(9), persons.get(4), complaints.get(8)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 11, 10, 9, 45), "9", "Audition pour plainte MOR-2024-0009", persons.get(9), persons.get(10), persons.get(8), complaints.get(9)));
-            auditions.add(new Audition(LocalDateTime.of(2024, 12, 15, 11, 15), "10", "Audition pour plainte LEG-2024-0010", persons.get(10), persons.get(1), persons.get(4), complaints.get(10)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 1, 20, 13, 0), "11", "Audition pour plainte DUP-2024-0011", persons.get(1), persons.get(3), persons.get(8), complaints.get(11)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 2, 25, 15, 30), "12", "Audition pour plainte MAR-2024-0012", persons.get(2), persons.get(4), persons.get(4), complaints.get(12)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 3, 2, 10, 0), "13", "Audition pour plainte LER-2025-0001", persons.get(3), persons.get(5), persons.get(8), complaints.get(13)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 4, 7, 14, 30), "14", "Audition pour plainte DUB-2025-0002", persons.get(4), persons.get(6), persons.get(4), complaints.get(14)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 5, 12, 9, 15), "15", "Audition pour plainte LAM-2025-0003", persons.get(5), persons.get(7), persons.get(8), complaints.get(15)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 6, 17, 11, 45), "16", "Audition pour plainte ROU-2025-0004", persons.get(6), persons.get(8), persons.get(4), complaints.get(16)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 7, 22, 13, 30), "17", "Audition pour plainte LEF-2025-0005", persons.get(7), persons.get(9), persons.get(8), complaints.get(17)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 8, 27, 15, 0), "18", "Audition pour plainte PET-2025-0006", persons.get(8), persons.get(10), persons.get(4), complaints.get(18)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 10, 2, 10, 30), "19", "Audition pour plainte MOR-2025-0007", persons.get(9), persons.get(1), persons.get(8), complaints.get(19)));
-            auditions.add(new Audition(LocalDateTime.of(2025, 11, 7, 14, 0), "20", "Audition pour plainte LEG-2025-0008", persons.get(10), persons.get(2), persons.get(4), complaints.get(20)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 2, 1, 10, 0), "1", "Audition pour plainte DUP-2024-0001", persons.get(0), persons.get(5), persons.get(3), complaints.get(0)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 3, 5, 14, 30), "2", "Audition pour plainte MAR-2024-0002", persons.get(1), persons.get(5), persons.get(7), complaints.get(1)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 4, 10, 9, 15), "3", "Audition pour plainte LER-2024-0003", persons.get(2), persons.get(9), persons.get(7), complaints.get(2)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 5, 15, 11, 45), "4", "Audition pour plainte DUB-2024-0004", persons.get(3), persons.get(1), persons.get(7), complaints.get(3)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 6, 20, 13, 30), "5", "Audition pour plainte LAM-2024-0005", persons.get(4), persons.get(1), persons.get(3), complaints.get(4)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 7, 25, 15, 0), "6", "Audition pour plainte ROU-2024-0006", persons.get(5), persons.get(9), persons.get(7), complaints.get(5)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 8, 30, 10, 30), "7", "Audition pour plainte LEF-2024-0007", persons.get(6), persons.get(1), persons.get(3), complaints.get(6)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 10, 5, 14, 0), "8", "Audition pour plainte PET-2024-0008", persons.get(7), persons.get(5), persons.get(3), complaints.get(7)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 11, 10, 9, 45), "9", "Audition pour plainte MOR-2024-0009", persons.get(8), persons.get(5), persons.get(3), complaints.get(8)));
+            auditions.add(new Audition(LocalDateTime.of(2024, 12, 15, 11, 15), "10", "Audition pour plainte LEG-2024-0010", persons.get(9), persons.get(1), persons.get(7), complaints.get(9)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 1, 20, 13, 0), "11", "Audition pour plainte DUP-2024-0011", persons.get(0), persons.get(5), persons.get(3), complaints.get(10)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 2, 25, 15, 30), "12", "Audition pour plainte MAR-2024-0012", persons.get(1), persons.get(9), persons.get(7), complaints.get(11)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 3, 2, 10, 0), "13", "Audition pour plainte LER-2025-0001", persons.get(2), persons.get(1), persons.get(3), complaints.get(12)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 4, 7, 14, 30), "14", "Audition pour plainte DUB-2025-0002", persons.get(3), persons.get(5), persons.get(7), complaints.get(13)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 5, 12, 9, 15), "15", "Audition pour plainte LAM-2025-0003", persons.get(4), persons.get(9), persons.get(3), complaints.get(14)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 6, 17, 11, 45), "16", "Audition pour plainte ROU-2025-0004", persons.get(5), persons.get(1), persons.get(7), complaints.get(15)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 7, 22, 13, 30), "17", "Audition pour plainte LEF-2025-0005", persons.get(6), persons.get(5), persons.get(3), complaints.get(16)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 8, 27, 15, 0), "18", "Audition pour plainte PET-2025-0006", persons.get(7), persons.get(9), persons.get(3), complaints.get(17)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 10, 2, 10, 30), "19", "Audition pour plainte MOR-2025-0007", persons.get(8), persons.get(1), persons.get(3), complaints.get(18)));
+            auditions.add(new Audition(LocalDateTime.of(2025, 11, 7, 14, 0), "20", "Audition pour plainte LEG-2025-0008", persons.get(9), persons.get(5), persons.get(7), complaints.get(19)));
             auditionRepository.saveAll(auditions);
 
             // Jugements (20)
