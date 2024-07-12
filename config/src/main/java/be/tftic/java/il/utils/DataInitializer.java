@@ -163,9 +163,9 @@ public class DataInitializer implements CommandLineRunner {
             persons.add(new Person("960101-012-10", "Legrand", "Isabelle", LocalDate.of(1996, 1, 1), "Verviers", Gender.FEMALE, null, "", ""));
             for (int i = 0; i < persons.size(); i++) {
                 if (i == 3)
-                    persons.get(i).setLawyer(persons.get(7));
+                    continue;
                 else if (i == 7)
-                    persons.get(i).setLawyer(persons.get(3));
+                    continue;
                 else if (i %2 == 0)
                     persons.get(i).setLawyer(persons.get(7));
                 else
