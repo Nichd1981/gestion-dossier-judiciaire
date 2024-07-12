@@ -11,6 +11,7 @@ import be.tftic.java.common.models.requests.update.ClosedSurveyRequest;
 import be.tftic.java.common.models.requests.create.ComplaintCreateRequest;
 import be.tftic.java.common.models.responses.ComplaintDetailResponse;
 import be.tftic.java.common.models.responses.ComplaintShortResponse;
+import be.tftic.java.common.models.responses.PagedResponse;
 import be.tftic.java.dal.repositories.ComplaintRepository;
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.Complaint;
@@ -20,13 +21,18 @@ import be.tftic.java.domain.enums.ComplaintType;
 import be.tftic.java.domain.enums.Gender;
 import be.tftic.java.il.utils.MailUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Plainte.
@@ -85,11 +91,21 @@ public class ComplaintServiceImpl implements ComplaintService {
      * @return la liste de toutes les plaintes, ou une liste vide si aucune plainte n'est enregistrée.
      */
     @Override
-    public List<ComplaintShortResponse> findAll() {
-        return complaintRepository.findAll()
-                .stream()
-                .map(ComplaintShortResponse::fromEntity)
-                .toList();
+    public PagedResponse<ComplaintShortResponse> findAll(Map<String, String> params, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        Page<Complaint> pagedComplaints = complaintRepository
+                .findAll(filterByParams(params), pageable);
+
+        return new PagedResponse<>(
+                pagedComplaints.getContent()
+                        .stream()
+                        .map(ComplaintShortResponse::fromEntity)
+                        .toList(),
+                pageable.getPageSize(),
+                pagedComplaints.getTotalElements(),
+                pagedComplaints.getTotalPages()
+        );
     }
 
     /**
@@ -286,6 +302,40 @@ public class ComplaintServiceImpl implements ComplaintService {
             spec = spec.and(ComplaintSpecification.getByComplainant(complainant));
         }
         return spec;
+    }
+
+    private Specification<Complaint> filterByParams(Map<String, String> params) {
+        Specification<Complaint> specification = Specification.where(null);
+
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if (!entry.getValue().isBlank()) {
+                specification = specification.and(filterBy(entry.getKey(), entry.getValue()));
+            }
+        }
+
+        return specification;
+    }
+
+    private Specification<Complaint> filterBy(String key, String value) {
+        return (root, query, criteriaBuilder) ->
+                switch (key) {
+                    case "fileNumber" ->
+                        criteriaBuilder.like(root.get("fileNumber"), "%s" + value + "%");
+
+                    case "lowerBound" ->
+                        criteriaBuilder.greaterThanOrEqualTo(root.get("date"), LocalDateTime.parse(value));
+
+                    case "upperBound" ->
+                        criteriaBuilder.lessThanOrEqualTo(root.get("date"), LocalDateTime.parse(value));
+
+                    case "status" ->
+                        criteriaBuilder.equal(root.get("status"), ComplaintStatus.valueOf(value));
+
+                    case "type" ->
+                        criteriaBuilder.equal(root.get("type"), ComplaintType.valueOf(value));
+
+                    default -> null;
+                };
     }
 
 }
