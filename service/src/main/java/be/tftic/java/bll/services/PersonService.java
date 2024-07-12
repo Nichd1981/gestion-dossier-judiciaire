@@ -1,12 +1,13 @@
 package be.tftic.java.bll.services;
 
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
+import be.tftic.java.common.models.responses.PagedResponse;
 import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.domain.entities.Person;
-import org.springframework.core.io.InputStreamResource;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface pour les opérations de gestion des personnes.
@@ -19,6 +20,8 @@ public interface PersonService {
      * @param request DTO containing required information to create a person
      */
     Person create(PersonCreateRequest request);
+
+    PagedResponse<PersonShortResponse> getAll(Map<String, String> params, int page, int pageSize);
 
     PersonDetailResponse findDetailsById(Long id);
 

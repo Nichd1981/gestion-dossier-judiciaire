@@ -3,21 +3,22 @@ package be.tftic.java.bll.services.impls;
 import be.tftic.java.bll.exceptions.entity.EntityNotFoundException;
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.create.PersonCreateRequest;
+import be.tftic.java.common.models.responses.PagedResponse;
 import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import be.tftic.java.dal.repositories.PersonRepository;
 import be.tftic.java.domain.entities.Person;
 import be.tftic.java.domain.entities.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe de service pour la gestion des opérations liées à l'entité Personne.
@@ -42,6 +43,25 @@ public class PersonServiceImpl implements PersonService {
     public Person create(PersonCreateRequest request) {
         Person p = request.toEntity();
         return personRepository.save(p);
+    }
+
+    @Override
+    public PagedResponse<PersonShortResponse> getAll(Map<String, String> params, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        Page<Person> pagedPersons = personRepository
+                .findAll(filterByParams(params), pageable);
+
+        return new PagedResponse<>(
+                pagedPersons.getContent()
+                        .stream()
+                        .map(PersonShortResponse::fromEntity)
+                        .toList(),
+                pageable.getPageSize(),
+                pagedPersons.getTotalElements(),
+                pagedPersons.getTotalPages()
+        );
+
     }
 
     /**
@@ -135,6 +155,46 @@ public class PersonServiceImpl implements PersonService {
                 .stream()
                 .map(PersonShortResponse::fromEntity)
                 .toList();
+    }
+
+    private Specification<Person> filterByParams(Map<String, String> params) {
+        Specification<Person> specification = Specification.where(null);
+
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if (!entry.getValue().isBlank()) {
+                specification = specification.and(filterBy(entry.getKey(), entry.getValue()));
+            }
+        }
+
+        return specification;
+    }
+
+    private Specification<Person> filterBy(String key, String value) {
+        return (root, query, criteriaBuilder) ->
+                switch (key) {
+                    case "birthDateLowerBound" ->
+                            criteriaBuilder.greaterThanOrEqualTo(root.get("birthDateLowerBound"), value);
+
+                    case "birthDateUpperBound" ->
+                            criteriaBuilder.lessThanOrEqualTo(root.get("birthDateUpperBound"), value);
+
+                    case "name" ->
+                            criteriaBuilder.like(root.get("name"), "%" + value + "%");
+
+                    case "firstname" ->
+                            criteriaBuilder.like(root.get("firstname"), "%" + value + "%");
+
+                    case "nationalRegister" ->
+                            criteriaBuilder.like(root.get("nationalRegister"), "%" + value + "%");
+
+                    case "birthPlace" ->
+                            criteriaBuilder.like(root.get("birthPlace"), "%" + value + "%");
+
+                    case "gender" ->
+                            criteriaBuilder.equal(root.get("gender"), value);
+
+                    default -> null;
+                };
     }
 
 }

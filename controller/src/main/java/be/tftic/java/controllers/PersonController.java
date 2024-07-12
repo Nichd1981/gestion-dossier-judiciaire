@@ -2,15 +2,16 @@ package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.PersonService;
 import be.tftic.java.common.models.requests.update.PersonUpdateRequest;
+import be.tftic.java.common.models.responses.PagedResponse;
 import be.tftic.java.common.models.responses.PersonDetailResponse;
 import be.tftic.java.common.models.responses.PersonShortResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Contrôleur REST pour gérer les opérations liées aux personnes.
@@ -26,6 +27,16 @@ import java.util.List;
 public class PersonController {
 
     private final PersonService personService;
+
+    @PreAuthorize("hasAuthority('AGENT')")
+    @GetMapping
+    public ResponseEntity<PagedResponse<PersonShortResponse>> getAll(
+            @RequestParam Map<String, String> params,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int pageSize
+    ) {
+        return ResponseEntity.ok(personService.getAll(params, page, pageSize));
+    }
 
     /**
      * Met à jour les informations d'une personne spécifiée par son identifiant.

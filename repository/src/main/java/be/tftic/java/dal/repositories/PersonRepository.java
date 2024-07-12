@@ -2,6 +2,7 @@ package be.tftic.java.dal.repositories;
 
 import be.tftic.java.domain.entities.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * Hérite de JpaRepository pour les opérations CRUD.
  */
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long>, JpaSpecificationExecutor<Person> {
 
     Optional<Person> findByNationalRegister(String nationalRegister);
 
