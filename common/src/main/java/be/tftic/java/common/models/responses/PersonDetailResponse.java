@@ -97,7 +97,7 @@ public class PersonDetailResponse {
                 .gender(person.getGender().toString())
                 .deathDate(person.getDeathDate())
                 .picture(person.getPicture())
-                .lawyer(PersonShortResponse.fromEntity(person.getLawyer()))
+                .lawyer(person.getLawyer() == null ? null : PersonShortResponse.fromEntity(person.getLawyer()))
                 .imprint(person.getImprint())
                 .addresses(person.getAddress().stream().map(AddressResponse::fromEntity).toList())
                 .phones(person.getPhones().stream().map(PhoneResponse::fromEntity).toList())
