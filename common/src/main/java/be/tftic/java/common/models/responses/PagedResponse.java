@@ -4,7 +4,7 @@ import java.util.List;
 
 public record PagedResponse<T> (
         List<T> content,
-        Integer elementsPerPage,
+        Integer pageSize,
         Long totalElements,
         Integer totalPages
 ) { }
