@@ -6,6 +6,7 @@ import be.tftic.java.common.models.requests.update.ClosedSurveyRequest;
 import be.tftic.java.common.models.requests.create.ComplaintCreateRequest;
 import be.tftic.java.common.models.responses.ComplaintDetailResponse;
 import be.tftic.java.common.models.responses.ComplaintShortResponse;
+import be.tftic.java.common.models.responses.PagedResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  * Contrôleur REST pour la gestion des plaintes.
@@ -39,9 +41,14 @@ public class ComplaintController {
      */
     @PreAuthorize("hasAuthority('AGENT')")
     @GetMapping
-    public ResponseEntity<List<ComplaintShortResponse>> getAll(){
-        return ResponseEntity.ok(complaintService.findAll());
+    public ResponseEntity<PagedResponse<ComplaintShortResponse>> getAll(
+        @RequestParam Map<String, String> params,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int pageSize
+    ){
+        return ResponseEntity.ok(complaintService.findAll(params, page, pageSize));
     }
+
     /**
      * Récupère les détails d'une plainte spécifique.
      *

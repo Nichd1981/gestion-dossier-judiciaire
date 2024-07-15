@@ -5,8 +5,10 @@ import be.tftic.java.common.models.requests.filter.ComplaintFilterRequest;
 import be.tftic.java.common.models.requests.update.ClosedSurveyRequest;
 import be.tftic.java.common.models.responses.ComplaintDetailResponse;
 import be.tftic.java.common.models.responses.ComplaintShortResponse;
+import be.tftic.java.common.models.responses.PagedResponse;
 import be.tftic.java.domain.entities.Complaint;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface pour les opérations de gestion des plaintes.
@@ -21,7 +23,7 @@ public interface ComplaintService {
      *
      * @return une liste d'entités Plainte représentant toutes les plaintes disponibles
      */
-    List<ComplaintShortResponse> findAll();
+    PagedResponse<ComplaintShortResponse> findAll(Map<String, String> params, int page, int pageSize);
 
     /**
      * Récupère une plainte par son identifiant.
