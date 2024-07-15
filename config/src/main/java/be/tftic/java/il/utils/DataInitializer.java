@@ -12,8 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Classe responsable de l'initialisation des données au démarrage de l'application.
@@ -239,26 +238,26 @@ public class DataInitializer implements CommandLineRunner {
 
             // Plaintes (20)
             List<Complaint> complaints = new ArrayList<>();
-            complaints.add(new Complaint("DUP-2024-0001", ComplaintStatus.REGISTERED, LocalDate.of(2024, 1, 15).atStartOfDay(), persons.get(0), persons.get(1)));
-            complaints.add(new Complaint("MAR-2024-0002", ComplaintStatus.IN_PROGRESS, LocalDate.of(2024, 2, 20).atStartOfDay(), persons.get(1), persons.get(5)));
-            complaints.add(new Complaint("LER-2024-0003", ComplaintStatus.CLOSED, LocalDate.of(2024, 3, 10).atStartOfDay(), persons.get(2), persons.get(9)));
-            complaints.add(new Complaint("DUB-2024-0004", ComplaintStatus.REGISTERED, LocalDate.of(2024, 4, 5).atStartOfDay(), persons.get(3), persons.get(1)));
-            complaints.add(new Complaint("LAM-2024-0005", ComplaintStatus.IN_PROGRESS, LocalDate.of(2024, 5, 12).atStartOfDay(), persons.get(4), persons.get(5)));
-            complaints.add(new Complaint("ROU-2024-0006", ComplaintStatus.CLOSED, LocalDate.of(2024, 6, 18).atStartOfDay(), persons.get(5), persons.get(9)));
-            complaints.add(new Complaint("LEF-2024-0007", ComplaintStatus.REGISTERED, LocalDate.of(2024, 7, 22).atStartOfDay(), persons.get(6), persons.get(1)));
-            complaints.add(new Complaint("PET-2024-0008", ComplaintStatus.IN_PROGRESS, LocalDate.of(2024, 8, 30).atStartOfDay(), persons.get(7), persons.get(5)));
-            complaints.add(new Complaint("MOR-2024-0009", ComplaintStatus.CLOSED, LocalDate.of(2024, 9, 7).atStartOfDay(), persons.get(8), persons.get(9)));
-            complaints.add(new Complaint("LEG-2024-0010", ComplaintStatus.REGISTERED, LocalDate.of(2024, 10, 14).atStartOfDay(), persons.get(9), persons.get(1)));
-            complaints.add(new Complaint("DUP-2024-0011", ComplaintStatus.IN_PROGRESS, LocalDate.of(2024, 11, 19).atStartOfDay(), persons.get(0), persons.get(5)));
-            complaints.add(new Complaint("MAR-2024-0012", ComplaintStatus.CLOSED, LocalDate.of(2024, 12, 25).atStartOfDay(), persons.get(1), persons.get(9)));
-            complaints.add(new Complaint("LER-2025-0001", ComplaintStatus.REGISTERED, LocalDate.of(2025, 1, 2).atStartOfDay(), persons.get(2), persons.get(1)));
-            complaints.add(new Complaint("DUB-2025-0002", ComplaintStatus.IN_PROGRESS, LocalDate.of(2025, 2, 8).atStartOfDay(), persons.get(3), persons.get(5)));
-            complaints.add(new Complaint("LAM-2025-0003", ComplaintStatus.CLOSED, LocalDate.of(2025, 3, 15).atStartOfDay(), persons.get(4), persons.get(9)));
-            complaints.add(new Complaint("ROU-2025-0004", ComplaintStatus.REGISTERED, LocalDate.of(2025, 4, 21).atStartOfDay(), persons.get(5), persons.get(1)));
-            complaints.add(new Complaint("LEF-2025-0005", ComplaintStatus.IN_PROGRESS, LocalDate.of(2025, 5, 27).atStartOfDay(), persons.get(6), persons.get(5)));
-            complaints.add(new Complaint("PET-2025-0006", ComplaintStatus.CLOSED, LocalDate.of(2025, 6, 3).atStartOfDay(), persons.get(7), persons.get(9)));
-            complaints.add(new Complaint("MOR-2025-0007", ComplaintStatus.REGISTERED, LocalDate.of(2025, 7, 9).atStartOfDay(), persons.get(8), persons.get(1)));
-            complaints.add(new Complaint("LEG-2025-0008", ComplaintStatus.IN_PROGRESS, LocalDate.of(2025, 8, 16).atStartOfDay(), persons.get(9), persons.get(5)));
+            complaints.add(new Complaint("DUP-2024-0001", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 1, 15, 0, 0), persons.get(0), persons.get(1), new HashSet<>(Arrays.asList(persons.get(2), persons.get(3)))));
+            complaints.add(new Complaint("MAR-2024-0002", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("LER-2024-0003", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 3, 10, 0, 0), persons.get(2), persons.get(9), new HashSet<>(Arrays.asList(persons.get(3), persons.get(4)))));
+            complaints.add(new Complaint("DUB-2024-0004", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 4, 5, 0, 0), persons.get(3), persons.get(1), new HashSet<>(Arrays.asList(persons.get(5), persons.get(6)))));
+            complaints.add(new Complaint("LAM-2024-0005", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 5, 12, 0, 0), persons.get(4), persons.get(5), new HashSet<>(Arrays.asList(persons.get(7), persons.get(8)))));
+            complaints.add(new Complaint("ROU-2024-0006", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 6, 18, 0, 0), persons.get(5), persons.get(9), new HashSet<>(Arrays.asList(persons.get(0), persons.get(2)))));
+            complaints.add(new Complaint("LEF-2024-0007", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 7, 22, 0, 0), persons.get(6), persons.get(1), new HashSet<>(Arrays.asList(persons.get(3), persons.get(4)))));
+            complaints.add(new Complaint("PET-2024-0008", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 8, 30, 0, 0), persons.get(7), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(8)))));
+            complaints.add(new Complaint("MOR-2024-0009", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 9, 7, 0, 0), persons.get(8), persons.get(9), new HashSet<>(Arrays.asList(persons.get(0), persons.get(1)))));
+            complaints.add(new Complaint("LEG-2024-0010", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 10, 14, 0, 0), persons.get(9), persons.get(1), new HashSet<>(Arrays.asList(persons.get(2), persons.get(3)))));
+            complaints.add(new Complaint("DUP-2024-0011", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 11, 19, 0, 0), persons.get(0), persons.get(5), new HashSet<>(Arrays.asList(persons.get(4), persons.get(6)))));
+            complaints.add(new Complaint("MAR-2024-0012", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 12, 25, 0, 0), persons.get(1), persons.get(9), new HashSet<>(Arrays.asList(persons.get(7), persons.get(8)))));
+            complaints.add(new Complaint("LER-2025-0001", ComplaintStatus.REGISTERED, LocalDateTime.of(2025, 1, 2, 0, 0), persons.get(2), persons.get(1), new HashSet<>(Arrays.asList(persons.get(0), persons.get(3)))));
+            complaints.add(new Complaint("DUB-2025-0002", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2025, 2, 8, 0, 0), persons.get(3), persons.get(5), new HashSet<>(Arrays.asList(persons.get(1), persons.get(4)))));
+            complaints.add(new Complaint("LAM-2025-0003", ComplaintStatus.CLOSED, LocalDateTime.of(2025, 3, 15, 0, 0), persons.get(4), persons.get(9), new HashSet<>(Arrays.asList(persons.get(2), persons.get(5)))));
+            complaints.add(new Complaint("ROU-2025-0004", ComplaintStatus.REGISTERED, LocalDateTime.of(2025, 4, 21, 0, 0), persons.get(5), persons.get(1), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("LEF-2025-0005", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2025, 5, 27, 0, 0), persons.get(6), persons.get(5), new HashSet<>(Arrays.asList(persons.get(8), persons.get(9)))));
+            complaints.add(new Complaint("PET-2025-0006", ComplaintStatus.CLOSED, LocalDateTime.of(2025, 6, 3, 0, 0), persons.get(7), persons.get(9), new HashSet<>(Arrays.asList(persons.get(0), persons.get(1)))));
+            complaints.add(new Complaint("MOR-2025-0007", ComplaintStatus.REGISTERED, LocalDateTime.of(2025, 7, 9, 0, 0), persons.get(8), persons.get(1), new HashSet<>(Arrays.asList(persons.get(2), persons.get(3)))));
+            complaints.add(new Complaint("LEG-2025-0008", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2025, 8, 16, 0, 0), persons.get(9), persons.get(5), new HashSet<>(Arrays.asList(persons.get(4), persons.get(6)))));
             // Ajout de 50 plaintes supplémentaires
             for (int i = 20; i < 70; i++) {
                 String complaintNumber = String.format("COMP-%d-%04d", 2024 + i / 12, i % 1000);
@@ -266,7 +265,10 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDateTime date = LocalDateTime.of(2024 + i / 12, i % 12 + 1, i % 28 + 1, 10, 0);
                 Person complainant = persons.get(i % 50 + 10);
                 Person agent = persons.get(new int[]{1, 5, 9}[i % 3]);
-                Complaint complaint = new Complaint(complaintNumber, status, date, complainant, agent);
+                Set<Person> personConcened = new HashSet<>();
+                personConcened.add(persons.get((i + 1) % 50));
+                personConcened.add(persons.get((i + 2) % 50));
+                Complaint complaint = new Complaint(complaintNumber, status, date, complainant, agent, personConcened);
                 complaints.add(complaint);
             }
             complaintRepository.saveAll(complaints);

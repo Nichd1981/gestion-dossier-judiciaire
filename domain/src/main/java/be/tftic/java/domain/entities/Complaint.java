@@ -177,12 +177,13 @@ public class Complaint {
      */
     @Builder
     public Complaint(String fileNumber, ComplaintStatus status, LocalDateTime complaintDate,
-                     Person complainant, Person agent) {
+                     Person complainant, Person agent, Set<Person> personConcerned) {
         this.fileNumber = fileNumber;
         this.status = status;
         this.complaintDate = complaintDate;
         this.complainant = complainant;
         this.agent = agent;
+        this.personConcerned = personConcerned;
     }
 
 }

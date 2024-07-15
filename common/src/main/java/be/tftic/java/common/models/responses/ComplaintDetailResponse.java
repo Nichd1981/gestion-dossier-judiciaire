@@ -18,6 +18,7 @@ import java.util.List;
 @Data
 public class ComplaintDetailResponse {
 
+    Long id;
     /**
      * Numéro de dossier de la plainte.
      */
@@ -59,6 +60,7 @@ public class ComplaintDetailResponse {
      */
     public static ComplaintDetailResponse fromEntity(Complaint complaint) {
         return ComplaintDetailResponse.builder()
+                .id(complaint.getId())
                 .fileNumber(complaint.getFileNumber())
                 .status(complaint.getStatus().toString())
                 .date(complaint.getComplaintDate())

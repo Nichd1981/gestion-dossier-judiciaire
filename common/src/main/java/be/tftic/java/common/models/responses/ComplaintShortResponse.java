@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 public class ComplaintShortResponse {
 
+    Long id;
     /**
      * Numéro de dossier de la plainte.
      */
@@ -53,6 +54,7 @@ public class ComplaintShortResponse {
      */
     public static ComplaintShortResponse fromEntity(Complaint complaint) {
         return ComplaintShortResponse.builder()
+                .id(complaint.getId())
                 .fileNumber(complaint.getFileNumber())
                 .status(complaint.getStatus().toString())
                 .date(complaint.getComplaintDate())
