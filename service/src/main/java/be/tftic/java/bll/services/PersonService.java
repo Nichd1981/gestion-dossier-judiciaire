@@ -23,6 +23,8 @@ public interface PersonService {
 
     PagedResponse<PersonShortResponse> getAll(Map<String, String> params, int page, int pageSize);
 
+//    PagedResponse<PersonShortResponse> getCustomersForLawyer(Long lawyerId, Map<String, String> params, int page, int pageSize);
+
     PersonDetailResponse findDetailsById(Long id);
 
     PersonDetailResponse findUserDetails();
@@ -60,5 +62,4 @@ public interface PersonService {
      */
     Long update(Long id, Person person);
 
-    List<PersonShortResponse> getCustomersForLawyer(Long lawyerId);
 }

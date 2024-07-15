@@ -63,8 +63,30 @@ public class PersonServiceImpl implements PersonService {
                 pagedPersons.getTotalElements(),
                 pagedPersons.getTotalPages()
         );
-
     }
+
+//    public PagedResponse<PersonShortResponse> getCustomersForLawyer(Long lawyerId, Map<String, String> params, int page, int pageSize) {
+//
+//        Pageable pageable = PageRequest.of(page, pageSize);
+//
+//        Page<Person> pagedPersons = personRepository
+//                .findAll(filterByParams(params), pageable);
+//
+//        return new PagedResponse<>(
+//                pagedPersons.getContent()
+//                        .stream()
+//                        .map(PersonShortResponse::fromEntity)
+//                        .toList(),
+//                pageable.getPageSize(),
+//                pagedPersons.getTotalElements(),
+//                pagedPersons.getTotalPages()
+//        );
+//
+////        return personRepository.findCustomersByLawyer(lawyerId)
+////                .stream()
+////                .map(PersonShortResponse::fromEntity)
+////                .toList();
+//    }
 
     /**
      * Récupère une personne donnée à partir de son identifiant unique.
@@ -152,13 +174,6 @@ public class PersonServiceImpl implements PersonService {
         );
     }
 
-    public List<PersonShortResponse> getCustomersForLawyer(Long lawyerId) {
-        return personRepository.findCustomersByLawyer(lawyerId)
-                .stream()
-                .map(PersonShortResponse::fromEntity)
-                .toList();
-    }
-
     private Specification<Person> filterByParams(Map<String, String> params) {
         Specification<Person> specification = Specification.where(null);
 
@@ -194,6 +209,9 @@ public class PersonServiceImpl implements PersonService {
 
                     case "gender" ->
                             criteriaBuilder.equal(root.get("gender"), value);
+
+                    case "lawyerId" ->
+                            criteriaBuilder.equal(root.get("lawyer.id"), value);
 
                     default -> null;
                 };
