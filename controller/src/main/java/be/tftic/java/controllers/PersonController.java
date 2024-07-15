@@ -38,6 +38,18 @@ public class PersonController {
         return ResponseEntity.ok(personService.getAll(params, page, pageSize));
     }
 
+    @PreAuthorize("hasAuthority('LAWYER')")
+    @GetMapping("/lawyer/{lawyerId:\\d+}")
+    public ResponseEntity<PagedResponse<PersonShortResponse>> getCustomersByLawyer(
+            @PathVariable Long lawyerId,
+            @RequestParam Map<String, String> params,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int pageSize
+    ) {
+        params.put("lawyerId", String.valueOf(lawyerId));
+        return ResponseEntity.ok(personService.getAll(params, page, pageSize));
+    }
+
     /**
      * Met à jour les informations d'une personne spécifiée par son identifiant.
      * @PutMapping("/{id:\\d+}") indique que cette methode traite une requette HTTP PUT envoyer
@@ -60,12 +72,6 @@ public class PersonController {
     @PutMapping
     public ResponseEntity<Long> updatePerson(@RequestBody @Valid PersonUpdateRequest person) {
         return ResponseEntity.ok(personService.update(null, person.toEntity()));
-    }
-
-    @PreAuthorize("hasAuthority('LAWYER')")
-    @GetMapping("/lawyer/{lawyerId:\\d+}")
-    public ResponseEntity<List<PersonShortResponse>> getCustomersByLawyer(@PathVariable Long lawyerId) {
-        return ResponseEntity.ok(personService.getCustomersForLawyer(lawyerId));
     }
 
     @PreAuthorize("hasAnyAuthority('AGENT', 'CITIZEN', 'LAWYER')")
