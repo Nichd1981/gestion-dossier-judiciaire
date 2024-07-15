@@ -151,16 +151,22 @@ public class DataInitializer implements CommandLineRunner {
 
             // Personnes
             List<Person> persons = new ArrayList<>();
-            persons.add(new Person("900101-123-01", "Dupont", "Jean", LocalDate.of(1990, 1, 1), "Liège", Gender.MALE, null, "", ""));
-            persons.add(new Person("920202-234-02", "Martin", "Sophie", LocalDate.of(1992, 2, 2), "Namur", Gender.FEMALE, null, "", ""));
-            persons.add(new Person("880303-345-03", "Leroy", "Luc", LocalDate.of(1988, 3, 3), "Bruxelles", Gender.MALE, null, "", ""));
-            persons.add(new Person("950404-456-04", "Dubois", "Marie", LocalDate.of(1995, 4, 4), "Anvers", Gender.FEMALE, null, "", ""));
-            persons.add(new Person("910505-567-05", "Lambert", "Pierre", LocalDate.of(1991, 5, 5), "Gand", Gender.MALE, null, "", ""));
-            persons.add(new Person("930606-678-06", "Rousseau", "Claire", LocalDate.of(1993, 6, 6), "Mons", Gender.FEMALE, null, "", ""));
-            persons.add(new Person("870707-789-07", "Lefebvre", "Michel", LocalDate.of(1987, 7, 7), "Charleroi", Gender.MALE, null, "", ""));
-            persons.add(new Person("940808-890-08", "Petit", "Anne", LocalDate.of(1994, 8, 8), "Bruges", Gender.FEMALE, null, "", ""));
-            persons.add(new Person("890909-901-09", "Moreau", "Thomas", LocalDate.of(1989, 9, 9), "Louvain", Gender.MALE, null, "", ""));
-            persons.add(new Person("960101-012-10", "Legrand", "Isabelle", LocalDate.of(1996, 1, 1), "Verviers", Gender.FEMALE, null, "", ""));
+            persons.add(new Person("90.01.01-123.01", "Dupont", "Jean", LocalDate.of(1990, 1, 1), "Liège", Gender.MALE, null, "", ""));
+            persons.add(new Person("92.02.02-234.02", "Martin", "Sophie", LocalDate.of(1992, 2, 2), "Namur", Gender.FEMALE, null, "", ""));
+            persons.add(new Person("88.03.03-345.03", "Leroy", "Luc", LocalDate.of(1988, 3, 3), "Bruxelles", Gender.MALE, null, "", ""));
+            persons.add(new Person("95.04.04-456.04", "Dubois", "Marie", LocalDate.of(1995, 4, 4), "Anvers", Gender.FEMALE, null, "", ""));
+            persons.add(new Person("91.05.05-567.05", "Lambert", "Pierre", LocalDate.of(1991, 5, 5), "Gand", Gender.MALE, null, "", ""));
+            persons.add(new Person("93.06.06-678.06", "Rousseau", "Claire", LocalDate.of(1993, 6, 6), "Mons", Gender.FEMALE, null, "", ""));
+            persons.add(new Person("87.07.07-789.07", "Lefebvre", "Michel", LocalDate.of(1987, 7, 7), "Charleroi", Gender.MALE, null, "", ""));
+            persons.add(new Person("94.08.08-890.08", "Petit", "Anne", LocalDate.of(1994, 8, 8), "Bruges", Gender.FEMALE, null, "", ""));
+            persons.add(new Person("89.09.09-901.09", "Moreau", "Thomas", LocalDate.of(1989, 9, 9), "Louvain", Gender.MALE, null, "", ""));
+            persons.add(new Person("96.01.01-012.10", "Legrand", "Isabelle", LocalDate.of(1996, 1, 1), "Verviers", Gender.FEMALE, null, "", ""));
+            // Ajout de 50 personnes  supplémentaires
+            for (int i = 10; i < 60; i++) {
+                String niss = String.format("%02d.%02d.%02d-%03d.%02d", 90 + i % 10, i % 12 + 1, i % 28 + 1, i * 3 % 1000, i % 100);
+                Person person = new Person(niss, "Nom" + i, "Prenom" + i, LocalDate.of(1990 + i % 30, i % 12 + 1, i % 28 + 1), "Ville" + i, i % 2 == 0 ? Gender.MALE : Gender.FEMALE, null, "", "");
+                persons.add(person);
+            }
             for (int i = 0; i < persons.size(); i++) {
                 if (i == 3)
                     continue;
@@ -185,7 +191,6 @@ public class DataInitializer implements CommandLineRunner {
             addresses.add(new Address("Markt", "12", "Bruges", "8000", "Belgique", "Domicile", persons.get(7)));
             addresses.add(new Address("Bondgenotenlaan", "30", "Louvain", "3000", "Belgique", "Domicile", persons.get(8)));
             addresses.add(new Address("Rue du Centre", "18", "Verviers", "4800", "Belgique", "Domicile", persons.get(9)));
-            addressRepository.saveAll(addresses);
             List<Phone> phones = new ArrayList<>();
             phones.add(new Phone("0494012345", "GSM", persons.get(0)));
             phones.add(new Phone("0495123456", "GSM", persons.get(1)));
@@ -197,6 +202,15 @@ public class DataInitializer implements CommandLineRunner {
             phones.add(new Phone("0491789012", "GSM", persons.get(7)));
             phones.add(new Phone("0492890123", "GSM", persons.get(8)));
             phones.add(new Phone("0493901234", "GSM", persons.get(9)));
+            // Ajout de 50 adresses et numéros de téléphone supplémentaires
+            for (int i = 10; i < 60; i++) {
+                Address address = new Address("Rue " + i, String.valueOf(i), "Ville" + i, String.format("%04d", 1000 + i * 100), "Belgique", "Domicile", persons.get(i));
+                addresses.add(address);
+
+                Phone phone = new Phone("04" + String.format("%08d", i * 1111111), "GSM", persons.get(i));
+                phones.add(phone);
+            }
+            addressRepository.saveAll(addresses);
             phoneRepository.saveAll(phones);
 
             // Utilisateurs (avec mot de passe "12341234")
@@ -211,6 +225,16 @@ public class DataInitializer implements CommandLineRunner {
             users.add(User.builder().mail("anne.petit@email.com").password(passwordEncoder.encode("12341234")).role(Role.LAWYER).person(persons.get(7)).build());
             users.add(User.builder().mail("thomas.moreau@email.com").password(passwordEncoder.encode("12341234")).role(Role.CITIZEN).person(persons.get(8)).build());
             users.add(User.builder().mail("isabelle.legrand@email.com").password(passwordEncoder.encode("12341234")).role(Role.AGENT).person(persons.get(9)).build());
+            // Ajout de 50 utilisateurs supplémentaires
+            for (int i = 10; i < 60; i++) {
+                User user = User.builder()
+                        .mail("utilisateur" + i + "@email.com")
+                        .password(passwordEncoder.encode("12341234"))
+                        .role(Role.CITIZEN)
+                        .person(persons.get(i))
+                        .build();
+                users.add(user);
+            }
             userRepository.saveAll(users);
 
             // Plaintes (20)
@@ -235,11 +259,30 @@ public class DataInitializer implements CommandLineRunner {
             complaints.add(new Complaint("PET-2025-0006", ComplaintStatus.CLOSED, LocalDate.of(2025, 6, 3).atStartOfDay(), persons.get(7), persons.get(9)));
             complaints.add(new Complaint("MOR-2025-0007", ComplaintStatus.REGISTERED, LocalDate.of(2025, 7, 9).atStartOfDay(), persons.get(8), persons.get(1)));
             complaints.add(new Complaint("LEG-2025-0008", ComplaintStatus.IN_PROGRESS, LocalDate.of(2025, 8, 16).atStartOfDay(), persons.get(9), persons.get(5)));
+            // Ajout de 50 plaintes supplémentaires
+            for (int i = 20; i < 70; i++) {
+                String complaintNumber = String.format("COMP-%d-%04d", 2024 + i / 12, i % 1000);
+                ComplaintStatus status = ComplaintStatus.values()[i % 3];
+                LocalDateTime date = LocalDateTime.of(2024 + i / 12, i % 12 + 1, i % 28 + 1, 10, 0);
+                Person complainant = persons.get(i % 50 + 10);
+                Person agent = persons.get(new int[]{1, 5, 9}[i % 3]);
+                Complaint complaint = new Complaint(complaintNumber, status, date, complainant, agent);
+                complaints.add(complaint);
+            }
             complaintRepository.saveAll(complaints);
 
             // Dépositions
             List<Deposition> depositions = new ArrayList<>();
             depositions.add(new Deposition(LocalDate.of(2024, 1, 15), "Déposition pour plainte DUP-2024-0001", complaints.get(0)));
+            // Ajout d'environ 50 dépositions supplémentaires
+            for (int i = 0; i < 80; i++) {
+                LocalDate date = LocalDate.of(2024 + i / 12, i % 12 + 1, i % 28 + 1);
+                String description = "Déposition supplémentaire pour plainte " + complaints.get(i % complaints.size()).getFileNumber();
+                Complaint relatedComplaint = complaints.get(i % complaints.size());
+
+                Deposition deposition = new Deposition(date, description, relatedComplaint);
+                depositions.add(deposition);
+            }
             depositionRepository.saveAll(depositions);
 
             // Auditions (20)
@@ -264,6 +307,18 @@ public class DataInitializer implements CommandLineRunner {
             auditions.add(new Audition(LocalDateTime.of(2025, 8, 27, 15, 0), "18", "Audition pour plainte PET-2025-0006", persons.get(7), persons.get(9), persons.get(3), complaints.get(17)));
             auditions.add(new Audition(LocalDateTime.of(2025, 10, 2, 10, 30), "19", "Audition pour plainte MOR-2025-0007", persons.get(8), persons.get(1), persons.get(3), complaints.get(18)));
             auditions.add(new Audition(LocalDateTime.of(2025, 11, 7, 14, 0), "20", "Audition pour plainte LEG-2025-0008", persons.get(9), persons.get(5), persons.get(7), complaints.get(19)));
+            // Ajout de 50 auditions supplémentaires
+            for (int i = 20; i < 70; i++) {
+                LocalDateTime dateTime = LocalDateTime.of(2024 + i / 12, i % 12 + 1, i % 28 + 1, 9 + i % 8, 0);
+                String pv = String.valueOf(i + 1);
+                String description = "Audition supplémentaire " + (i + 1);
+                Person auditionedPerson = persons.get(i % 50 + 10);
+                Person agent = persons.get(new int[]{5, 9, 1}[i % 3]);
+                Person lawyer = persons.get(new int[]{3, 7}[i % 2]);
+                Complaint relatedComplaint = complaints.get(i % complaints.size());
+                Audition audition = new Audition(dateTime, pv, description, auditionedPerson, agent, lawyer, relatedComplaint);
+                auditions.add(audition);
+            }
             auditionRepository.saveAll(auditions);
 
             // Jugements (20)
@@ -288,6 +343,15 @@ public class DataInitializer implements CommandLineRunner {
             judgments.add(new Judgment(LocalDateTime.of(2026, 2, 10, 15, 0), JudgmentDecision.DISMISSED, "Jugement pour PET-2025-0006", complaints.get(17)));
             judgments.add(new Judgment(LocalDateTime.of(2026, 3, 15, 9, 30), JudgmentDecision.CONDEMNATION, "Jugement pour MOR-2025-0007", complaints.get(18)));
             judgments.add(new Judgment(LocalDateTime.of(2026, 4, 20, 11, 30), JudgmentDecision.DISMISSED, "Jugement pour LEG-2025-0008", complaints.get(19)));
+            // Ajout de 50 jugements supplémentaires
+            for (int i = 20; i < 70; i++) {
+                LocalDateTime dateTime = LocalDateTime.of(2024 + i / 12, i % 12 + 1, i % 28 + 1, 13 + i % 4, 0);
+                JudgmentDecision decision = JudgmentDecision.values()[i % 2];
+                String description = "Jugement supplémentaire " + (i + 1);
+                Complaint relatedComplaint = complaints.get(i % complaints.size());
+                Judgment judgment = new Judgment(dateTime, decision, description, relatedComplaint);
+                judgments.add(judgment);
+            }
             judgmentRepository.saveAll(judgments);
 
         }
