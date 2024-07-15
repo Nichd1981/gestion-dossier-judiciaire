@@ -17,6 +17,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -173,10 +175,10 @@ public class PersonServiceImpl implements PersonService {
         return (root, query, criteriaBuilder) ->
                 switch (key) {
                     case "birthDateLowerBound" ->
-                            criteriaBuilder.greaterThanOrEqualTo(root.get("birthDateLowerBound"), value);
+                            criteriaBuilder.greaterThanOrEqualTo(root.get("birthdate"), LocalDate.parse(value, DateTimeFormatter.ISO_DATE_TIME));
 
                     case "birthDateUpperBound" ->
-                            criteriaBuilder.lessThanOrEqualTo(root.get("birthDateUpperBound"), value);
+                            criteriaBuilder.lessThanOrEqualTo(root.get("birthdate"), LocalDate.parse(value, DateTimeFormatter.ISO_DATE_TIME));
 
                     case "name" ->
                             criteriaBuilder.like(root.get("name"), "%" + value + "%");
