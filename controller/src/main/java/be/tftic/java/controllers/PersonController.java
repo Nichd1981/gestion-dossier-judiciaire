@@ -74,7 +74,13 @@ public class PersonController {
         return ResponseEntity.ok(personService.update(null, person.toEntity()));
     }
 
-    @PreAuthorize("hasAnyAuthority('AGENT', 'CITIZEN', 'LAWYER')")
+    @PreAuthorize("hasAnyAuthority('AGENT', 'LAWYER')")
+    @GetMapping("/details/{id:\\d+}")
+    public ResponseEntity<PersonDetailResponse> getDetailsPerson(@PathVariable Long id) {
+        return ResponseEntity.ok(personService.findUserDetails(id));
+    }
+
+    @PreAuthorize("hasAuthority('CITIZEN')")
     @GetMapping("/details")
     public ResponseEntity<PersonDetailResponse> getDetailsPerson() {
         return ResponseEntity.ok(personService.findUserDetails());

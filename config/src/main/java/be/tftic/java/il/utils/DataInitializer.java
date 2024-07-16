@@ -239,7 +239,12 @@ public class DataInitializer implements CommandLineRunner {
             // Plaintes (20)
             List<Complaint> complaints = new ArrayList<>();
             complaints.add(new Complaint("DUP-2024-0001", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 1, 15, 0, 0), persons.get(0), persons.get(1), new HashSet<>(Arrays.asList(persons.get(2), persons.get(3)))));
-            complaints.add(new Complaint("MAR-2024-0002", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("MAR-2024-0002", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("MAR-2024-0003", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("MAR-2024-0004", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("MAR-2024-0005", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("MAR-2024-0006", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
+            complaints.add(new Complaint("MAR-2024-0007", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 2, 20, 0, 0), persons.get(1), persons.get(5), new HashSet<>(Arrays.asList(persons.get(6), persons.get(7)))));
             complaints.add(new Complaint("LER-2024-0003", ComplaintStatus.CLOSED, LocalDateTime.of(2024, 3, 10, 0, 0), persons.get(2), persons.get(9), new HashSet<>(Arrays.asList(persons.get(3), persons.get(4)))));
             complaints.add(new Complaint("DUB-2024-0004", ComplaintStatus.REGISTERED, LocalDateTime.of(2024, 4, 5, 0, 0), persons.get(3), persons.get(1), new HashSet<>(Arrays.asList(persons.get(5), persons.get(6)))));
             complaints.add(new Complaint("LAM-2024-0005", ComplaintStatus.IN_PROGRESS, LocalDateTime.of(2024, 5, 12, 0, 0), persons.get(4), persons.get(5), new HashSet<>(Arrays.asList(persons.get(7), persons.get(8)))));

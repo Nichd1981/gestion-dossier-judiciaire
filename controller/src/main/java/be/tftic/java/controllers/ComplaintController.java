@@ -1,6 +1,7 @@
 package be.tftic.java.controllers;
 
 import be.tftic.java.bll.services.ComplaintService;
+import be.tftic.java.bll.services.impls.PdfServiceImpl;
 import be.tftic.java.common.models.requests.filter.ComplaintFilterRequest;
 import be.tftic.java.common.models.requests.update.ClosedSurveyRequest;
 import be.tftic.java.common.models.requests.create.ComplaintCreateRequest;
@@ -9,6 +10,7 @@ import be.tftic.java.common.models.responses.ComplaintShortResponse;
 import be.tftic.java.common.models.responses.PagedResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +33,7 @@ import java.util.Map;
 public class ComplaintController {
 
     private final ComplaintService complaintService;
+    private final PdfServiceImpl pdfServiceImpl;
 
     /**
      * Récupère la liste de toutes les plaintes.
@@ -85,8 +88,23 @@ public class ComplaintController {
      */
     @PreAuthorize("hasAuthority('CITIZEN')")
     @GetMapping("/citizen")
-    public ResponseEntity<List<ComplaintShortResponse>> getComplaintByComplainantId() {
-        return ResponseEntity.ok(complaintService.findByComplainantId());
+    public ResponseEntity<PagedResponse<ComplaintShortResponse>> getComplaintByComplainantId(
+            @RequestParam Map<String, String> params,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int pageSize
+    ) {
+        return ResponseEntity.ok(complaintService.findByComplainantId(params, page, pageSize));
+    }
+
+    @PreAuthorize("hasAuthority('AGENT')")
+    @GetMapping("/citizen/{id:\\d+}")
+    public ResponseEntity<PagedResponse<ComplaintShortResponse>> getComplaintByComplainantId(
+            @PathVariable Long id,
+            @RequestParam Map<String, String> params,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int pageSize
+    ) {
+        return ResponseEntity.ok(complaintService.findByComplainantId(params, page, pageSize));
     }
     /**
      * Récupère la liste des plaintes où l'utilisateur authentifié est la personne concernée.
@@ -163,5 +181,13 @@ public class ComplaintController {
     @GetMapping("/lawyer/{customerId:\\d+}")
     public ResponseEntity<List<ComplaintShortResponse>> getComplaintByCustomerAndLawyer(@PathVariable Long customerId) {
         return ResponseEntity.ok(complaintService.getComplaintByCustomerAndLawyer(customerId));
+    }
+
+    @GetMapping("/{id}/generate-pdf")
+    public ResponseEntity<byte[]> generatePdf(@PathVariable Long id) {
+        byte[] pdf = pdfServiceImpl.generatePdfComplaint(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=complaint.pdf");
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
     }
 }

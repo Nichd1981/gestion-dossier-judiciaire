@@ -20,6 +20,7 @@ import be.tftic.java.domain.enums.ComplaintStatus;
 import be.tftic.java.domain.enums.ComplaintType;
 import be.tftic.java.domain.enums.Gender;
 import be.tftic.java.il.utils.MailUtils;
+import jakarta.persistence.criteria.Join;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,13 +62,25 @@ public class ComplaintServiceImpl implements ComplaintService {
      * @return la liste des plaintes déposées par la personne, ou une liste vide si aucune plainte n'a été déposée.
      */
     @Override
-    public List<ComplaintShortResponse> findByComplainantId() {
+    public PagedResponse<ComplaintShortResponse> findByComplainantId(Map<String, String> params, int page, int pageSize) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return complaintRepository.findByComplainantId(user.getPerson().getId())
-                .stream()
-                .map(ComplaintShortResponse::fromEntity)
-                .toList();
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        params.put("complainantId", String.valueOf(user.getPerson().getId()));
+
+        Page<Complaint> pagedComplaints = complaintRepository
+                .findAll(filterByParams(params), pageable);
+
+        return new PagedResponse<>(
+                pagedComplaints.getContent()
+                        .stream()
+                        .map(ComplaintShortResponse::fromEntity)
+                        .toList(),
+                pageable.getPageSize(),
+                pagedComplaints.getTotalElements(),
+                pagedComplaints.getTotalPages()
+        );
     }
 
     /**
@@ -119,6 +132,11 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public ComplaintDetailResponse findById(Long id) {
         return ComplaintDetailResponse.fromEntity(getComplaint(id));
+    }
+
+    @Override
+    public Complaint findComplaintById(Long id) {
+        return getComplaint(id);
     }
 
     /**
@@ -333,6 +351,12 @@ public class ComplaintServiceImpl implements ComplaintService {
 
                     case "type" ->
                         criteriaBuilder.equal(root.get("type"), ComplaintType.valueOf(value));
+
+                    case "complainantId" ->
+                    {
+                        Join<Complaint, Person> complainantJoin = root.join("complainant");
+                        yield criteriaBuilder.equal(complainantJoin.get("id"), value);
+                    }
 
                     default -> null;
                 };

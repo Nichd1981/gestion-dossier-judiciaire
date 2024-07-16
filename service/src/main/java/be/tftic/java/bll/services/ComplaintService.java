@@ -32,6 +32,7 @@ public interface ComplaintService {
      * @return l'entité Plainte correspondant à l'identifiant spécifié
      */
     ComplaintDetailResponse findById(Long id);
+    Complaint findComplaintById(Long id);
 
     /**
      * Récupère une plainte par son numéro de dossier.
@@ -45,7 +46,7 @@ public interface ComplaintService {
      * Récupère toutes les plaintes associées à un plaignant spécifique.
      * @return une liste d'entités Plainte associées au plaignant spécifié
      */
-    List<ComplaintShortResponse> findByComplainantId();
+    PagedResponse<ComplaintShortResponse> findByComplainantId(Map<String, String> params, int page, int pageSize);
 
     /**
      * Récupère toutes les plaintes associées à une personne concernée spécifique.

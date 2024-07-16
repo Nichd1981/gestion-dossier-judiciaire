@@ -114,6 +114,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public PersonDetailResponse findUserDetails(Long id) {
+        return PersonDetailResponse.fromEntity(findById(id));
+    }
+
+    @Override
     public List<PersonShortResponse> getAllDetailsPerson() {
         return personRepository.findAll()
                 .stream()

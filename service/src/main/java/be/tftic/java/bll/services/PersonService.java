@@ -28,6 +28,7 @@ public interface PersonService {
     PersonDetailResponse findDetailsById(Long id);
 
     PersonDetailResponse findUserDetails();
+    PersonDetailResponse findUserDetails(Long id);
 
     List<PersonShortResponse> getAllDetailsPerson();
 
