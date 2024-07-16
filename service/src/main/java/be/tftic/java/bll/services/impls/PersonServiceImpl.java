@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import jakarta.persistence.criteria.Join;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -211,7 +212,10 @@ public class PersonServiceImpl implements PersonService {
                             criteriaBuilder.equal(root.get("gender"), value);
 
                     case "lawyerId" ->
-                            criteriaBuilder.equal(root.get("lawyer.id"), value);
+                    {
+                        Join<Person, Person> lawyerJoin = root.join("lawyer");
+                        yield criteriaBuilder.equal(lawyerJoin.get("id"), value);
+                    }
 
                     default -> null;
                 };
