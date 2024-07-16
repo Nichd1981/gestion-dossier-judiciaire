@@ -323,10 +323,10 @@ public class ComplaintServiceImpl implements ComplaintService {
                         criteriaBuilder.like(root.get("fileNumber"), "%s" + value + "%");
 
                     case "lowerBound" ->
-                        criteriaBuilder.greaterThanOrEqualTo(root.get("date"), LocalDateTime.parse(value));
+                        criteriaBuilder.greaterThanOrEqualTo(root.get("date"), LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME));
 
                     case "upperBound" ->
-                        criteriaBuilder.lessThanOrEqualTo(root.get("date"), LocalDateTime.parse(value));
+                        criteriaBuilder.lessThanOrEqualTo(root.get("date"), LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME));
 
                     case "status" ->
                         criteriaBuilder.equal(root.get("status"), ComplaintStatus.valueOf(value));
